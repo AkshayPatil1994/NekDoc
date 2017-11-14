@@ -110,6 +110,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#deprecated-parameters">Deprecated Parameters</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-variables-in-usr-file">List of Variables in .usr File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#solution-variables">Solution Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#geometry-variables">Geometry Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#problem-setup-variables">Problem Setup Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#averaging-variables">Averaging Variables</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#the-fld-file-format">The .fld File Format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#header">Header</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data">Data</a></li>
@@ -205,7 +212,7 @@
 <style> .red {color:red} </style><div class="line-block">
 <div class="line"><strong>P001  DENSITY</strong> density for the case of constant properties (for variable density see parameter <code class="docutils literal"><span class="pre">P030</span></code>).</div>
 <div class="line"><br /></div>
-<div class="line"><strong>P002  VISCOS</strong>  kinematic viscosity (if <span class="math">\(&lt;0 \rightarrow Re\)</span>, otherwise <span class="math">\(1/Re\)</span>).</div>
+<div class="line"><strong>P002  VISCOS</strong>  dynamic viscosity (if <span class="math">\(&lt;0 \rightarrow Re\)</span>, otherwise <span class="math">\(1/Re\)</span>).</div>
 <div class="line"><br /></div>
 <div class="line"><strong>P003  BETAG</strong> if <span class="math">\(&gt;0\)</span>, natural convection is turned on (Boussinesq approximation). <span class="red">NOT IN USE!</span></div>
 <div class="line"><br /></div>
@@ -714,6 +721,365 @@
 </div>
 </div>
 </div>
+<div class="section" id="list-of-variables-in-usr-file">
+<h2>List of Variables in .usr File<a class="headerlink" href="#list-of-variables-in-usr-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="solution-variables">
+<h3>Solution Variables<a class="headerlink" href="#solution-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="35%" />
+<col width="9%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Size</th>
+<th class="head">Type</th>
+<th class="head">Short Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">vx</span></code></td>
+<td>(lx1,ly1,lz1,lelv)</td>
+<td>real</td>
+<td>x-velocity (u)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vy</span></code></td>
+<td>(lx1,ly1,lz1,lelv)</td>
+<td>real</td>
+<td>y-velocity (v)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">vz</span></code></td>
+<td>(lx1,ly1,lz1,lelv)</td>
+<td>real</td>
+<td>z-velocity (w)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">pr</span></code></td>
+<td>(lx2,ly2,lz2,lelv)</td>
+<td>real</td>
+<td>pressure (pr)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">t</span></code></td>
+<td>(lx1,ly1,lz1,lelt,ldimt)</td>
+<td>real</td>
+<td>temperature (t) and passive scalars (ps)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vtrans</span></code></td>
+<td>(lx1,ly1,lz1,lelt,ldimt1)</td>
+<td>real</td>
+<td>convective coefficient</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">vdiff</span></code></td>
+<td>(lx1,ly1,lz1,lelt,ldimt1)</td>
+<td>real</td>
+<td>diffusion coefficient</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vxlag</span></code></td>
+<td>(lx1,ly1,lz1,lelv,2)</td>
+<td>real</td>
+<td>x-velocity at previous time steps</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">vylag</span></code></td>
+<td>(lx1,ly1,lz1,lelv,2)</td>
+<td>real</td>
+<td>y-velocity at previous time steps</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vzlag</span></code></td>
+<td>(lx1,ly1,lz1,lelv,2)</td>
+<td>real</td>
+<td>z-velocity at previous time steps</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">prlag</span></code></td>
+<td>(lx2,ly2,lz2,lelv,lorder2)</td>
+<td>real</td>
+<td>pressure at previous time steps</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">tlag</span></code></td>
+<td>(lx1,ly1,lz1,lelv,lorder-1,ldimt1)</td>
+<td>real</td>
+<td>t and ps at previous time steps</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">time</span></code></td>
+<td>–</td>
+<td>real</td>
+<td>physical time</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">dt</span></code></td>
+<td>–</td>
+<td>real</td>
+<td>time step size</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">dtlag</span></code></td>
+<td>( 10 )</td>
+<td>real</td>
+<td>previous time step sizes</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">istep</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>time step number</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="geometry-variables">
+<h3>Geometry Variables<a class="headerlink" href="#geometry-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="28%" />
+<col width="13%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Size</th>
+<th class="head">Type</th>
+<th class="head">Short Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">xm1</span></code></td>
+<td>(lx1,ly1,lz1,lelt)</td>
+<td>real</td>
+<td>x-coordinates for velocity mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ym1</span></code></td>
+<td>(lx1,ly1,lz1,lelt)</td>
+<td>real</td>
+<td>y-coordinates for velocity mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">zm1</span></code></td>
+<td>(lx1,ly1,lz1,lelt)</td>
+<td>real</td>
+<td>z-coordinates for velocity mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">bm1</span></code></td>
+<td>(lx1,ly1,lz1,lelt)</td>
+<td>real</td>
+<td>mass matrix for velocity mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">binvm1</span></code></td>
+<td>(lx1,ly1,lz1,lelv)</td>
+<td>real</td>
+<td>inverse mass matrix for velocity mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">bintm1</span></code></td>
+<td>(lx1,ly1,lz1,lelt)</td>
+<td>real</td>
+<td>inverse mass matrix for t mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">volvm1</span></code></td>
+<td>–</td>
+<td>real</td>
+<td>total volume for velocity mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">voltm1</span></code></td>
+<td>–</td>
+<td>real</td>
+<td>total volume for t mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">xm2</span></code></td>
+<td>(lx2,ly2,lz2,lelv)</td>
+<td>real</td>
+<td>x-coordinates for pressure mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">ym2</span></code></td>
+<td>(lx2,ly2,lz2,lelv)</td>
+<td>real</td>
+<td>y-coordinates for pressure mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">zm2</span></code></td>
+<td>(lx2,ly2,lz2,lelv)</td>
+<td>real</td>
+<td>z-coordinates for pressure mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">unx</span></code></td>
+<td>(lx1,ly1,6,lelt)</td>
+<td>real</td>
+<td>x-component of face unit normal</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">uny</span></code></td>
+<td>(lx1,ly1,6,lelt)</td>
+<td>real</td>
+<td>y-component of face unit normal</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">unz</span></code></td>
+<td>(lx1,ly1,6,lelt)</td>
+<td>real</td>
+<td>z-component of face unit normal</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">area</span></code></td>
+<td>(lx1,ly1,6,lelt)</td>
+<td>real</td>
+<td>face area (surface integral weights)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="problem-setup-variables">
+<h3>Problem Setup Variables<a class="headerlink" href="#problem-setup-variables" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="28%" />
+<col width="13%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Size</th>
+<th class="head">Type</th>
+<th class="head">Short Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nid</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>MPI rank id (lowest rank is always 0)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nio</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>I/O node id</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">nelv</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>number of elements in velocity mesh</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nelt</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>number of elements in t mesh</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">ndim</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>dimensionality of problem (i.e. 2 or 3)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">nsteps</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>number of time steps to run</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">iostep</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>time steps between data output</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">cbc</span></code></td>
+<td>(6,lelt,ldimt1)</td>
+<td>character*3</td>
+<td>boundary condition</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">lglel</span></code></td>
+<td>(lelt)</td>
+<td>integer</td>
+<td>local to global element number map</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">gllel</span></code></td>
+<td>(lelg)</td>
+<td>integer</td>
+<td>global to local element number map</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="averaging-variables">
+<h3>Averaging Variables<a class="headerlink" href="#averaging-variables" title="Permalink to this headline">¶</a></h3>
+<p>Arrays associated with the <code class="docutils literal"><span class="pre">avg_all</span></code> subroutine</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="28%" />
+<col width="9%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable Name</th>
+<th class="head">Size</th>
+<th class="head">Type</th>
+<th class="head">Short Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">uavg</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged x-velocity</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vavg</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged y-velocity</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wavg</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged z-velocity</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">pavg</span></code></td>
+<td>(ax2,ay2,az2,lelt)</td>
+<td>real</td>
+<td>time averaged pressure</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">tavg</span></code></td>
+<td>(ax1,ay1,az1,lelt,ldimt)</td>
+<td>real</td>
+<td>time averaged temperature and passive scalars</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">urms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged u^2</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">vrms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged v^2</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">wrms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged w^2</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">prms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged pr^2</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">trms</span></code></td>
+<td>(ax1,ay1,az1,lelt,ldimt)</td>
+<td>real</td>
+<td>time averaged t^2 and ps^2</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">uvms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged uv</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">vwms</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged vw</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">wums</span></code></td>
+<td>(ax1,ay1,az1,lelt)</td>
+<td>real</td>
+<td>time averaged wu</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">iastep</span></code></td>
+<td>–</td>
+<td>integer</td>
+<td>time steps between averaged data output</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div class="section" id="the-fld-file-format">
 <h2>The .fld File Format<a class="headerlink" href="#the-fld-file-format" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">fld</span></code> file format is used to write and read data both in serial and parallel
@@ -780,7 +1146,7 @@ representation of the number 6.54321 either in little or big endian.</p>
 <tr class="row-odd"><td>6</td>
 <td>11</td>
 <td><code class="docutils literal"><span class="pre">nelgt</span></code></td>
-<td><span class="red">&#8212;-</span></td>
+<td><span class="red">—-</span></td>
 </tr>
 <tr class="row-even"><td>7</td>
 <td>21</td>
@@ -906,7 +1272,7 @@ Example code for reading the geometry field in python:</p>
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

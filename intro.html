@@ -184,7 +184,7 @@
 high-order weighted residual technique similar to the finite element method.   In the SEM, the
 solution and data are represented in terms of <span class="math">\(N\)</span> th-order tensor-product polynomials within each
 of <span class="math">\(E\)</span> deformable hexahedral (brick) elements. Typical discretizations involve
-<span class="math">\(E\)</span>=100&#8211;10,000 elements of order <span class="math">\(N\)</span>=8&#8211;16 (corresponding to 512&#8211;4096 points per
+<span class="math">\(E\)</span>=100–10,000 elements of order <span class="math">\(N\)</span>=8–16 (corresponding to 512–4096 points per
 element).  Vectorization and cache efficiency derive from the local lexicographical ordering within
 each macro-element and from the fact that the action of discrete operators, which nominally have
 <span class="math">\(O(EN^6)\)</span> nonzeros, can be evaluated in only <span class="math">\(O(EN^4)\)</span> work and <span class="math">\(O(EN^3)\)</span> storage
@@ -202,7 +202,7 @@ developers.</li>
 <li>Fast matrix free operator evaluation with minimal storage.</li>
 <li>Matrix operations are implemented in assembler code <span class="math">\(M \times M\)</span> routines to speed up
 computations.</li>
-<li>The parallelism is &#8220;under the hood&#8221;, demanding from the user only care in handling local versus
+<li>The parallelism is “under the hood”, demanding from the user only care in handling local versus
 global operations and array sizes.</li>
 <li>By testing at the beginning of each run which one of the three readily implemented
 parallel-algorithms behaves optimally, the parallelism of Nek5000 can be automatically tuned to
@@ -236,13 +236,13 @@ while the fluid boundary not shared by solid <span class="math">\(\overline{\par
 <div class="math" id="equation-ns_cont">
 <span class="eqno">(2)<a class="headerlink" href="#equation-ns_cont" title="Permalink to this equation">¶</a></span>\[\nabla \cdot \mathbf u =0 \,\, , \text{in } \Omega_f, \quad \text{  (Continuity)  }\]</div>
 <p>If the fluid viscosity is constant in the entire domain the viscous stress tensor can be contracted
-<span class="math">\(\nabla\cdot\tau=\mu\Delta \mathbf u\)</span>, therefore one may solve the Navier&#8211;Stokes equations
+<span class="math">\(\nabla\cdot\tau=\mu\Delta \mathbf u\)</span>, therefore one may solve the Navier–Stokes equations
 in either the stress formulation, or no stress</p>
 <ul class="simple">
 <li>Variable viscosity requires the full stress tensor <span class="math">\(\nabla \cdot \tau=\nabla \cdot
 \mu[\nabla \mathbf u+\nabla \mathbf u^{T}]\)</span>, and we shall refer to this as the stress formulation</li>
 <li>Constant viscosity leads to a simpler stress tensor <span class="math">\(\nabla \cdot \tau=\mu\Delta \mathbf u\)</span>,
-which we refer to as the &#8216;no stress&#8217; formulation</li>
+which we refer to as the ‘no stress’ formulation</li>
 </ul>
 </div>
 <div class="section" id="non-dimensional-navier-stokes">
@@ -367,7 +367,7 @@ continuity equation and obtaining a so-called thermal divergence (the term <span
 <p>Magnetohydrodynamics is based on the idea that magnetic fields can induce currents in a moving
 conductive fluid, which in turn creates forces on the fluid and changing the magnetic field itself.
 The set of equations which describe MHD are a combination of the Navier-Stokes equations of fluid
-dynamics and Maxwell&#8217;s equations of electromagnetism. These differential equations have to be
+dynamics and Maxwell’s equations of electromagnetism. These differential equations have to be
 solved simultaneously, and Nek5000 has an implementation for the incompressible MHD.</p>
 <p>Consider a fluid of velocity <span class="math">\(\mathbf u\)</span> subject to a magnetic field <span class="math">\(\mathbf B\)</span> then
 the incompressible MHD equations are</p>
@@ -508,7 +508,7 @@ and because of this, the overhead for the moving domain formulation is very low.
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

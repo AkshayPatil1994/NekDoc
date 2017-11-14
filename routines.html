@@ -101,7 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#subroutines">Subroutines</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#functions">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#an-example-of-specifying-surface-normals-in-the-usr-file">An Example of Specifying Surface Normals in the .usr File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#spectral-interpolation-tool">Spectral Interpolation Tool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history-points">History Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#grid-to-grid-interpolation">Grid-to-Grid Interpolation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#lagrangian-particle-tracking">Lagrangian Particle Tracking</a></li>
 </ul>
@@ -218,7 +218,7 @@
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">quickmv</span></code></dt>
 <dd>Moves the mesh to allow user affine motion.</dd>
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">runtimeavg(ay,y,j,istep1,ipostep,s5)</span></code></dt>
-<dd>Computes, stores, and (for <code class="docutils literal"><span class="pre">ipostep!0</span></code>) prints runtime averages of <code class="docutils literal"><span class="pre">j</span></code>-quantity <code class="docutils literal"><span class="pre">y</span></code> (along w/ <code class="docutils literal"><span class="pre">y</span></code> itself unless <code class="docutils literal"><span class="pre">ipostep&lt;0</span></code>) with <code class="docutils literal"><span class="pre">j</span></code> + &#8216;<code class="docutils literal"><span class="pre">rtavg_</span></code>&#8216; + (unique) <code class="docutils literal"><span class="pre">s5</span></code> every <code class="docutils literal"><span class="pre">ipostep</span></code> for <code class="docutils literal"><span class="pre">istep&gt;=istep1</span></code>. <code class="docutils literal"><span class="pre">s5</span></code> is a string to append to <code class="docutils literal"><span class="pre">rtavg_</span></code> for storage file naming.</dd>
+<dd>Computes, stores, and (for <code class="docutils literal"><span class="pre">ipostep!0</span></code>) prints runtime averages of <code class="docutils literal"><span class="pre">j</span></code>-quantity <code class="docutils literal"><span class="pre">y</span></code> (along w/ <code class="docutils literal"><span class="pre">y</span></code> itself unless <code class="docutils literal"><span class="pre">ipostep&lt;0</span></code>) with <code class="docutils literal"><span class="pre">j</span></code> + ‘<code class="docutils literal"><span class="pre">rtavg_</span></code>’ + (unique) <code class="docutils literal"><span class="pre">s5</span></code> every <code class="docutils literal"><span class="pre">ipostep</span></code> for <code class="docutils literal"><span class="pre">istep&gt;=istep1</span></code>. <code class="docutils literal"><span class="pre">s5</span></code> is a string to append to <code class="docutils literal"><span class="pre">rtavg_</span></code> for storage file naming.</dd>
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">lagrng(uo,y,yvec,uvec,work,n,m)</span></code></dt>
 <dd>Compute Lagrangian interpolant for <code class="docutils literal"><span class="pre">uo</span></code></dd>
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">opcopy(a1,a2,a3,b1,b2,b3)</span></code></dt>
@@ -337,13 +337,14 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="spectral-interpolation-tool">
-<h2>Spectral Interpolation Tool<a class="headerlink" href="#spectral-interpolation-tool" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">Check</span> <span class="pre">intpts().</span></code>
-Monitor Points</p>
-<p>Multiple monitor points can be defined in the file <code class="docutils literal"><span class="pre">hpts.in</span></code> to examine the field data at every timestep.</p>
+<div class="section" id="history-points">
+<h2>History Points<a class="headerlink" href="#history-points" title="Permalink to this headline">¶</a></h2>
+<p>Assuming a case named <code class="docutils literal"><span class="pre">blah</span></code>, a list of monitor points can be defined in file <code class="docutils literal"><span class="pre">blah.his</span></code> to evaluate velocity,
+temperature, pressure and passive scalars. Results will be appended to this file each time subroutine <code class="docutils literal"><span class="pre">hpts()</span></code>
+is called. Depending on the numnber of monitoring points you may need to increase parameter <code class="docutils literal"><span class="pre">lhis</span></code> in SIZE.
+Usage example:</p>
 <ul>
-<li><p class="first">setup an ASCII file called <code class="docutils literal"><span class="pre">hpts.in</span></code> e.g:</p>
+<li><p class="first">setup an ASCII file called <code class="docutils literal"><span class="pre">blah.his</span></code>, e.g.:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>3 !number of monitoring points
 1.1 -1.2 1.0
 . . .
@@ -351,33 +352,20 @@ x y z
 </pre></div>
 </div>
 </li>
-<li><p class="first">depending on the number number of monitoring points you may need to increase <code class="docutils literal"><span class="pre">lhis</span></code> in SIZE.</p>
-</li>
-<li><p class="first">add <code class="docutils literal"><span class="pre">'call</span> <span class="pre">hpts()'</span></code> to <code class="docutils literal"><span class="pre">userchk()</span></code></p>
+<li><p class="first">add <code class="docutils literal"><span class="pre">call</span> <span class="pre">hpts()</span></code> to <code class="docutils literal"><span class="pre">userchk()</span></code></p>
 </li>
 </ul>
 </div>
 <div class="section" id="grid-to-grid-interpolation">
 <h2>Grid-to-Grid Interpolation<a class="headerlink" href="#grid-to-grid-interpolation" title="Permalink to this headline">¶</a></h2>
-<p>To interpolate an existing field file (e.g. <code class="docutils literal"><span class="pre">base.fld</span></code>) onto a new mesh do the following:</p>
-<ul>
-<li><p class="first">set <code class="docutils literal"><span class="pre">lpart</span></code> in SIZE to a large value (e.g. 100,000 or larger) depending on your memory footprint</p>
-</li>
-<li><p class="first">compile Nek with MPI/IO support</p>
-</li>
-<li><p class="first">set <code class="docutils literal"><span class="pre">NSTEPS=0</span></code> in the <code class="docutils literal"><span class="pre">.rea</span></code> file (post-processing mode)</p>
-</li>
-<li><p class="first">run Nek using the new geometry (e.g. <code class="docutils literal"><span class="pre">new_geom.f0000</span></code>)</p>
-</li>
-<li><p class="first">run Nek using the old geometry and add this code snippet to <code class="docutils literal"><span class="pre">userchk()</span></code></p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="kt">character</span><span class="o">*</span><span class="mi">132</span>  <span class="n">newfld</span><span class="p">,</span> <span class="n">oldfld</span><span class="p">,</span> <span class="n">newgfld</span>
-<span class="k">data </span><span class="n">newfld</span><span class="p">,</span> <span class="n">oldfld</span><span class="p">,</span> <span class="n">newgfld</span> <span class="o">/</span><span class="s1">&#39;new0.f0001&#39;</span><span class="p">,</span><span class="s1">&#39;base.fld&#39;</span><span class="p">,</span><span class="s1">&#39;new_geom.f0000&#39;</span><span class="o">/</span>
-<span class="k">call </span><span class="n">g2gi</span><span class="p">(</span><span class="n">newfld</span><span class="p">,</span> <span class="n">oldfld</span><span class="p">,</span> <span class="n">newgfld</span><span class="p">)</span> <span class="c">! grid2grid interpolation</span>
-<span class="k">call </span><span class="n">exitt</span><span class="p">()</span>
+<p>To restart from an existing field file (e.g. base.fld) onto a new mesh you can call the generic field file
+reader interpolation subroutine in userchk. Note that selection of specific fields to read is not currently
+supported. That means all fields included in base.fld will be overwritten. Usage example:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre><span></span>if (istep.eq.0) call gfldr(&#39;base.fld&#39;)
 </pre></div>
 </div>
-</li>
-</ul>
+</div></blockquote>
 </div>
 <div class="section" id="lagrangian-particle-tracking">
 <h2>Lagrangian Particle Tracking<a class="headerlink" href="#lagrangian-particle-tracking" title="Permalink to this headline">¶</a></h2>
@@ -527,7 +515,7 @@ x y z
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

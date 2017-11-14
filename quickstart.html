@@ -213,7 +213,7 @@ git clone https://github.com/Nek5000/Nek5000.git -b master
 <div class="section" id="downloading-the-example-problems">
 <span id="quickstart-git-examples"></span><h3>Downloading the Example Problems<a class="headerlink" href="#downloading-the-example-problems" title="Permalink to this headline">¶</a></h3>
 <p>The Nek5000 example problems are hosted in a second repository on GitHub,
-<a class="reference external" href="https://github.com/Nek5000/NekExamples">https://github.com/Nek5000/NekExamples</a>.  Likewise, you can download the examples as a <a class="reference external" href="https://github.com/Nek5000/NekExample/archive/master.zip">.zip archive</a>, a <a class="reference external" href="https://github.com/Nek5000/NekExamples/archive/master.tar.gz">.tar.gz archive</a>.  If you&#8217;d like to use Git, you can
+<a class="reference external" href="https://github.com/Nek5000/NekExamples">https://github.com/Nek5000/NekExamples</a>.  Likewise, you can download the examples as a <a class="reference external" href="https://github.com/Nek5000/NekExample/archive/master.zip">.zip archive</a>, a <a class="reference external" href="https://github.com/Nek5000/NekExamples/archive/master.tar.gz">.tar.gz archive</a>.  If you’d like to use Git, you can
 download a working copy of the repository to your home directory:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~
 git clone https://github.com/Nek5000/NekExamples.git -b master
@@ -244,7 +244,7 @@ in another directory of your choice by providing a second argument to <code clas
 <p>Besides the compiled tools, there are several convenience scripts in <code class="docutils literal"><span class="pre">Nek5000/bin</span></code> that allow you
 to easily set up and execute runs of Nek5000.  These scripts are executable as-is and do not need
 to be compiled.</p>
-<p>We recommend that you add <code class="docutils literal"><span class="pre">Nek5000/bin</span></code> to the <code class="docutils literal"><span class="pre">$PATH</span></code> variable in your shell&#8217;s environment.  This
+<p>We recommend that you add <code class="docutils literal"><span class="pre">Nek5000/bin</span></code> to the <code class="docutils literal"><span class="pre">$PATH</span></code> variable in your shell’s environment.  This
 will allow you execute the tools and scripts without typing the full path to the executables.  For
 example, In the bash shell, if you have cloned Nek5000 in <code class="docutils literal"><span class="pre">$HOME/Nek5000</span></code> and compiled tools
 in <code class="docutils literal"><span class="pre">$HOME/Nek5000/bin</span></code>, you can edit your executable path with:</p>
@@ -274,20 +274,81 @@ cp <span class="nv">$HOME</span>/Nek5000/bin/makenek .
 </div>
 <div class="section" id="modifying-makenek">
 <h3>Modifying makenek<a class="headerlink" href="#modifying-makenek" title="Permalink to this headline">¶</a></h3>
-<p>If you do not have MPI installed on your system, edit <code class="docutils literal"><span class="pre">makenek</span></code>, uncomment the <code class="docutils literal"><span class="pre">MPI=0</span></code>
-flag, and change the Fortran and C compilers according to what is available on your machine.  (Most
-any Fortran compiler save g77 or g95 will work.)</p>
-<p>Nek5000 is written in F77 which has implicit typesetting as default. This means in practice that if
-the user defines a new variable in the user file and forgets to define its type explicitly then
-variable beginning with a character from I to N, its type is <code class="docutils literal"><span class="pre">INTEGER</span></code>. Otherwise, it is <code class="docutils literal"><span class="pre">REAL</span></code>.</p>
-<p>This common type of mistake for a beginner can be avoided using a warning flag <code class="docutils literal"><span class="pre">-Wimplicit</span></code>. This
-flag warns whenever a variable, array, or function is implicitly declared. Has an effect similar to
-using the <code class="docutils literal"><span class="pre">IMPLICIT</span> <span class="pre">NONE</span></code> statement in every program unit.</p>
-<p>Another useful flag may <code class="docutils literal"><span class="pre">-mcmodel</span></code> which allows for arrays of size larger than 2GB. This option
+<p>Makenek allows for several customization options.
+If the source is not installed in the standard directory option:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nv">SOURCE_ROOT</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/Nek5000&quot;</span>
+</pre></div>
+</div>
+<p>the user can modify the variable <code class="docutils literal"><span class="pre">SOURCE_ROOT</span></code>.
+The Fortran compiler is defined with the variable <code class="docutils literal"><span class="pre">FC</span></code>, while the  C compiler is defined with the</p>
+<blockquote>
+<div><code class="docutils literal"><span class="pre">CC</span></code> variable. They are set at common choices for most systems but may require to be changed</div></blockquote>
+<p>for some specialized architectures (Blue GeneQ architectures).</p>
+<p>The <code class="docutils literal"><span class="pre">PPLIST</span></code> field can be used to activate several features at compilation time.
+A list a possible options is below:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="2">&#160;</th>
+</tr>
+<tr class="row-even"><th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>NOMPIIO</td>
+<td>deactivate MPI-IO support</td>
+</tr>
+<tr class="row-even"><td>BGQ</td>
+<td>use BGQ optimized mxm</td>
+</tr>
+<tr class="row-odd"><td>XSMM</td>
+<td>use libxsmm for mxm</td>
+</tr>
+<tr class="row-even"><td>CVODE</td>
+<td>compile with CVODE support for scalars</td>
+</tr>
+<tr class="row-odd"><td>VENDOR_BLAS</td>
+<td>use VENDOR BLAS/LAPACK</td>
+</tr>
+<tr class="row-even"><td>EXTBAR</td>
+<td>add underscore to exit call (for BGQ)</td>
+</tr>
+<tr class="row-odd"><td>NEKNEK</td>
+<td>activate overlapping mesh solver (experimental)</td>
+</tr>
+<tr class="row-even"><td>CMTNEK</td>
+<td>activate DG compressible-flow solver (experimental)</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to these preprocessor items, the user can add compilation and linking flags.
+<code class="docutils literal"><span class="pre">FFLAGS</span></code> allows the user to add Fortran compilation flags while <code class="docutils literal"><span class="pre">CCFAGS</span></code> allows the user to
+add C compilation flags. These will be compiler dependent and the user is encouraged to consult
+the manual of the compiler if specific options are needed/desired.
+A commonly used flag is <code class="docutils literal"><span class="pre">-mcmodel</span></code> which allows for arrays of size larger than 2GB. This option
 tells the compiler to use a specific memory model to generate code and store data. It can affect
 code size and performance. If your program has global and static data with a total size smaller than
 2GB, <code class="docutils literal"><span class="pre">-mcmodel=small</span></code> is sufficient. Global and static data larger than 2GB requires
-<code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> or <code class="docutils literal"><span class="pre">-mcmodel=large</span></code>.</p>
+<code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> or <code class="docutils literal"><span class="pre">-mcmodel=large</span></code>.
+Another useful flag is related to implicit typesetting. Nek5000 relies often on
+implicit typesetting as default in the example cases. This means in practice that if
+the user defines a new variable in the user file and forgets to define its type explicitly then
+variable beginning with a character from I to N, its type is <code class="docutils literal"><span class="pre">INTEGER</span></code>. Otherwise, it is <code class="docutils literal"><span class="pre">REAL</span></code>.
+To avoid confusion the user not accustomed to implicit typesetting may use the warning flag
+<code class="docutils literal"><span class="pre">-Wimplicit</span></code>. This flag warns whenever a variable, array, or function is implicitly declared.
+Has an effect similar to using the <code class="docutils literal"><span class="pre">IMPLICIT</span> <span class="pre">NONE</span></code> statement in every program unit.</p>
+<p>At linking time <code class="docutils literal"><span class="pre">USR_LFLAGS</span></code> can be used to add linking flags, while <code class="docutils literal"><span class="pre">USR</span></code>
+can be used to link additional files.</p>
+<p>Nek5000 is typically run with MPI. If you do not have MPI installed on your system, uncomment
+the <code class="docutils literal"><span class="pre">MPI=0</span></code> flag, and change the Fortran and C compilers according to what is available  i
+on your system.  In a similar manner profiling can be turned off by uncommenting <code class="docutils literal"><span class="pre">PROFILING=0</span></code>.</p>
+<p>Nek5000 has also some experimental features for in-situ visulization. In case you are interested
+in these features, they can be activated by uncommenting <code class="docutils literal"><span class="pre">VISIT=1</span></code> and follow instructions in
+makenek.  We reccomend to consult the developers before attempting to use this feature.</p>
 </div>
 <div class="section" id="compiling-nek">
 <h3>Compiling Nek<a class="headerlink" href="#compiling-nek" title="Permalink to this headline">¶</a></h3>
@@ -325,7 +386,7 @@ jobs (e.g., pbs), then the following would be a typical job submission command:<
 </pre></div>
 </div>
 <p>In most cases, however, the details of the <code class="docutils literal"><span class="pre">nekpbs</span></code> script would need to be modified to accommodate an
-individual&#8217;s user account, the desired runtime and perhaps the particular queue.   Note that the
+individual’s user account, the desired runtime and perhaps the particular queue.   Note that the
 scripts <code class="docutils literal"><span class="pre">nek</span></code>, <code class="docutils literal"><span class="pre">nekb</span></code>, <code class="docutils literal"><span class="pre">nekmpi</span></code>, <code class="docutils literal"><span class="pre">nekbmpi</span></code>, etc. perform some essential file manipulations prior to
 executing <code class="docutils literal"><span class="pre">nek5000</span></code>, so it is important to use them rather than invoking <code class="docutils literal"><span class="pre">nek5000</span></code> directly.</p>
 </div>
@@ -571,7 +632,7 @@ viscosity = -20
       <script type="text/javascript" src="_static/jquery.js"></script>
       <script type="text/javascript" src="_static/underscore.js"></script>
       <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 
