@@ -1368,23 +1368,51 @@ three units.</p>
 <p>SIZE file defines the problem size, i.e. spatial points at which the solution is to be evaluated within each element, number of elements per processor etc.
 The SIZE file governs the memory allocation for most of the arrays
 in Nek5000, with the exception of those required by the C utilities.
-The primary parameters of interest in SIZE are:</p>
+The <em>basic</em> parameters of interest in SIZE are:</p>
 <ul class="simple">
 <li><strong>ldim</strong> = 2 or 3.  This must be set to 2 for two-dimensional or axisymmetric simulations  (the latter only partially supported) or to 3 for three-dimensional simulations.</li>
 <li><strong>lx1</strong> controls the polynomial order of the approximation, <span class="math">\(N = {\tt lx1-1}\)</span>.</li>
-<li><strong>lxd</strong> controls the polynomial order of the integration forconvective terms.  Generally, <span class="math">\({\tt lxd=3 * lx1/2}\)</span>.  On some platforms, however,it is important for memory access performance that <code class="docutils literal"><span class="pre">lx1</span></code> and <code class="docutils literal"><span class="pre">lxd</span></code> be even.</li>
-<li><strong>lx2</strong> = <code class="docutils literal"><span class="pre">lx1</span></code> or <code class="docutils literal"><span class="pre">lx1-2</span></code>.  This determines the formulation for the Navier-Stokes  solver (i.e., the choice between the <span class="math">\(\mathbb{P}_N - \mathbb{P}_N\)</span> or <span class="math">\(\mathbb{P}_N - \mathbb{P}_{N-2}\)</span> methods) and the approximation order for the pressure, <code class="docutils literal"><span class="pre">lx2-1</span></code>.</li>
-<li><strong>lelt</strong> determines the <em>maximum</em> number of elements <em>per processor</em></li>
+<li><strong>lxd</strong> controls the polynomial order of the (over-)integration/dealising for convective terms.  Generally, <span class="math">\({\tt lxd=3 * lx1/2}\)</span>.  On some platforms, however, it is important for efficient memory access performance that <code class="docutils literal"><span class="pre">lx1</span></code> and <code class="docutils literal"><span class="pre">lxd</span></code> are even.</li>
+<li><strong>lx2</strong> = <code class="docutils literal"><span class="pre">lx1</span></code> or <code class="docutils literal"><span class="pre">lx1-2</span></code> and is an approximation order for pressure that determines the formulation for the Navier-Stokes  solver (i.e., the choice between the <span class="math">\(\mathbb{P}_N - \mathbb{P}_N\)</span> or <span class="math">\(\mathbb{P}_N - \mathbb{P}_{N-2}\)</span> spectral-element methods).</li>
+<li><strong>lelg</strong>, an upper bound on the number of elements in the simulation (it should be not less than a maximum global element number of one’s mesh, <code class="docutils literal"><span class="pre">nelgt</span></code>).</li>
+<li><strong>lpmax</strong>, a maximum number of processors that can be used (used to be  <strong>lp</strong>  in the legacy SIZE).</li>
+<li><strong>lpmin</strong>, a minimum number of processors that can be used (see also  <strong>Memory Requirements</strong>).</li>
+<li><strong>ldimt</strong>, an upper bound on a number of auxilary fields to solve (temperature + other scalars, minimum is 1).</li>
 </ul>
-<p>The total size of the problem is <code class="docutils literal"><span class="pre">lx1*ly1*lz1*lelt</span></code>.</p>
+<p>The <em>optional</em>
+upper bounds on parameters in SIZE are (minimum being 1 unless otherwise noted):</p>
+<ul class="simple">
+<li><strong>lhis</strong>, a maximum history (i.e. trace) points.</li>
+<li><strong>maxobj</strong>, a maximum number of objects.</li>
+<li><strong>lpert</strong>, a maximum perturbation modes.</li>
+<li><strong>toteq</strong>, a maximum number of conserved scalars in CMT (minimum could be 0).</li>
+<li><strong>nsessmax</strong>, a maximum number of (ensemble-average) sessions.</li>
+<li><strong>lxo</strong>, a maximum number of points per element for field file output (<span class="math">\({\tt lxo \geq lx1}\)</span>).</li>
+<li><strong>lelx</strong>, <strong>lely</strong>, <strong>lelz</strong>, a maximum number of element in each direction for global tensor product solver and/or dimentions.</li>
+<li><strong>mxprev</strong>, a maximum dimension of projection space (e.g. 20).</li>
+<li><strong>lgmres</strong>, a maximum dimension of Krylov space (e.g. 30).</li>
+<li><strong>lorder</strong>, a maximum order of temporal discretization (minimum is2 see also characteristic/OIFS method).</li>
+<li><strong>lelt</strong> determines the maximum number of elements <em>per processor</em> (should be not smaller than nelgt/lpmin, e.g. lelg/lpmin+1).</li>
+<li><strong>lx1m</strong>, a polynomial order for mesh solver that should be equal to lx1 in case of ALE and in case of stress-formulation (=1 otherwise).</li>
+<li><strong>lbelt</strong> determines the maximum number of elements per processor for MHD solver that should be equalt to lelt (=1 otherwise).</li>
+<li><strong>lpelt</strong> determines the maximum number of elements per processor for linear stability solver that should be equalt to lelt (=1 otherwise).</li>
+<li><strong>lcvelt</strong> determines the maximum number of elements per processor for CVODE solver that should be equalt to lelt (=1 otherwise).</li>
+<li><strong>lfdm</strong> equals to 1 for global tensor product solver (that uses fast diagonalization method) being 0 otherwise.</li>
+</ul>
+<p>Note that one also need to include the following line to SIZE file:</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">include</span> <span class="s1">&#39;SIZE.inc&#39;</span>
+</pre></div>
+</div>
+<p>that defines the auxilaly parameters and missing optional parameter defaults.</p>
 <div class="section" id="memory-requirements">
 <h3>Memory Requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h3>
 <p>Per-processor memory requirements for  Nek5000 scale
 roughly as 400 8-byte words per allocated gridpoint.  The number
 of <em>allocated</em> gridpoints per processor is
-<span class="math">\(n_{\max}\)</span> = <code class="docutils literal"><span class="pre">lx1*ly1*lz1*lelt</span></code>.
-(For 3D, <code class="docutils literal"><span class="pre">lz1=ly1=lx1</span></code>; for 2D, <code class="docutils literal"><span class="pre">lz1=1</span></code>, <code class="docutils literal"><span class="pre">ly1=lx1</span></code>.)
-If required for a particular simulation, more memory may be made
+<span class="math">\(n_{\max}\)</span> = <code class="docutils literal"><span class="pre">lx1*ly1*lz1*lelt</span></code>.</p>
+<blockquote>
+<div>and <code class="docutils literal"><span class="pre">lz1=ly1=lx1</span></code> for 3D while for 2D, <code class="docutils literal"><span class="pre">lz1=1</span></code>, <code class="docutils literal"><span class="pre">ly1=lx1</span></code>.</div></blockquote>
+<p>If required for a particular simulation, more memory may be made
 available by using additional processors.  For example, suppose
 one needed to run a simulation with 6000 elements of order <span class="math">\(N=9\)</span>.
 To leading order, the total memory requirements would be
@@ -1393,14 +1421,10 @@ To leading order, the total memory requirements would be
 is 400 MB of memory per core available to the user (after accounting
 for OS requirements), then one could run this simulation with
 <span class="math">\({\tt P \geq 19,200 MB / (400 MB/proc) = 48}\)</span> processors.
-To do so, it would be necessary to set <span class="math">\({\tt lelt} \geq 6000/48 = 125\)</span>.</p>
-<p>We note two other parameters of interest in the parallel context:</p>
-<ul class="simple">
-<li><strong>lp</strong>, the maximum number of processors that can be used.</li>
-<li><strong>lelg</strong>, an upper bound on the number of elements in the simulation.</li>
-</ul>
-<p>There is a slight memory penalty associated with these variables, so
-one generally does not want to have them excessively large.  It is
+To do so, it would be necessary to set <span class="math">\({\tt lpmin = 48}\)</span> (or <span class="math">\({\tt lelt} \geq 6000/48 = 125\)</span> in legacy SIZE file).</p>
+<p>We note three other basic SIZE parameters of interest in the parallel context: <em>lelg</em>, <em>lpmax</em>, <em>lpmin</em>.
+There is a slight memory penalty associated with these variables, so
+one generally does not want to have them equal to excessive values.  It is
 common, however, to have lp be as large as anticipated for a given
 case so that the executable can be run without recompiling on
 any admissible number of processors (<span class="math">\(P_{mem} \leq P \leq E\)</span>,
