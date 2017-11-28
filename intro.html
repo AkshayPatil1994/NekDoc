@@ -231,8 +231,8 @@ while the fluid boundary not shared by solid <span class="math">\(\overline{\par
 <span id="intro-ns"></span><h2>Incompressible Navier-Stokes Equations<a class="headerlink" href="#incompressible-navier-stokes-equations" title="Permalink to this headline">¶</a></h2>
 <p>The governing equations of flow motion in dimensional form are</p>
 <div class="math" id="equation-ns_momentum">
-<span class="eqno">(1)<a class="headerlink" href="#equation-ns_momentum" title="Permalink to this equation">¶</a></span>\[\rho(\partial_{t} \mathbf u +\mathbf u \cdot \nabla \mathbf u) = - \nabla p + \nabla \cdot \tau + \rho {\bf f} \,\, , \text{in } \Omega_f , \quad \text{  (Momentum)  }\]</div>
-<p>where <span class="math">\(\tau=\mu[\nabla \mathbf u+\nabla \mathbf u^{T}]\)</span>.</p>
+<span class="eqno">(1)<a class="headerlink" href="#equation-ns_momentum" title="Permalink to this equation">¶</a></span>\[\rho\left(\frac{\partial\mathbf u}{\partial t} +\mathbf u \cdot \nabla \mathbf u\right) = - \nabla p + \nabla \cdot \tau + \rho {\bf f} \,\, , \text{in } \Omega_f , \quad \text{  (Momentum)  }\]</div>
+<p>where <span class="math">\(\tau=\mu[\nabla \mathbf u+\nabla \mathbf u^{T}]\)</span> and <span class="math">\(\mathbf f\)</span> is a user defined acceleration.</p>
 <div class="math" id="equation-ns_cont">
 <span class="eqno">(2)<a class="headerlink" href="#equation-ns_cont" title="Permalink to this equation">¶</a></span>\[\nabla \cdot \mathbf u =0 \,\, , \text{in } \Omega_f, \quad \text{  (Continuity)  }\]</div>
 <p>If the fluid viscosity is constant in the entire domain the viscous stress tensor can be contracted
@@ -248,7 +248,7 @@ which we refer to as the ‘no stress’ formulation</li>
 <div class="section" id="non-dimensional-navier-stokes">
 <span id="intro-ns-nondim"></span><h2>Non-Dimensional Navier-Stokes<a class="headerlink" href="#non-dimensional-navier-stokes" title="Permalink to this headline">¶</a></h2>
 <p>Let us introduce the following non-dimensional variables <span class="math">\(\mathbf x^*\ = \frac{\mathbf x}{L}\)</span>,
-<span class="math">\(\mathbf u^*\ = \frac{u}{U}\)</span>, <span class="math">\(t^*\ = \frac{t}{L/U}\,\)</span>.  For the pressure scale we have
+<span class="math">\(\mathbf u^*\ = \frac{u}{U}\)</span>, <span class="math">\(t^*\ = \frac{tU}{L}\)</span>, and <span class="math">\(\mathbf f^* =\frac{\mathbf f L}{U^2}\)</span>.  For the pressure scale we have
 two options:</p>
 <ul class="simple">
 <li>Convective effects are dominant i.e. high velocity flows <span class="math">\(p^* = \frac{p}{\rho U^2}\)</span></li>
@@ -257,10 +257,9 @@ two options:</p>
 <p>For highly convective flows we choose the first scaling of the pressure and obtain the
 non-dimensional Navier-Stokes:</p>
 <div class="math" id="equation-NS_nondim">
-<span class="eqno">(3)<a class="headerlink" href="#equation-NS_nondim" title="Permalink to this equation">¶</a></span>\[\frac{\partial \mathbf{u^*}}{\partial t^*} + \mathbf{u^*} \cdot \nabla \mathbf{u^*}\ = -\nabla p^* + \frac{1}{Re} \nabla\cdot \tau^* + \frac{1}{Fr}\frac{\mathbf{f}}{g}.\]</div>
-<p>where <span class="math">\(\tau^*=[\nabla \mathbf u^*+\nabla \mathbf u^{*T}]\)</span>.</p>
-<p>The two non-dimensional numbers here are the Reynolds number <span class="math">\(Re=\frac{\nu}{U L}\)</span> <span class="math">\(Fr\)</span>
-and the Froude number, defined as <span class="math">\(Fr = \frac{U^2}{gL}\)</span>.</p>
+<span class="eqno">(3)<a class="headerlink" href="#equation-NS_nondim" title="Permalink to this equation">¶</a></span>\[\frac{\partial \mathbf{u^*}}{\partial t^*} + \mathbf{u^*} \cdot \nabla \mathbf{u^*}\ = -\nabla p^* + \frac{1}{Re} \nabla\cdot \tau^* + \mathbf f^*.\]</div>
+<p>where <span class="math">\(\tau^*=[\nabla \mathbf u^*+\nabla \mathbf u^{*T}]\)</span> and <span class="math">\(\mathbf f^*\)</span> is the dimensionless user defined forcing function, e.g. gravity.</p>
+<p>The non-dimensional number here is the Reynolds number <span class="math">\(Re=\frac{\rho U L}{\mu}\)</span>.</p>
 </div>
 <div class="section" id="energy-equation">
 <span id="intro-energy"></span><h2>Energy Equation<a class="headerlink" href="#energy-equation" title="Permalink to this headline">¶</a></h2>
