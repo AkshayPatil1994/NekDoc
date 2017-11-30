@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
         <link rel="next" title="&lt;no title&gt;" href="bibliography.html"/>
-        <link rel="prev" title="Routines of Interest" href="routines.html"/> 
+        <link rel="prev" title="Theory" href="theory.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,13 +91,16 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_files.html">User Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="geometry.html">Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="large_scale.html">Performing Large-Scale Simulations in Nek5000</a></li>
-<li class="toctree-l1"><a class="reference internal" href="routines.html">Routines of Interest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Appendices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-options">Build Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parallelism-in-nek5000">Parallelism in Nek5000</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-layout">Data Layout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-rea-file">List of Parameters in .rea File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#available-parameters">Available Parameters</a></li>
@@ -105,19 +108,19 @@
 <li class="toctree-l3"><a class="reference internal" href="#logical-switches">Logical switches</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-size-file">List of Parameters in SIZE File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#parameters-in-size-inc-file">Parameters in SIZE.inc File</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#deprecated-parameters">Deprecated Parameters</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#list-of-variables-in-usr-file">List of Variables in .usr File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-size-file">List of Parameters in SIZE File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commonly-used-variables">Commonly used Variables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#solution-variables">Solution Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#geometry-variables">Geometry Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#problem-setup-variables">Problem Setup Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#averaging-variables">Averaging Variables</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#the-fld-file-format">The .fld File Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#commonly-used-subroutines">Commonly used Subroutines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#commonly-used-functions">Commonly used Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#history-points">History Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grid-to-grid-interpolation">Grid-to-Grid Interpolation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#field-file-format">Field File Format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#header">Header</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data">Data</a></li>
 </ul>
@@ -189,6 +192,250 @@
             
   <div class="section" id="appendices">
 <h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="build-options">
+<h2>Build Options<a class="headerlink" href="#build-options" title="Permalink to this headline">¶</a></h2>
+<p>The shell script <code class="docutils literal"><span class="pre">makenek</span></code> is designed to assist the compilation process of Nek5000. The script will create a <code class="docutils literal"><span class="pre">makefile</span></code> based on the user settings section in <code class="docutils literal"><span class="pre">makenek</span></code>. The GNU gmake utility is used to build Nek5000.
+Available configurations options:</p>
+<span id="tab-bdms"></span><table border="1" class="colwidths-given docutils" id="id1">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">Compiler options</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="24%" />
+<col width="14%" />
+<col width="24%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">name</th>
+<th class="head">values</th>
+<th class="head">default</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>PPLIST</td>
+<td>string</td>
+<td>&#160;</td>
+<td>list of pre-processor symbols (CVODE, …)</td>
+</tr>
+<tr class="row-odd"><td>MPI</td>
+<td>1, 0</td>
+<td>1</td>
+<td>use MPI (needed for a multiprocessor computation)</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>FC</td>
+<td>string</td>
+<td>optional</td>
+<td>Fortran compiler (mpif77)</td>
+</tr>
+<tr class="row-even"><td>CC</td>
+<td>string</td>
+<td>optional</td>
+<td>C compiler (mpicc)</td>
+</tr>
+<tr class="row-odd"><td>FCLAGS</td>
+<td>string</td>
+<td>optional</td>
+<td>optional Fortan compilation flags</td>
+</tr>
+<tr class="row-even"><td>CCLAGS</td>
+<td>string</td>
+<td>optional</td>
+<td>optional C compilation flags</td>
+</tr>
+<tr class="row-odd"><td>SOURCE_ROOT</td>
+<td>string</td>
+<td>optional</td>
+<td>path of Nek5000 source</td>
+</tr>
+<tr class="row-even"><td>USR</td>
+<td>string</td>
+<td>optional</td>
+<td>object list of additional files to compile make intructions (<code class="docutils literal"><span class="pre">makefile_usr.inc</span></code> required)</td>
+</tr>
+<tr class="row-odd"><td>USR_LFLAGS</td>
+<td>string</td>
+<td>optional</td>
+<td>optional linking flags</td>
+</tr>
+<tr class="row-even"><td>PROFILING</td>
+<td>1, 0</td>
+<td>1</td>
+<td>enable internal timers for performance statistics</td>
+</tr>
+<tr class="row-odd"><td>VISIT</td>
+<td>1, 0</td>
+<td>0</td>
+<td>Toggles Visit in situ. See Visit_in_situ for details</td>
+</tr>
+<tr class="row-even"><td>VISIT_INSTALL</td>
+<td>string</td>
+<td>VISIT in situ</td>
+<td>Path to VISIT install path. See Visit_in_situ for details.</td>
+</tr>
+<tr class="row-odd"><td>VISIT_STOP</td>
+<td>true, false</td>
+<td>false</td>
+<td>When running VISIT in situ, simulation stops after step 1 to connect VISIT.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parallelism-in-nek5000">
+<h2>Parallelism in Nek5000<a class="headerlink" href="#parallelism-in-nek5000" title="Permalink to this headline">¶</a></h2>
+<p>The parallelism of Nek5000 is accomplished via domain decomposition methods and a suitable gather-scatter code. All this is implemented in such way that the user does not have to be concerned with the parallelism and only focus on the actual solvers while keeping in mind a few simple rules and routines that switch from local to global and back.</p>
+<ul class="simple">
+<li>Locally, the SEM is structured.</li>
+<li>Globally, the SEM is unstructured.</li>
+<li>Vectorization and serial performance derive from the structured aspects of the computation.</li>
+<li>Parallelism and geometric flexibility derive from the unstructured, element-by-element, operator evaluation.</li>
+<li>Elements, or groups of elements are distributed across processors, but an element is never subdivided.</li>
+</ul>
+<p>For the most part, the global element numbering is not relevant since Nek5000 assigns it randomly but following certain rules.</p>
+<p>There are two types of array sizes, starting with <code class="docutils literal"><span class="pre">lx1</span></code>, <code class="docutils literal"><span class="pre">lelv</span></code>, etc. which give an upper bound of the arrays. And <code class="docutils literal"><span class="pre">nx1</span></code>, <code class="docutils literal"><span class="pre">nelv</span></code>, etc. which give the actual number of elements/grid points per processors. For the example in <a class="reference internal" href="#fig-procsplit"><span class="std std-numref">Fig. 15</span></a> we have</p>
+<ul class="simple">
+<li>on proc 0, <code class="docutils literal"><span class="pre">nelt=2</span></code>  (<code class="docutils literal"><span class="pre">nelt</span></code> = no elements in temperature domain)</li>
+<li>on proc 1, <code class="docutils literal"><span class="pre">nelt=3</span></code>  (<code class="docutils literal"><span class="pre">nelv</span></code> = no elements in fluid domain, usually = <code class="docutils literal"><span class="pre">nelt</span></code>)</li>
+</ul>
+<div class="align-center figure" id="id2">
+<span id="fig-procsplit"></span><img alt="element-splitting" src="_images/serial_parallel.png" />
+<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">A simple SEM row of elements and a potential splitting</span></p>
+</div>
+<p>Arrays <code class="docutils literal"><span class="pre">lglel</span></code> that distinguish which processor has which elements,</p>
+<ul class="simple">
+<li>on proc 0, <code class="docutils literal"><span class="pre">nelt=2,</span> <span class="pre">lglel=(2,5)</span></code>, local element <code class="docutils literal"><span class="pre">1-&gt;2</span></code> and <code class="docutils literal"><span class="pre">2-&gt;5</span></code></li>
+<li>on proc 1, <code class="docutils literal"><span class="pre">nelt=3,</span> <span class="pre">lglel=(1,3,4)</span></code>, local element <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;3</span></code> and <code class="docutils literal"><span class="pre">4-&gt;3</span></code></li>
+</ul>
+<p>Now for global to local we have two common arrays (scaling as <code class="docutils literal"><span class="pre">nelgt</span></code>, but only two such arrays)</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">gllel=(1,1,2,3,2)</span></code>, assigns a global element to its local correspondent, i.e. global element <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;1</span></code> and <code class="docutils literal"><span class="pre">3-&gt;2</span></code> etc.</li>
+<li><code class="docutils literal"><span class="pre">gllnid=(1,0,1,1,0)</span></code>, assigns a global element to its processor, i.e. <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;0</span></code> and <code class="docutils literal"><span class="pre">3-&gt;1</span></code> etc.</li>
+</ul>
+<p>All data contiguously packed (and quad-aligned) <code class="docutils literal"><span class="pre">real</span>&#160; <span class="pre">u(lx1,ly1,lz1,lelt)</span></code> indicates that <code class="docutils literal"><span class="pre">u</span></code> is a collection of elements, <code class="docutils literal"><span class="pre">e=1,...,Nelt</span> <span class="pre">=&lt;</span> <span class="pre">lelt</span></code>, each of size <span class="math">\((N+1)d\)</span>, <span class="math">\(d\)</span> = 2 or 3.</p>
+<p><strong>Example: Summation</strong></p>
+<p>Serial version</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
+<span class="k">do </span><span class="n">iz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
+<span class="k">do </span><span class="n">iy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
+<span class="k">do </span><span class="n">ix</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
+<span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
+<span class="k">end do</span><span class="p">,...,</span><span class="k">end do</span>
+</pre></div>
+</div>
+<p>Second approach, serial version (works in parallel in Nek)</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">=</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
+<span class="n">s</span><span class="o">=</span><span class="mi">0</span>
+<span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span>
+<span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+<p>Nek Parallel Version</p>
+<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">glsum</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you want a local max <code class="docutils literal"><span class="pre">s=vlmax(u,n)</span></code>, or a global max <code class="docutils literal"><span class="pre">s=glmax(u,n)</span></code>.</p>
+</div>
+<div class="section" id="data-layout">
+<h2>Data Layout<a class="headerlink" href="#data-layout" title="Permalink to this headline">¶</a></h2>
+<p>Nek5000 was designed with two principal performance criteria in mind,
+namely, <em>single-node</em> performance and <em>parallel</em> performance.</p>
+<p>A key precept in obtaining good single node performance was to use,
+wherever possible, unit-stride memory addressing, which is realized by
+using contiguously declared arrays and then accessing the data in
+the correct order.   Data locality is thus central to good serial
+performance.   To ensure that this performance is not compromised
+in parallel, the parallel message-passing data model is used, in which
+each processor has its own local (private) address space.  Parallel
+data, therefore, is laid out just as in the serial case, save that there
+are multiple copies of the arrays—one per processor, each containing
+different data.  Unlike the shared memory model, this distributed memory
+model makes data locality transparent and thus simplifies the task of
+analyzing and optimizing parallel performance.</p>
+<p>Some fundamentals of Nek5000’s internal data layout are given below.</p>
+<ol class="arabic">
+<li><p class="first">Data is laid out as  <span class="math">\(u_{ijk}^e = u(i,j,k,e)\)</span></p>
+<p><code class="docutils literal"><span class="pre">i=1,...,nx1</span></code>   (<code class="docutils literal"><span class="pre">nx1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
+<code class="docutils literal"><span class="pre">j=1,...,ny1</span></code>   (<code class="docutils literal"><span class="pre">ny1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
+<code class="docutils literal"><span class="pre">k=1,...,nz1</span></code>   (<code class="docutils literal"><span class="pre">nz1</span> <span class="pre">=</span> <span class="pre">lx1</span></code> or 1, according to ndim=3 or 2)</p>
+<p><code class="docutils literal"><span class="pre">e=1,...,nelv</span></code>, where <code class="docutils literal"><span class="pre">nelv</span></code> <span class="math">\(\leq\)</span> <code class="docutils literal"><span class="pre">lelv</span></code>, and <code class="docutils literal"><span class="pre">lelv</span></code> is the upper
+bound on number of elements, <em>per processor</em>.</p>
+</li>
+<li><p class="first">Fortran data is stored in column major order (opposite of C).</p>
+</li>
+<li><p class="first">All data arrays are thus contiguous, even when <span class="math">\({\tt nelv} &lt; {\tt lelv}\)</span>.</p>
+</li>
+<li><p class="first">Data accesses are thus primarily unit-stride (see chap.8 of DFM
+for importance of this point), and in particular, all data on
+a given processor can be accessed as, e.g.,</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
+   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>which is equivalent but superior (WHY?) to:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
+<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
+<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
+<span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
+   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>which is equivalent but vastly superior (WHY?) to:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
+<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
+<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
+<span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
+   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">All data arrays are stored according to the SPMD programming
+model, in which address spaces that are local to each processor
+are private — not accessible to other processors except through
+interprocessor data-transfer (i.e., message passing).  Thus</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
+   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">end do</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>means different things on different processors and <code class="docutils literal"><span class="pre">nelv</span></code> may
+differ from one processor to the next.</p>
+</li>
+<li><p class="first">For the most part, low-level loops such as above are expressed in
+higher level routines only through subroutine calls, e.g.,:</p>
+<blockquote>
+<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>where <code class="docutils literal"><span class="pre">n:=nx1*ny1*nz1*nelv</span></code>.   Notable exceptions are in places where
+performance is critical, e.g., in the middle of certain iterative
+solvers.</p>
+</li>
+</ol>
+</div>
 <div class="section" id="list-of-parameters-in-rea-file">
 <h2>List of Parameters in .rea File<a class="headerlink" href="#list-of-parameters-in-rea-file" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="parameters">
@@ -636,93 +883,13 @@
 <div class="line"><br /></div>
 <div class="line"><strong>lhis</strong>: maximum number of history points a single rank will read in (<code class="docutils literal"><span class="pre">NP*LHIS</span></code> <span class="math">\(&lt;\)</span> number of points in <code class="docutils literal"><span class="pre">hpts.in</span></code>).</div>
 <div class="line"><br /></div>
-<div class="line"><strong>mxprev</strong>: maximum number of history entries for residual projection (recommended value: 20).</div>
+<div class="line"><strong>mxprev</strong>: maximum number of history entries for residual projection (recommended value: 20-30).</div>
 <div class="line"><br /></div>
-<div class="line"><strong>lgmres</strong>: dimension of Krylov subspace in GMRES (recommended value: 40).</div>
-</div>
-<div class="section" id="parameters-in-size-inc-file">
-<h3>Parameters in SIZE.inc File<a class="headerlink" href="#parameters-in-size-inc-file" title="Permalink to this headline">¶</a></h3>
-<p>The following parameters appeared in the SIZE file in previous versions, and are now moved to the internal SIZE.inc file. They are automatically set based on SIZE parameters.</p>
-<div class="line-block">
-<div class="line"><strong>ly1, lz1</strong>: number of (GLL) points in the <span class="math">\(y\)</span> and <span class="math">\(z\)</span>-directions, respectively, within each element of mesh1 (velocity) which is equal to the (polynomial order <span class="math">\(+1\)</span>) by definition. <code class="docutils literal"><span class="pre">ly1</span></code> is usually the same as <code class="docutils literal"><span class="pre">lx1</span></code> and for 2D cases <code class="docutils literal"><span class="pre">lz1=1</span></code>.</div>
-<div class="line">(is <code class="docutils literal"><span class="pre">lx1</span></code> <span class="math">\(\neq\)</span> <code class="docutils literal"><span class="pre">ly1</span></code> supported?)</div>
-<div class="line"><br /></div>
-</div>
-<div class="line-block">
-<div class="line"><strong>ly2, lz2</strong>: number of (GLL) points in the <span class="math">\(y\)</span> and <span class="math">\(z\)</span> directions, respectively, within each element of mesh2 (pressure).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lx3, ly3, lz3</strong>: number of (GLL) points in the <span class="math">\(x\)</span>, <span class="math">\(y\)</span> and <span class="math">\(z\)</span> directions, respectively, within each element of mesh3. These are set to the same number of (GLL) point on mesh1.</div>
-<div class="line">(mesh3 is rarely used)</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lyd, lzd</strong>: number of points for over integration (dealiasing). <code class="docutils literal"><span class="pre">lyd</span> <span class="pre">=</span> <span class="pre">lxd</span></code>, and <code class="docutils literal"><span class="pre">lzd</span> <span class="pre">=</span> <span class="pre">lxd</span></code> for 3D and <code class="docutils literal"><span class="pre">lzd</span> <span class="pre">=</span> <span class="pre">1</span></code> for 2D.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lp</strong>: <code class="docutils literal"><span class="pre">lp</span> <span class="pre">=</span> <span class="pre">lpmax</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lelv</strong>: maximum number of local elements for V-mesh (<code class="docutils literal"><span class="pre">lelv</span> <span class="pre">=</span> <span class="pre">lelt</span></code>).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lpelv</strong>: Number of elements of the perturbation field, number of perturbation fields. <code class="docutils literal"><span class="pre">lpelv</span> <span class="pre">=</span> <span class="pre">lpelt</span></code>.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lpx1, lpy1, lpz1</strong>: Number of point in <span class="math">\(x\)</span>, <span class="math">\(y\)</span>, <span class="math">\(z\)</span> direction of perturbation field within each element of mesh1. <code class="docutils literal"><span class="pre">lpx1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>, <code class="docutils literal"><span class="pre">lpy1</span> <span class="pre">=</span> <span class="pre">lpx1</span></code>, and <code class="docutils literal"><span class="pre">lpz1</span> <span class="pre">=</span> <span class="pre">lpx1</span></code> for 3D and <code class="docutils literal"><span class="pre">lpz1</span> <span class="pre">=</span> <span class="pre">1</span></code> for 2D.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lbelv</strong>: Total Number of elements of the B-field (MHD). <code class="docutils literal"><span class="pre">lbelv</span> <span class="pre">=</span> <span class="pre">lbelt</span></code>.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lbx1, lby1, lbz1</strong>: Number of point in <span class="math">\(x\)</span>, <span class="math">\(y\)</span>, <span class="math">\(z\)</span> direction of B-field within each element of mesh1. <code class="docutils literal"><span class="pre">lbx1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>, <code class="docutils literal"><span class="pre">lby1</span> <span class="pre">=</span> <span class="pre">lbx1</span></code>, and <code class="docutils literal"><span class="pre">lbz1</span> <span class="pre">=</span> <span class="pre">lbx1</span></code> for 3D and <code class="docutils literal"><span class="pre">lbz1</span> <span class="pre">=</span> <span class="pre">1</span></code> for 2D.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lbx2, lby2, lbz2</strong>: Number of point in <span class="math">\(x\)</span>, <span class="math">\(y\)</span>, <span class="math">\(z\)</span> direction of B-field within each element of mesh2. <code class="docutils literal"><span class="pre">lbx2</span> <span class="pre">=</span> <span class="pre">lx2</span></code>, <code class="docutils literal"><span class="pre">lby2</span> <span class="pre">=</span> <span class="pre">lbx2</span></code>, and <code class="docutils literal"><span class="pre">lbz2</span> <span class="pre">=</span> <span class="pre">lbx2</span></code> for 3D and <code class="docutils literal"><span class="pre">lbz2</span> <span class="pre">=</span> <span class="pre">1</span></code> for 2D.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>ly1m, lz1m</strong>: when the mesh is a moving type <code class="docutils literal"><span class="pre">lx1m=lx1</span></code>, otherwise it is set to 1. <code class="docutils literal"><span class="pre">ly1m</span> <span class="pre">=</span> <span class="pre">lx1m</span></code>, and <code class="docutils literal"><span class="pre">lz1m</span> <span class="pre">=</span> <span class="pre">lx1m</span></code> for 3D and <code class="docutils literal"><span class="pre">lz1m</span> <span class="pre">=</span> <span class="pre">1</span></code> for 2D.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lxz</strong>: lxz = lx1*lz1</div>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">connect1.f:</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">common</span> <span class="pre">/scruz/</span>&#160; <span class="pre">snx(lxz)</span> <span class="pre">,</span> <span class="pre">sny(lxz)</span> <span class="pre">,</span> <span class="pre">snz(lxz)</span> <span class="pre">,</span>&#160; <span class="pre">efc(lxz)</span></code></div>
-<div class="line"><br /></div>
-</div>
-<div class="line"><strong>lctmp0</strong>: <code class="docutils literal"><span class="pre">lctmp0</span> <span class="pre">=</span> <span class="pre">2*lx1*ly1*lz1*lelt</span></code></div>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">drive1.f:c</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">COMMON</span> <span class="pre">/CTMP0/</span> <span class="pre">DUMMY0(LCTMP0)</span></code></div>
-<div class="line"><br /></div>
-</div>
-<div class="line"><strong>lctmp1</strong>: <code class="docutils literal"><span class="pre">lctmp1</span> <span class="pre">=</span> <span class="pre">4*lx1*ly1*lz1*lelt</span></code></div>
-<div class="line-block">
-<div class="line"><code class="docutils literal"><span class="pre">drive1.f:c</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">COMMON</span> <span class="pre">/CTMP1/</span> <span class="pre">DUMMY1(LCTMP1)</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">drive2.f:</span>&#160;&#160;&#160;&#160;&#160; <span class="pre">COMMON</span> <span class="pre">/SCRNS/</span> <span class="pre">WORK(LCTMP1)</span></code></div>
-<div class="line"><br /></div>
-</div>
-<div class="line"><strong>maxmor</strong>: <code class="docutils literal"><span class="pre">=lelt</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lzl</strong>: for 2D cases <code class="docutils literal"><span class="pre">lzl=1</span></code> and for 3D cases <code class="docutils literal"><span class="pre">lzl=3</span></code> (computed automatically).</div>
+<div class="line"><strong>lgmres</strong>: dimension of Krylov subspace in GMRES (recommended value: 20-40).</div>
 </div>
 </div>
-<div class="section" id="deprecated-parameters">
-<h3>Deprecated Parameters<a class="headerlink" href="#deprecated-parameters" title="Permalink to this headline">¶</a></h3>
-<p>The following parameters are deprecated and were subsequently removed in newer versions.</p>
-<div class="line-block">
-<div class="line"><strong>lpert</strong>: Number of elements of the perturbation field, number of perturbation fields</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lstore</strong>: <span class="red">NOT IN USE!</span></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lsvec</strong>: <span class="red">NOT IN USE!</span></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lmvec</strong>: <span class="red">NOT IN USE !</span></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lvec</strong>: <span class="red">NOT IN USE!</span></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lelgec</strong>: <code class="docutils literal"><span class="pre">lelgec</span> <span class="pre">=</span> <span class="pre">1</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lxyz2</strong>: <code class="docutils literal"><span class="pre">lxyz2</span> <span class="pre">=</span> <span class="pre">1</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lxz21</strong>: <code class="docutils literal"><span class="pre">lxz21</span> <span class="pre">=</span> <span class="pre">1</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lmaxv</strong>: <code class="docutils literal"><span class="pre">lmaxv</span> <span class="pre">=</span> <span class="pre">lx1*ly1*lz1*lelv</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lmaxt</strong>: <code class="docutils literal"><span class="pre">lmaxt</span> <span class="pre">=</span> <span class="pre">lx1*ly1*lz1*lelt</span></code></div>
-<div class="line"><br /></div>
-<div class="line"><strong>lmaxp</strong>: <code class="docutils literal"><span class="pre">lmaxp</span> <span class="pre">=</span> <span class="pre">lx1*ly1*lz1*lelv</span></code></div>
-</div>
-</div>
-</div>
-<div class="section" id="list-of-variables-in-usr-file">
-<h2>List of Variables in .usr File<a class="headerlink" href="#list-of-variables-in-usr-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="commonly-used-variables">
+<h2>Commonly used Variables<a class="headerlink" href="#commonly-used-variables" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="solution-variables">
 <h3>Solution Variables<a class="headerlink" href="#solution-variables" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -1080,17 +1247,119 @@
 </table>
 </div>
 </div>
-<div class="section" id="the-fld-file-format">
-<h2>The .fld File Format<a class="headerlink" href="#the-fld-file-format" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal"><span class="pre">fld</span></code> file format is used to write and read data both in serial and parallel
-in Nek5000. This section describes the format and should allow third party tool
-developers to implement pre and postprocessing tools.</p>
+<div class="section" id="commonly-used-subroutines">
+<h2>Commonly used Subroutines<a class="headerlink" href="#commonly-used-subroutines" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">rescale_x(x,x0,x1)</span></code></dt>
+<dd>Rescales the array <code class="docutils literal"><span class="pre">x</span></code> to be in the range <code class="docutils literal"><span class="pre">(x0,x1)</span></code>. This is usually called from <code class="docutils literal"><span class="pre">usrdat2</span></code> in the <code class="docutils literal"><span class="pre">.usr</span></code> file</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">normvc(h1,semi,l2,linf,x1,x2,x3)</span></code></dt>
+<dd>Computes the error norms of a vector field variable <code class="docutils literal"><span class="pre">(x1,x2,x3)</span></code> defined on mesh 1, the velocity mesh. The error norms are normalized with respect to the volume, with the exception on the infinity norm, <code class="docutils literal"><span class="pre">linf</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">comp_vort3(vort,work1,work2,u,v,w)</span></code></dt>
+<dd>Computes the vorticity (<code class="docutils literal"><span class="pre">vort</span></code>) of the velocity field, <code class="docutils literal"><span class="pre">(u,v,w)</span></code></dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">lambda2(l2)</span></code></dt>
+<dd>Generates the Lambda-2 vortex criterion proposed by Jeong and Hussain (1995)</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">planar_average_z(ua,u,w1,w2)</span></code></dt>
+<dd>Computes the r-s planar average of the quantity <code class="docutils literal"><span class="pre">u</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">torque_calc(scale,x0,ifdout,iftout)</span></code></dt>
+<dd>Computes torque about the point <code class="docutils literal"><span class="pre">x0</span></code>. Here scale is a user supplied multiplier so that the results may be scaled to any convenient non-dimensionalization. Both the drag and the torque can be printed to the screen by switching the appropriate <code class="docutils literal"><span class="pre">ifdout(drag)</span></code> or <code class="docutils literal"><span class="pre">iftout(torque)</span></code> logical.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">set_obj</span></code></dt>
+<dd>Defines objects for surface integrals by changing the value of <code class="docutils literal"><span class="pre">hcode</span></code> for future calculations. Typically called once within <code class="docutils literal"><span class="pre">userchk</span></code> (for <code class="docutils literal"><span class="pre">istep</span> <span class="pre">=</span> <span class="pre">0</span></code>) and used for calculating torque. (see above)</dd>
+</dl>
+<p><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg1(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
+<p><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg2(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg3(avg,f,g,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></dt>
+<dd>These three subroutines calculate the (weighted) average of <code class="docutils literal"><span class="pre">f</span></code>. Depending on the value of the logical, <code class="docutils literal"><span class="pre">ifverbose</span></code>, the results will be printed to standard output along with name. In <code class="docutils literal"><span class="pre">avg2</span></code>, the <code class="docutils literal"><span class="pre">f</span></code> component is squared. In <code class="docutils literal"><span class="pre">avg3</span></code>, vector <code class="docutils literal"><span class="pre">g</span></code> also contributes to the average calculation.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">outpost(x,vy,vz,pr,tz,'</span> <span class="pre">')</span></code></dt>
+<dd>Dumps the current data of <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">vy</span></code>, <code class="docutils literal"><span class="pre">vz</span></code>, <code class="docutils literal"><span class="pre">pr</span></code>, <code class="docutils literal"><span class="pre">tz</span></code> to an <code class="docutils literal"><span class="pre">.fld</span></code> or <code class="docutils literal"><span class="pre">.f0????</span></code> file for post processing.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">platform_timer(ivrb)</span></code></dt>
+<dd>Runs the battery of timing tests for matrix-matrix products,contention-free processor-to-processor ping-pong tests, and <code class="docutils literal"><span class="pre">mpi_all_reduce</span></code> times. Allows one to check the performance of the communication routines used on specific platforms.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">quickmv</span></code></dt>
+<dd>Moves the mesh to allow user affine motion.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">runtimeavg(ay,y,j,istep1,ipostep,s5)</span></code></dt>
+<dd>Computes, stores, and (for <code class="docutils literal"><span class="pre">ipostep!0</span></code>) prints runtime averages of <code class="docutils literal"><span class="pre">j</span></code>-quantity <code class="docutils literal"><span class="pre">y</span></code> (along w/ <code class="docutils literal"><span class="pre">y</span></code> itself unless <code class="docutils literal"><span class="pre">ipostep&lt;0</span></code>) with <code class="docutils literal"><span class="pre">j</span></code> + ‘<code class="docutils literal"><span class="pre">rtavg_</span></code>’ + (unique) <code class="docutils literal"><span class="pre">s5</span></code> every <code class="docutils literal"><span class="pre">ipostep</span></code> for <code class="docutils literal"><span class="pre">istep&gt;=istep1</span></code>. <code class="docutils literal"><span class="pre">s5</span></code> is a string to append to <code class="docutils literal"><span class="pre">rtavg_</span></code> for storage file naming.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">lagrng(uo,y,yvec,uvec,work,n,m)</span></code></dt>
+<dd>Compute Lagrangian interpolant for <code class="docutils literal"><span class="pre">uo</span></code></dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">opcopy(a1,a2,a3,b1,b2,b3)</span></code></dt>
+<dd>Copies <code class="docutils literal"><span class="pre">b1</span></code> to <code class="docutils literal"><span class="pre">a1</span></code>, <code class="docutils literal"><span class="pre">b2</span></code> to <code class="docutils literal"><span class="pre">a2</span></code>, and <code class="docutils literal"><span class="pre">b3</span></code> to <code class="docutils literal"><span class="pre">a3</span></code>, when <code class="docutils literal"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">3</span></code>,</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">cadd(a,const,n)</span></code></dt>
+<dd>Adds <code class="docutils literal"><span class="pre">const</span></code> to vector <code class="docutils literal"><span class="pre">a</span></code> of size <code class="docutils literal"><span class="pre">n</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">col2(a,b,n)</span></code></dt>
+<dd>For <code class="docutils literal"><span class="pre">n</span></code> entries, calculates <code class="docutils literal"><span class="pre">a=a*b</span></code>.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">col3(a,b,c,n)</span></code></dt>
+<dd>For <code class="docutils literal"><span class="pre">n</span></code> entries, calculates <code class="docutils literal"><span class="pre">a=b*c</span></code>.</dd>
+</dl>
+</div>
+<div class="section" id="commonly-used-functions">
+<h2>Commonly used Functions<a class="headerlink" href="#commonly-used-functions" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glmax(a,n)</span></code></p>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glamax(a,n)</span></code></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglmax(a,n)</span></code></dt>
+<dd>Calculates the (absolute) max of a vector that is size <code class="docutils literal"><span class="pre">n</span></code>. Prefix <code class="docutils literal"><span class="pre">i</span></code> implies integer type.</dd>
+<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">i8glmax(a,n)</span></code></dt>
+<dd>Calculates the max of an integer*8 vector that is size <code class="docutils literal"><span class="pre">n</span></code>.</dd>
+</dl>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glmin(a,n)</span></code></p>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glamin(a,n)</span></code></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglmin(a,n)</span></code></dt>
+<dd>Calculates the (absolute) min of a vector that is size <code class="docutils literal"><span class="pre">n</span></code>. Prefix <code class="docutils literal"><span class="pre">i</span></code> implies integer type.</dd>
+</dl>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc2(a,b,n)</span></code></p>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc3(a,b,mult,n)</span></code></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc23(z,y,z,n)</span></code></dt>
+<dd>Performs the inner product in double precision. <code class="docutils literal"><span class="pre">glsc3</span></code> uses a multiplier, <code class="docutils literal"><span class="pre">mult</span></code> and <code class="docutils literal"><span class="pre">glsc23</span></code> performs <code class="docutils literal"><span class="pre">x*x*y*z</span></code>.</dd>
+</dl>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsum(x,n)</span></code></p>
+<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglsum(x,n)</span></code></p>
+<dl class="docutils">
+<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">i8glsum(x,n)</span></code></dt>
+<dd>Computes the global sum of <code class="docutils literal"><span class="pre">x</span></code>, where the prefix, <code class="docutils literal"><span class="pre">i</span></code> specifies type integer, and <code class="docutils literal"><span class="pre">i8</span></code> specifies type integer*8.</dd>
+</dl>
+</div>
+<div class="section" id="history-points">
+<h2>History Points<a class="headerlink" href="#history-points" title="Permalink to this headline">¶</a></h2>
+<p>Assuming a case named <code class="docutils literal"><span class="pre">foo</span></code>, a list of monitor points can be defined in file <code class="docutils literal"><span class="pre">foo.his</span></code> to evaluate velocity,
+temperature, pressure and passive scalars. Results will be appended to this file each time subroutine <code class="docutils literal"><span class="pre">hpts()</span></code>
+is called. Depending on the numnber of monitoring points you may need to increase parameter <code class="docutils literal"><span class="pre">lhis</span></code> in SIZE.
+Usage example:</p>
+<ul>
+<li><p class="first">setup an ASCII file called <code class="docutils literal"><span class="pre">foo.his</span></code>, e.g.:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>3 !number of monitoring points
+1.1 -1.2 1.0
+. . .
+x y z
+</pre></div>
+</div>
+</li>
+<li><p class="first">add <code class="docutils literal"><span class="pre">call</span> <span class="pre">hpts()</span></code> to <code class="docutils literal"><span class="pre">userchk()</span></code></p>
+</li>
+</ul>
+</div>
+<div class="section" id="grid-to-grid-interpolation">
+<h2>Grid-to-Grid Interpolation<a class="headerlink" href="#grid-to-grid-interpolation" title="Permalink to this headline">¶</a></h2>
+<p>To restart from an existing field file onto a new mesh you can call the generic field file
+reader interpolation subroutine in userchk. Note that selection of specific fields to read is not currently
+supported. That means all fields included in base.fld will be overwritten. Usage example:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre><span></span>if (istep.eq.0) call gfldr(&#39;foo.f00001&#39;)
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="field-file-format">
+<h2>Field File Format<a class="headerlink" href="#field-file-format" title="Permalink to this headline">¶</a></h2>
+<p>The binary <code class="docutils literal"><span class="pre">.f%05d</span></code> file format is used to write and read data both in serial and parallel
+in Nek5000.</p>
 <p>The file is composed of:</p>
 <blockquote>
 <div><ul class="simple">
-<li>the <em>header</em> in ASCII format,</li>
-<li>mesh data, including the geometry, saved unrolled as scalar vector
-fields</li>
+<li>header</li>
+<li>mesh data</li>
+<li>field data</li>
+<li>bounding box data</li>
 </ul>
 </div></blockquote>
 <p>We will go through each of these categories and give a description of its
@@ -1121,7 +1390,7 @@ representation of the number 6.54321 either in little or big endian.</p>
 <tr class="row-even"><td>1</td>
 <td>2</td>
 <td><code class="docutils literal"><span class="pre">wdsizo</span></code></td>
-<td>sets the precision to 4 (float) or 8 (double)</td>
+<td>sets the precision to 4 or 8</td>
 </tr>
 <tr class="row-odd"><td>2</td>
 <td>3</td>
@@ -1176,7 +1445,7 @@ representation of the number 6.54321 either in little or big endian.</p>
 </tbody>
 </table>
 <p>Example of a header::</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#std 4  6  6  1         36         36  0.1000000000000E+03     10000     0      1 XUP                                              úaÑ@</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#std 4  6  6  1         36         36  0.1000000000000E+03     10000     0      1 XUP</span>
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">wdsize</span></code> sets the precision of the floating point numbers in the file. This
@@ -1231,7 +1500,7 @@ Example code for reading the geometry field in python:</p>
         <a href="bibliography.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="routines.html" class="btn btn-neutral" title="Routines of Interest" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="theory.html" class="btn btn-neutral" title="Theory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Geometry &mdash; Nek5000 17.0 documentation</title>
+  <title>Mesh Generation and Conversion &mdash; Nek5000 17.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
-        <link rel="next" title="Performing Large-Scale Simulations in Nek5000" href="large_scale.html"/>
-        <link rel="prev" title="User Files" href="user_files.html"/> 
+        <link rel="next" title="Performance Considerations" href="perf.html"/>
+        <link rel="prev" title="Case Files" href="user_files.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,10 +91,10 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_files.html">User Files</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Geometry</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Mesh Generation and Conversion</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generating-a-mesh-with-genbox">Generating a Mesh with Genbox</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#uniformly-distributed-mesh">Uniformly Distributed Mesh</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#graded-mesh">Graded Mesh</a></li>
@@ -108,20 +108,22 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#moving-geometry">Moving Geometry</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#boundary-and-initial-conditions">Boundary and Initial Conditions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#boundary-conditions">Boundary Conditions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mesh-conversion">Mesh Conversion</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#exo2nek">exo2nek</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#boundary-conditions">Boundary Conditions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec-boundary">Boundary Conditions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fluid-velocity">Fluid Velocity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#passive-scalars-and-temperature">Passive scalars and Temperature</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#passive-scalars">Passive scalars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#internal-boundary-conditions">Internal Boundary Conditions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#initial-conditions">Initial Conditions</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#parallel-mesh-partitioning-with-genmap">Parallel Mesh Partitioning with Genmap</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="large_scale.html">Performing Large-Scale Simulations in Nek5000</a></li>
-<li class="toctree-l1"><a class="reference internal" href="routines.html">Routines of Interest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
 
@@ -167,7 +169,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Geometry</li>
+      <li>Mesh Generation and Conversion</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -186,17 +188,16 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="geometry">
-<h1>Geometry<a class="headerlink" href="#geometry" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="mesh-generation-and-conversion">
+<h1>Mesh Generation and Conversion<a class="headerlink" href="#mesh-generation-and-conversion" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="generating-a-mesh-with-genbox">
 <h2>Generating a Mesh with Genbox<a class="headerlink" href="#generating-a-mesh-with-genbox" title="Permalink to this headline">¶</a></h2>
-<p>Note that in case of any changes in the SIZE file, a recompilation is necessary.</p>
 <div class="section" id="uniformly-distributed-mesh">
 <h3>Uniformly Distributed Mesh<a class="headerlink" href="#uniformly-distributed-mesh" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you wish to simulate flow through an axisymmetric pipe,
 of radius <span class="math">\(R=0.5\)</span> and length <span class="math">\(L=4\)</span>.  You estimate that you will
 need 3 elements in radial <span class="math">\((y)\)</span> direction, and 5 in the <span class="math">\(x\)</span> direction,
-as depicted in <a class="reference internal" href="#fig-mesh-axi1"><span class="std std-numref">Fig. 7</span></a>.
+as depicted in <a class="reference internal" href="#fig-mesh-axi1"><span class="std std-numref">Fig. 8</span></a>.
 This would be specified by the following input file (called <code class="docutils literal"><span class="pre">pipe.box</span></code>)
 to <code class="docutils literal"><span class="pre">genbox</span></code>:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>axisymmetric.rea
@@ -216,9 +217,9 @@ Box 1                         Pipe
 v  ,O  ,A  ,W  ,   ,          BC&#39;s:  (cbx0, cbx1, cby0, cby1, cbz0, cbz1)
 </pre></div>
 </div>
-<div class="align-center figure" id="id1">
+<div class="align-center figure" id="id2">
 <span id="fig-mesh-axi1"></span><img alt="axis-pipe-mesh" src="_images/mesh_axi1.png" />
-<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Axisymmetric pipe mesh.</span></p>
+<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Axisymmetric pipe mesh.</span></p>
 </div>
 <ul class="simple">
 <li>The first line of this file supplies the name of an existing 2D <code class="docutils literal"><span class="pre">.rea</span></code> file that has the appropriate run parameters (viscosity, timestep size, etc.). These parameters can be modified later, but it is important that <code class="docutils literal"><span class="pre">axisymmetric.rea</span></code> be a 2D file, and not a 3D file.</li>
@@ -254,9 +255,9 @@ equivalent to a <em>v</em> or <em>V</em> boundary condition, with <span class="m
 </div>
 <div class="section" id="graded-mesh">
 <h3>Graded Mesh<a class="headerlink" href="#graded-mesh" title="Permalink to this headline">¶</a></h3>
-<div class="align-center figure" id="id2">
+<div class="align-center figure" id="id3">
 <span id="fig-mesh-axi2"></span><img alt="axis-pipe-mesh-graded" src="_images/mesh_axi2.png" />
-<p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">Axisymmetric pipe mesh, graded</span></p>
+<p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">Axisymmetric pipe mesh, graded</span></p>
 </div>
 <p>Suppose you wish to have the mesh be graded,
 that you have increased resolution near the wall.
@@ -274,13 +275,13 @@ in the above <code class="docutils literal"><span class="pre">genbox</span></cod
 0.0   0.5   0.7               y0  y1   ratio
 </pre></div>
 </div>
-<p>yields the mesh shown in <a class="reference internal" href="#fig-mesh-axi2"><span class="std std-numref">Fig. 8</span></a>.</p>
+<p>yields the mesh shown in <a class="reference internal" href="#fig-mesh-axi2"><span class="std std-numref">Fig. 9</span></a>.</p>
 </div>
 <div class="section" id="user-specified-distribution">
 <h3>User-Specified Distribution<a class="headerlink" href="#user-specified-distribution" title="Permalink to this headline">¶</a></h3>
-<div class="align-center figure" id="id3">
+<div class="align-center figure" id="id4">
 <span id="fig-mesh-axi3"></span><img alt="axis-pipe-mesh-user" src="_images/mesh_axi3.png" />
-<p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">Axisymmetric pipe mesh, user specified.</span></p>
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Axisymmetric pipe mesh, user specified.</span></p>
 </div>
 <p>You can also specify your own, precise, distribution of element
 locations.   For example, another graded mesh similar to the
@@ -295,7 +296,7 @@ one of the preceding example could be built by changing the
 that <code class="docutils literal"><span class="pre">genbox</span></code> is expecting <code class="docutils literal"><span class="pre">Nely+1</span></code> values of <span class="math">\(y\)</span> positions on the
 <span class="math">\(y\)</span>-element distribution line.   This is the <code class="docutils literal"><span class="pre">genbox</span></code> default, which
 explains why it corresponds to <code class="docutils literal"><span class="pre">Nely</span></code> <span class="math">\(&gt;\)</span> 0.  The corresponding mesh
-is shown in <a class="reference internal" href="#fig-mesh-axi3"><span class="std std-numref">Fig. 9</span></a>.</p>
+is shown in <a class="reference internal" href="#fig-mesh-axi3"><span class="std std-numref">Fig. 10</span></a>.</p>
 </div>
 <div class="section" id="mesh-modification-in-nek5000">
 <h3>Mesh Modification in Nek5000<a class="headerlink" href="#mesh-modification-in-nek5000" title="Permalink to this headline">¶</a></h3>
@@ -368,21 +369,21 @@ F      TEMPERATURE GRADIENT
 0      PASSIVE SCALARS
 </pre></div>
 </div>
-<p>The result of above changes is shown in <a class="reference internal" href="#fig-wavypipe"><span class="std std-numref">Fig. 10</span></a>.</p>
-<div class="align-center figure" id="id4">
+<p>The result of above changes is shown in <a class="reference internal" href="#fig-wavypipe"><span class="std std-numref">Fig. 11</span></a>.</p>
+<div class="align-center figure" id="id5">
 <span id="fig-wavypipe"></span><img alt="axis-pipe-mesh-wavy" src="_images/wavypipe.png" />
-<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Axisymmetric pipe mesh.</span></p>
+<p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Axisymmetric pipe mesh.</span></p>
 </div>
 </div>
 <div class="section" id="cylindrical-cartesian-transition-annuli">
 <span id="sec-genbox"></span><h3>Cylindrical/Cartesian-transition Annuli<a class="headerlink" href="#cylindrical-cartesian-transition-annuli" title="Permalink to this headline">¶</a></h3>
-<div class="align-center figure" id="id5">
-<span id="fig-cylbox-2d"></span><img alt="annuli-mesh-1" src="_images/cylbox_2d.png" />
-<p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Cylinder mesh</span></p>
-</div>
 <div class="align-center figure" id="id6">
-<span id="fig-cylbox-2da"></span><img alt="annuli-mesh-2" src="_images/cylbox_2da.png" />
+<span id="fig-cylbox-2d"></span><img alt="annuli-mesh-1" src="_images/cylbox_2d.png" />
 <p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Cylinder mesh</span></p>
+</div>
+<div class="align-center figure" id="id7">
+<span id="fig-cylbox-2da"></span><img alt="annuli-mesh-2" src="_images/cylbox_2da.png" />
+<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Cylinder mesh</span></p>
 </div>
 <p>An updated version of <code class="docutils literal"><span class="pre">genb6</span></code>, known as <code class="docutils literal"><span class="pre">genb7</span></code>, is currently under development
 and designed to simply/automate the construction of cylindrical annuli,
@@ -391,7 +392,7 @@ transition treatments may be generated using the GLOBAL REFINE options in
 <code class="docutils literal"><span class="pre">prenek</span></code> or through an upgrade of <code class="docutils literal"><span class="pre">genb7</span></code>, as demand warrants.
 Example 2D and 3D input files are provided in the <code class="docutils literal"><span class="pre">nek5000/doc</span></code> files
 <code class="docutils literal"><span class="pre">box7.2d</span></code> and <code class="docutils literal"><span class="pre">box7.3d</span></code>.
-<a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 11</span></a> shows a 2D example generated using
+<a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 12</span></a> shows a 2D example generated using
 the <code class="docutils literal"><span class="pre">box7.2d</span></code> input file, which reads:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>x2d.rea
 2                      spatial dimension
@@ -411,7 +412,7 @@ ccbb                descriptors: c-cyl, o-oct, b-box (1 character + space)
 v  ,W  ,E  ,E  ,    bc&#39;s (3 characters + comma)
 </pre></div>
 </div>
-<p>An example of a mesh is shown in <a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 11</span></a>.   The mesh has been quad-refined
+<p>An example of a mesh is shown in <a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 12</span></a>.   The mesh has been quad-refined
 once with oct-refine option of <code class="docutils literal"><span class="pre">prenek</span></code>. The 3D counterpart to this
 mesh could joined to a hemisphere/Cartesian transition built with
 the spherical mesh option in <code class="docutils literal"><span class="pre">prenek</span></code>.</p>
@@ -458,7 +459,7 @@ problem is solved consists of two distinct subdomains. The
 first subdomain is that part of the region occupied by
 fluid, denoted <span class="math">\(\Omega_f\)</span>, while the second subdomain is that part
 of the region occupied by a solid, denoted <span class="math">\(\Omega_s\)</span>. These two
-subdomains are depicted in <a class="reference internal" href="intro.html#fig-walls"><span class="std std-numref">Fig. 1</span></a>. The entire domain is denoted as <span class="math">\(D=\Omega_f \cup \Omega_s\)</span>.
+subdomains are depicted in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 14</span></a>. The entire domain is denoted as <span class="math">\(D=\Omega_f \cup \Omega_s\)</span>.
 The fluid problem is solved in the domain <span class="math">\(\Omega_f\)</span>, while the
 temperature in the energy equation is solved in the
 entire domain; the passive scalars can be solved in either
@@ -469,7 +470,7 @@ of the boundary of <span class="math">\(\Omega_f\)</span> which is not shared by
 that part of the boundary of <span class="math">\(\Omega_f\)</span> which is shared by <span class="math">\(\Omega_s\)</span>.
 In addition, <span class="math">\(\partial \Omega_{s}, \overline{\partial \Omega_s}\)</span> are analogously defined.
 These distinct portions of the
-domain boundary are illustrated in <a class="reference internal" href="intro.html#fig-walls"><span class="std std-numref">Fig. 1</span></a>.
+domain boundary are illustrated in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 14</span></a>.
 The restrictions on the domain for Nek5000 are itemized below.</p>
 <ul class="simple">
 <li>The domain <span class="math">\(\Omega=\Omega_f \cup \Omega_s\)</span> must correspond either to a
@@ -547,10 +548,17 @@ unacceptable, that is, a one-to-one mapping between the physical
 coordinates and the isoparametric local coordinates for any
 macro-element no longer exists.</p>
 </div>
-<div class="section" id="boundary-and-initial-conditions">
-<h2>Boundary and Initial Conditions<a class="headerlink" href="#boundary-and-initial-conditions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mesh-conversion">
+<h2>Mesh Conversion<a class="headerlink" href="#mesh-conversion" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exo2nek">
+<h3>exo2nek<a class="headerlink" href="#exo2nek" title="Permalink to this headline">¶</a></h3>
+<p>todo</p>
+</div>
+</div>
 <div class="section" id="boundary-conditions">
-<span id="sec-boundary"></span><h3>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h3>
+<h2>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sec-boundary">
+<span id="id1"></span><h3>Boundary Conditions<a class="headerlink" href="#sec-boundary" title="Permalink to this headline">¶</a></h3>
 <p>The boundary conditions for the governing equations
 given in the previous section are now described.</p>
 <p>The boundary conditions can be imposed in various ways:</p>
@@ -574,7 +582,7 @@ fluid velocity : essential (Dirichlet) boundary
 condition in which the velocity is specified;
 natural (Neumann) boundary condition in which the traction
 is specified.
-For segments that constitute the boundary <span class="math">\(\partial \Omega_f\)</span>, see <a class="reference internal" href="intro.html#fig-walls"><span class="std std-numref">Fig. 1</span></a>,
+For segments that constitute the boundary <span class="math">\(\partial \Omega_f\)</span>, see <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 14</span></a>,
 one of these two types of boundary conditions must be
 assigned to each component of the fluid velocity.
 The fluid boundary condition can be <em>all Dirichlet</em>
@@ -598,9 +606,9 @@ one of the Cartesian axes.</p>
 <p>For flow geometry which consists of
 a periodic repetition of a particular geometric unit,
 the periodic boundary conditions can be imposed,
-as illustrated in <a class="reference internal" href="intro.html#fig-walls"><span class="std std-numref">Fig. 1</span></a>.</p>
-<span id="tab-primitivebcf"></span><table border="1" class="docutils" id="id7">
-<caption><span class="caption-number">Table 12 </span><span class="caption-text">Primitive boundary conditions</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+as illustrated in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 14</span></a>.</p>
+<span id="tab-primitivebcf"></span><table border="1" class="docutils" id="id8">
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">Primitive boundary conditions</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="29%" />
@@ -670,8 +678,8 @@ as illustrated in <a class="reference internal" href="intro.html#fig-walls"><spa
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<span id="tab-userbcf"></span><table border="1" class="docutils" id="id8">
-<caption><span class="caption-number">Table 13 </span><span class="caption-text">User defined boundary conditions</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<span id="tab-userbcf"></span><table border="1" class="docutils" id="id9">
+<caption><span class="caption-number">Table 13 </span><span class="caption-text">User defined boundary conditions</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="27%" />
 <col width="73%" />
@@ -756,8 +764,8 @@ depends on the Stefan-Boltzmann constant/view-factor
 product <span class="math">\(h_{rad}\)</span> and the difference between the fourth power
 of the environmental temperature <span class="math">\(T_{\infty}\)</span> and the fourth
 power of the surface temperature.</p>
-<span id="tab-primitivebct"></span><table border="1" class="docutils" id="id9">
-<caption><span class="caption-number">Table 14 </span><span class="caption-text">Primitive boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<span id="tab-primitivebct"></span><table border="1" class="docutils" id="id10">
+<caption><span class="caption-number">Table 14 </span><span class="caption-text">Primitive boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="15%" />
 <col width="48%" />
@@ -797,8 +805,8 @@ power of the surface temperature.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<span id="tab-userbct"></span><table border="1" class="docutils" id="id10">
-<caption><span class="caption-number">Table 15 </span><span class="caption-text">User defined boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<span id="tab-userbct"></span><table border="1" class="docutils" id="id11">
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">User defined boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="25%" />
 <col width="75%" />
@@ -883,7 +891,7 @@ If the fluid flow problem is considered, i.e., the energy
 equation is solved in conjunction with the momentum and
 continuity equations, then only
 the common boundary between the fluid and the solid
-(i.e., all or portion of <span class="math">\(\partial \overline{\Omega}_f'\)</span> in <a class="reference internal" href="intro.html#fig-walls"><span class="std std-numref">Fig. 1</span></a>)
+(i.e., all or portion of <span class="math">\(\partial \overline{\Omega}_f'\)</span> in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 14</span></a>)
 can be defined as the melting front.
 In this case, segments on <span class="math">\(\partial \overline{\Omega}_f'\)</span> that
 belong to the dynamic melting/freezing interface need to be
@@ -905,244 +913,6 @@ In addition, the volumetric latent heat of fusion <span class="math">\(\rho L\)<
 for the two phases,
 which is also assumed to be constant, should be specified.</p>
 </div>
-<div class="section" id="initial-conditions">
-<h3>Initial Conditions<a class="headerlink" href="#initial-conditions" title="Permalink to this headline">¶</a></h3>
-<p>For time-dependent problems Nek5000 allows the user to choose among
-the following types of initial conditions for the
-velocity, temperature and passive scalars:</p>
-<ul class="simple">
-<li>Zero initial conditions: default; if nothing is specified.</li>
-<li>Fortran function: This option allows the user to specify the
-initial condition as a fortran function,
-e.g., as a function of <span class="math">\(x\)</span>, <span class="math">\(y\)</span> and <span class="math">\(z\)</span>.</li>
-<li>Presolv: For a temperature problem the presolv option gives the
-steady conduction solution as initial condition for the temperature.
-For a fluid problem this option <em>can</em> give the
-steady Stokes solution as the initial condition for the velocity
-<em>provided</em> that the classical splitting scheme is <em>not</em> used.</li>
-<li>Restart: this option allows the user to read in results from an earlier
-simulation, and use these as initial conditions.</li>
-</ul>
-<p>A tabulated summary of the compatibility of these initial condition options
-with various other solution strategies/parameters is given in the appendix.</p>
-</div>
-</div>
-<div class="section" id="parallel-mesh-partitioning-with-genmap">
-<h2>Parallel Mesh Partitioning with Genmap<a class="headerlink" href="#parallel-mesh-partitioning-with-genmap" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">genmap</span></code> is spectral graph partitioning tool, similar to e.g. METIS, which partitions the graph associated to the mesh to assure optimal communication time in HPC applications. Let us consider a simple mesh such as the one in <a class="reference internal" href="#fig-genmap"><span class="std std-numref">Fig. 13</span></a>. The vertices are distributed in a random fashion, which is the way they may be provided by some mesh generator. Let us assume the vertices are here given as</p>
-<div class="math">
-\[V_1=(-1,0),\ V_2=(0,1),\ V_3=(-1,2),\ V_4=(-1,1),\ V_5=(0,2),\ V_6=(0,0),\ V_7=(1,1),\ V_8=(1,0)\]</div>
-<p>The geometry is already stored in the <code class="docutils literal"><span class="pre">.rea</span></code> file by the point coordinates, and not vertex numbers</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="77%" />
-<col width="8%" />
-<col width="8%" />
-<col width="8%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><span class="math">\(\texttt{Element } 1=[V_1\ V_6\ V_2\ V_4]\)</span></td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><span class="math">\(x_{1,\ldots,4}= -1.\)</span></td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-<td>-1.</td>
-</tr>
-<tr class="row-odd"><td><span class="math">\(y_{1,\ldots,4}= 0.\)</span></td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-</tr>
-<tr class="row-even"><td><span class="math">\(\texttt{Element } 2=[V_8\ V_7\ V_2\ V_6]\)</span></td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-odd"><td><span class="math">\(x_{1,\ldots,4}= 1.\)</span></td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-</tr>
-<tr class="row-even"><td><span class="math">\(y_{1,\ldots,4}= 0.\)</span></td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-</tr>
-<tr class="row-odd"><td><span class="math">\(\texttt{Element } 3=[V_5\ V_3\ V_4\ V_2]\)</span></td>
-<td>&#160;</td>
-<td>&#160;</td>
-<td>&#160;</td>
-</tr>
-<tr class="row-even"><td><span class="math">\(x_{1,\ldots,4}= 0.\)</span></td>
-<td>-1.</td>
-<td>-1.</td>
-<td><ol class="first last arabic simple" start="0">
-<li></li>
-</ol>
-</td>
-</tr>
-<tr class="row-odd"><td><span class="math">\(y_{1,\ldots,4}= 2.\)</span></td>
-<td><ol class="first last arabic simple" start="2">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-<td><ol class="first last arabic simple">
-<li></li>
-</ol>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="align-center figure" id="id11">
-<span id="fig-genmap"></span><img alt="2d-mesh" src="_images/genmap_sketch.png" />
-<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Two-dimensional mesh</span></p>
-</div>
-<p>Let us a regard the mesh in <a class="reference internal" href="#fig-genmap"><span class="std std-numref">Fig. 13</span></a> as a graph of <span class="math">\(N\)</span> vertices and <span class="math">\(M\)</span> edges, <span class="math">\(G(V_N,E_M)\)</span>. We define the Laplacian matrix associated to a graph <span class="math">\(G\)</span> as <span class="math">\(L(G)\)</span>. We define as the degree of a node <span class="math">\(V_i\)</span> the number of incident edges, e.g. in <a class="reference internal" href="#fig-genmap"><span class="std std-numref">Fig. 13</span></a> <span class="math">\(deg(V_2)=4\)</span> and <span class="math">\(deg(V_6)=3\)</span>.</p>
-<div class="math">
-\[\begin{split}L(G)_{ij}= \left\{
-\begin{array}{l l}
-  i=j &amp; \quad \mathrm deg(V_i)\\
-  i\neq j &amp; \quad -1 \text{ if there is and edge (i,j) and } 0 \text{ otherwise}
-\end{array} \right .\end{split}\]</div>
-<div class="math">
-\[\begin{split}L(G)= \begin{pmatrix}
-  &amp;1 &amp; 2 &amp; 3 &amp; 4 &amp; 5 &amp; 6 &amp; 7 &amp; 8\\
-  \hline
-1| &amp;2 &amp; 0 &amp; 0 &amp; -1 &amp; 0 &amp; -1 &amp; 0 &amp; 0\\
-2| &amp;0 &amp; 4 &amp; 0 &amp; -1 &amp; -1 &amp; -1 &amp; -1 &amp; 0\\
-3| &amp;0 &amp; 0 &amp; 2 &amp; -1 &amp; -1 &amp; 0 &amp; 0 &amp; 0\\
-4| &amp;-1 &amp; -1 &amp; -1 &amp; 3 &amp; 0 &amp; 0 &amp; 0 &amp; 0\\
-5| &amp;0 &amp; -1 &amp; -1 &amp; 0 &amp; 2 &amp; 0 &amp; 0 &amp; 0\\
-6| &amp;-1 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 3 &amp; 0 &amp; -1\\
-7| &amp;0 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; 2 &amp; -1\\
-8| &amp;0 &amp; 0 &amp; 0 &amp; 0 &amp; 0 &amp; -1 &amp; -1 &amp; 2\\
-\end{pmatrix}\end{split}\]</div>
-<p>Properties of <span class="math">\(L(G)\)</span></p>
-<ul class="simple">
-<li><span class="math">\(L(G)\)</span> symmetric</li>
-<li>the unit vector <span class="math">\(e=[1, \ldots 1]\in \mathcal{N}(L(G))\)</span> is in the nullspace of the Laplacian matrix</li>
-<li><span class="math">\(\forall\lambda \in \sigma(L(G)&gt;0\)</span>, i.e. all the eigenvalues of <span class="math">\(L(G)\)</span> are positive except <span class="math">\(\lambda_0\)</span> corresponding to the unit vector</li>
-<li><span class="math">\(\lambda_2\neq 0\)</span> if the graph is connected, <span class="math">\(\lambda_2(L(G))\)</span> is also called the algebraic connectivity of the graph</li>
-</ul>
-<div class="line-block">
-<div class="line">The main ides of the spectral bisection algorithm is</div>
-<div class="line"><br /></div>
-<div class="line-block">
-<div class="line">compute <span class="math">\(v_2\)</span> eigenvector corresponding to <span class="math">\(\lambda_2(L(G)\)</span></div>
-<div class="line">for i=1,N</div>
-<div class="line-block">
-<div class="line">if <span class="math">\(v_2(i) &lt; 0\)</span> put vertex <span class="math">\(V_i\)</span> in <span class="math">\(N_{-}\)</span></div>
-<div class="line">else put vertex <span class="math">\(V_i\)</span> in <span class="math">\(N_{+}\)</span></div>
-</div>
-</div>
-</div>
-<p>The eigenvectors and eigenvalues are computed using Lanczos’s algorithm.
-These steps are repeated recursively on each of the two branches of the graph <span class="math">\(N_{-}, N_{+}\)</span>. This is possible since according to Fiedler’s theorems the graph <span class="math">\(N_{-}\)</span> is connected, <span class="math">\(N_{+}\)</span> connected only if no <span class="math">\(v_2(i)=0\)</span>,  and for each subgraph <span class="math">\(G_1\)</span> the algebraic connectivities satisfy <span class="math">\(\lambda_2(L(G_1))\leq\lambda_2(L(G))\)</span>.</p>
-<p>To run the <code class="docutils literal"><span class="pre">genmap</span></code> code be sure that the Nek tools are up-to-date and compiled.
-At command line type: <code class="docutils literal"><span class="pre">genmap</span></code>.</p>
-<p>NOTE: If the executables for the tools were not placed in the <code class="docutils literal"><span class="pre">bin</span></code> directory (default),
-include the path to the <code class="docutils literal"><span class="pre">genmap</span></code> executable. We give here the output for the <code class="docutils literal"><span class="pre">.rea</span></code> file in the Kovasznay example</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>Input (.rea) file name:
-kov
-Input mesh tolerance (default 0.2):
-NOTE: smaller is better, but generous is more forgiving for bad meshes.
-0.05
- reading .rea file data ...
- start locglob_lexico:           8         960        7680  0.10000000000000001
- locglob:           1           1        7680
- .....
- locglob:           3        1254        7680
- done locglob_lexico:        1254        1254        7680           8
- start periodic vtx:         960        1254
- done periodic vtx
- start rec_bisect:         960
- done:    0.1%
- .....
- done:   99.4%
-
- done rec_bisect
-writing kov.map
-</pre></div>
-</div>
-<p>The user is prompted for <code class="docutils literal"><span class="pre">.rea</span></code> file name and should enter only the prefix of the <code class="docutils literal"><span class="pre">.rea</span></code> file.
-The user is prompted for mesh tolerance value. Typically a value of .05 is sufficient. Increasing or decreasing this value should make very little difference in the mesh generation. However, if given an error from genmap, the tolerance may need to be made slightly more generous.</p>
-<p>A successful <code class="docutils literal"><span class="pre">genmap</span></code> run will produce a <code class="docutils literal"><span class="pre">.map</span></code> file with the proper processor decomposition.</p>
-<p>NOTE: For large element counts, it is not uncommon for <code class="docutils literal"><span class="pre">genmap</span></code> to be produce a few disconnected sets.
-These sets are typically under 7 elements large and  will not affect optimization of the Nek5000 run.
-If a disconnected set is produced, <code class="docutils literal"><span class="pre">genmap</span></code> will output the following warning to stdout:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>not connected   N0   NEL  Nsets   Nlarge sets
-</pre></div>
-</div>
-<p>Here, <code class="docutils literal"><span class="pre">N0</span></code> is the number of elements disconnected from the set of <code class="docutils literal"><span class="pre">NEL</span></code> elements, <code class="docutils literal"><span class="pre">Nsets</span></code> is the counter of disconnected sets found,
-and <code class="docutils literal"><span class="pre">Nlarge</span> <span class="pre">sets</span></code> is the number of sets greater than 64 elements in size.  <code class="docutils literal"><span class="pre">Nlarge</span> <span class="pre">sets</span></code> should always be 0.  If not, please contact someone on the developer team so we can be sure to have a more optimal partition of your mesh.</p>
-<p><code class="docutils literal"><span class="pre">genmap</span></code> outputs an ordered set of numbers which are organized as follows
-Line number 1 contains the header <code class="docutils literal"><span class="pre">nel,</span> <span class="pre">nactive,</span> <span class="pre">depth,</span> <span class="pre">d2,</span> <span class="pre">npts,</span> <span class="pre">nrank,</span> <span class="pre">noutflow</span></code></p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">nel</span></code>  number of elements</li>
-<li><code class="docutils literal"><span class="pre">nactive</span></code> nrank-noutflow</li>
-<li><code class="docutils literal"><span class="pre">depth</span></code> floor(log2(nel))</li>
-<li><code class="docutils literal"><span class="pre">d2</span></code> <span class="math">\(2^{depth}\)</span></li>
-<li><code class="docutils literal"><span class="pre">npts</span></code> number of corner points (<code class="docutils literal"><span class="pre">nel*4</span></code> in 2D, <code class="docutils literal"><span class="pre">nel*8</span></code> in 3D)</li>
-<li><code class="docutils literal"><span class="pre">nrank</span></code> number of unique corner points</li>
-<li><code class="docutils literal"><span class="pre">noutflow</span></code> number of outflows (not used anymore, is zero)</li>
-</ul>
-<p>For the Kovasnay flow on an 8 element mesh with periodic boundary conditions we have:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">8</span>         <span class="mi">12</span>          <span class="mi">3</span>          <span class="mi">8</span>         <span class="mi">32</span>         <span class="mi">12</span>          <span class="mi">0</span>
-</pre></div>
-</div>
-<p>Next we have the data (one line per element, listed in order of global element number):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">6</span>          <span class="mi">12</span>          <span class="mi">11</span>           <span class="mi">6</span>           <span class="mi">5</span>
-</pre></div>
-</div>
-<p>This means that elemnt one (since we are on the first line) belongs to group 6, and this element is given by vertices in unique ordering.
-The vertices are ordered in symmetric ordering (starting at 1):</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">3</span> <span class="o">-</span> <span class="mi">4</span>
-<span class="o">|</span>   <span class="o">|</span>
-<span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span>
-</pre></div>
-</div>
-<p>To distribute amongst processors, one just takes as many consecutive
-processors as one wants.</p>
 </div>
 </div>
 
@@ -1156,10 +926,10 @@ processors as one wants.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="large_scale.html" class="btn btn-neutral float-right" title="Performing Large-Scale Simulations in Nek5000" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="perf.html" class="btn btn-neutral float-right" title="Performance Considerations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="user_files.html" class="btn btn-neutral" title="User Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="user_files.html" class="btn btn-neutral" title="Case Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

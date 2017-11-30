@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>User Files &mdash; Nek5000 17.0 documentation</title>
+  <title>Case Files &mdash; Nek5000 17.0 documentation</title>
   
 
   
@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
-        <link rel="next" title="Geometry" href="geometry.html"/>
-        <link rel="prev" title="Quickstart" href="quickstart.html"/> 
+        <link rel="next" title="Mesh Generation and Conversion" href="geometry.html"/>
+        <link rel="prev" title="Tutorials" href="tutorials.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -91,9 +91,9 @@
             
             
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">User Files</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Case Files</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#session-file">SESSION File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#parameters-file-par">Parameters File (.par)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#case-setup-file-usr">Case Setup File (.usr)</a><ul>
@@ -101,7 +101,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#routines-in-usr-file">Routines in .usr File</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#problem-size-file-size">Problem-Size File (SIZE)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#size-file">SIZE File</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#memory-requirements">Memory Requirements</a></li>
 </ul>
 </li>
@@ -112,12 +112,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#data-layout">Data Layout</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="geometry.html">Geometry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="large_scale.html">Performing Large-Scale Simulations in Nek5000</a></li>
-<li class="toctree-l1"><a class="reference internal" href="routines.html">Routines of Interest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
 
@@ -163,7 +162,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>User Files</li>
+      <li>Case Files</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,8 +181,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="user-files">
-<span id="id1"></span><h1>User Files<a class="headerlink" href="#user-files" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="case-files">
+<span id="user-files"></span><h1>Case Files<a class="headerlink" href="#case-files" title="Permalink to this headline">¶</a></h1>
 <p>Each simulation is defined by three files: the .rea file, the <code class="docutils literal"><span class="pre">.usr</span></code> file, and the SIZE file.  In
 addition, there is a derived <code class="docutils literal"><span class="pre">.map</span></code> file that is generated from the <code class="docutils literal"><span class="pre">.rea</span></code> file by running <code class="docutils literal"><span class="pre">genmap</span></code>,
 which will determine how the elements will be split across processors in the case of a parallel
@@ -238,8 +237,8 @@ key = value
 between <code class="docutils literal"><span class="pre">SCALAR01</span></code> and <code class="docutils literal"><span class="pre">SCALAR99</span></code>. The descripton of the keys of each section is given in the
 following tables (all keys/values are case insensitive). The value assigned to each key can be a
 user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in the tables below.</p>
-<span id="tab-generalparams"></span><table border="1" class="docutils" id="id2">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text"><code class="docutils literal"><span class="pre">GENERAL</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<span id="tab-generalparams"></span><table border="1" class="docutils" id="id1">
+<caption><span class="caption-number">Table 1 </span><span class="caption-text"><code class="docutils literal"><span class="pre">GENERAL</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="29%" />
 <col width="17%" />
@@ -482,8 +481,8 @@ steps</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-probtypeparams"></span><table border="1" class="docutils" id="id3">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text"><code class="docutils literal"><span class="pre">PROBLEMTYPE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<span id="tab-probtypeparams"></span><table border="1" class="docutils" id="id2">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text"><code class="docutils literal"><span class="pre">PROBLEMTYPE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="28%" />
 <col width="21%" />
@@ -623,8 +622,8 @@ adjoint NS</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-meshparams"></span><table border="1" class="docutils" id="id4">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text"><code class="docutils literal"><span class="pre">MESH</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<span id="tab-meshparams"></span><table border="1" class="docutils" id="id3">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text"><code class="docutils literal"><span class="pre">MESH</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="26%" />
 <col width="18%" />
@@ -724,8 +723,8 @@ file</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-velocityparams"></span><table border="1" class="docutils" id="id5">
-<caption><span class="caption-number">Table 4 </span><span class="caption-text"><code class="docutils literal"><span class="pre">VELOCITY</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<span id="tab-velocityparams"></span><table border="1" class="docutils" id="id4">
+<caption><span class="caption-number">Table 4 </span><span class="caption-text"><code class="docutils literal"><span class="pre">VELOCITY</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="29%" />
 <col width="16%" />
@@ -812,8 +811,8 @@ file</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-pressureparams"></span><table border="1" class="docutils" id="id6">
-<caption><span class="caption-number">Table 5 </span><span class="caption-text"><code class="docutils literal"><span class="pre">PRESSURE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
+<span id="tab-pressureparams"></span><table border="1" class="docutils" id="id5">
+<caption><span class="caption-number">Table 5 </span><span class="caption-text"><code class="docutils literal"><span class="pre">PRESSURE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="29%" />
 <col width="18%" />
@@ -877,8 +876,8 @@ file</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-temperatureparams"></span><table border="1" class="docutils" id="id7">
-<caption><span class="caption-number">Table 6 </span><span class="caption-text"><code class="docutils literal"><span class="pre">TEMPERATURE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
+<span id="tab-temperatureparams"></span><table border="1" class="docutils" id="id6">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text"><code class="docutils literal"><span class="pre">TEMPERATURE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id6" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="16%" />
@@ -977,8 +976,8 @@ file</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-scalarparams"></span><table border="1" class="docutils" id="id8">
-<caption><span class="caption-number">Table 7 </span><span class="caption-text"><code class="docutils literal"><span class="pre">SCALAR%%</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
+<span id="tab-scalarparams"></span><table border="1" class="docutils" id="id7">
+<caption><span class="caption-number">Table 7 </span><span class="caption-text"><code class="docutils literal"><span class="pre">SCALAR%%</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id7" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="18%" />
@@ -1086,8 +1085,8 @@ file</div>
 </tr>
 </tbody>
 </table>
-<span id="tab-cvodeparams"></span><table border="1" class="docutils" id="id9">
-<caption><span class="caption-number">Table 8 </span><span class="caption-text"><code class="docutils literal"><span class="pre">CVODE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<span id="tab-cvodeparams"></span><table border="1" class="docutils" id="id8">
+<caption><span class="caption-number">Table 8 </span><span class="caption-text"><code class="docutils literal"><span class="pre">CVODE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="30%" />
 <col width="18%" />
@@ -1187,17 +1186,17 @@ routine is called once per processor, and once per discrete point therein.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>Momentum Eq. <a class="reference internal" href="intro.html#equation-ns_momentum">(1)</a></td>
+<tr class="row-even"><td>Momentum Eq. <a class="reference internal" href="theory.html#equation-ns_momentum">(1)</a></td>
 <td><span class="math">\(\rho\)</span></td>
 <td><span class="math">\(\mu\)</span></td>
 <td>1</td>
 </tr>
-<tr class="row-odd"><td>Energy Eq. <a class="reference internal" href="intro.html#equation-energy">(4)</a></td>
+<tr class="row-odd"><td>Energy Eq. <a class="reference internal" href="theory.html#equation-energy">(4)</a></td>
 <td><span class="math">\(\rho c_p\)</span></td>
 <td><span class="math">\(k\)</span></td>
 <td>2</td>
 </tr>
-<tr class="row-even"><td>Passive scalar <a class="reference internal" href="intro.html#equation-pass_scal">(6)</a></td>
+<tr class="row-even"><td>Passive scalar <a class="reference internal" href="theory.html#equation-pass_scal">(6)</a></td>
 <td><span class="math">\((\rho c_p)_i\)</span></td>
 <td><span class="math">\(k_i\)</span></td>
 <td><span class="math">\(i-1\)</span></td>
@@ -1251,7 +1250,7 @@ three units.</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>The routine <code class="docutils literal"><span class="pre">userf</span></code> is called once for each point and provides the force term in Eq. <a class="reference internal" href="intro.html#equation-ns_momentum">(1)</a>. Not that according to the dimensionalization in Eq. <a class="reference internal" href="intro.html#equation-ns_momentum">(1)</a> the force term <span class="math">\(\mathbf{f}\)</span> is in fact multiplied by the density <span class="math">\(\rho\)</span>.</p>
+<p>The routine <code class="docutils literal"><span class="pre">userf</span></code> is called once for each point and provides the force term in Eq. <a class="reference internal" href="theory.html#equation-ns_momentum">(1)</a>. Not that according to the dimensionalization in Eq. <a class="reference internal" href="theory.html#equation-ns_momentum">(1)</a> the force term <span class="math">\(\mathbf{f}\)</span> is in fact multiplied by the density <span class="math">\(\rho\)</span>.</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">userf</span>  <span class="p">(</span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">eg</span><span class="p">)</span>
 <span class="k">include</span> <span class="s1">&#39;SIZE&#39;</span>
 <span class="k">include</span> <span class="s1">&#39;TOTAL&#39;</span>
@@ -1265,7 +1264,7 @@ three units.</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>Similarly to <code class="docutils literal"><span class="pre">userf</span></code> the routine <code class="docutils literal"><span class="pre">userq</span></code> provides the force term in Eq. <a class="reference internal" href="intro.html#equation-energy">(4)</a> and the subsequent passive scalar equations according to Eq. <a class="reference internal" href="intro.html#equation-pass_scal">(6)</a>.</p>
+<p>Similarly to <code class="docutils literal"><span class="pre">userf</span></code> the routine <code class="docutils literal"><span class="pre">userq</span></code> provides the force term in Eq. <a class="reference internal" href="theory.html#equation-energy">(4)</a> and the subsequent passive scalar equations according to Eq. <a class="reference internal" href="theory.html#equation-pass_scal">(6)</a>.</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">userq</span>  <span class="p">(</span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">eg</span><span class="p">)</span>
 <span class="k">include</span> <span class="s1">&#39;SIZE&#39;</span>
 <span class="k">include</span> <span class="s1">&#39;TOTAL&#39;</span>
@@ -1363,8 +1362,8 @@ three units.</p>
 </div>
 </div>
 </div>
-<div class="section" id="problem-size-file-size">
-<h2>Problem-Size File (SIZE)<a class="headerlink" href="#problem-size-file-size" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="size-file">
+<h2>SIZE File<a class="headerlink" href="#size-file" title="Permalink to this headline">¶</a></h2>
 <p>SIZE file defines the problem size, i.e. spatial points at which the solution is to be evaluated within each element, number of elements per processor etc.
 The SIZE file governs the memory allocation for most of the arrays
 in Nek5000, with the exception of those required by the C utilities.
@@ -1502,8 +1501,8 @@ coordinates <code class="docutils literal"><span class="pre">XZERO;YZERO</span><
 dimension is the the problem (here three dimensional), and how many elements
 are in the fluid mesh (192).</p>
 <blockquote>
-<div><span id="tab-element"></span><table border="1" class="docutils" id="id10">
-<caption><span class="caption-number">Table 9 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-element"></span><table border="1" class="docutils" id="id9">
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="31%" />
 <col width="17%" />
@@ -1562,11 +1561,11 @@ are in the fluid mesh (192).</p>
 <p>Following the header, all elements are listed. The fluid elements are listed
 first, followed by all solid elements if present. In this case there are (34)
 solid elements.</p>
-<p>The data following the header is formatted as shown in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 9</span></a>. This provides all the coordinates of an element for top and bottom faces. The numbering of the vertices is shown in Fig. <a class="reference internal" href="#fig-elorder"><span class="std std-numref">Fig. 2</span></a>. The header for each element as in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 9</span></a>, i.e. <code class="docutils literal"><span class="pre">[1A]</span> <span class="pre">GROUP</span></code> is reminiscent of older Nek5000 format and does not impact the mesh generation at this stage. (We are inquiring whether other groups still use it.)</p>
+<p>The data following the header is formatted as shown in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 9</span></a>. This provides all the coordinates of an element for top and bottom faces. The numbering of the vertices is shown in Fig. <a class="reference internal" href="#fig-elorder"><span class="std std-numref">Fig. 3</span></a>. The header for each element as in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 9</span></a>, i.e. <code class="docutils literal"><span class="pre">[1A]</span> <span class="pre">GROUP</span></code> is reminiscent of older Nek5000 format and does not impact the mesh generation at this stage. (We are inquiring whether other groups still use it.)</p>
 <blockquote class="last">
-<div><div class="align-center figure" id="id11">
+<div><div class="align-center figure" id="id10">
 <span id="fig-elorder"></span><img alt="rea-geometry" src="_images/3dcube_1.png" />
-<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file (sketch of one element ordering - Preprocessor
+<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file (sketch of one element ordering - Preprocessor
 corner notation)</span></p>
 </div>
 </div></blockquote>
@@ -1582,8 +1581,8 @@ Therefore, if no elements are curved (if only linear elements are present) the s
 Only non-trivial curvature data needs to be provided, i.e., edges that correspond to linear elements, since they have no curvature, will have no entry.
 The formatting for the curvature data is provided in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 10</span></a>.</p>
 <blockquote>
-<div><span id="tab-midside"></span><table border="1" class="docutils" id="id12">
-<caption><span class="caption-number">Table 10 </span><span class="caption-text">Curvature information specification</span><a class="headerlink" href="#id12" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-midside"></span><table border="1" class="docutils" id="id11">
+<caption><span class="caption-number">Table 10 </span><span class="caption-text">Curvature information specification</span><a class="headerlink" href="#id11" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="11%" />
 <col width="9%" />
@@ -1644,18 +1643,18 @@ The formatting for the curvature data is provided in <a class="reference interna
 </ul>
 <p>Both ‘C’ and ‘s’ types allow for a surface of as high order as the polynomial used in the spectral method, since they have an underlying analytical description, any circle arc can be fully determined by the radius and end points. However for the ‘m’ curved element descriptor the surface can be reconstructed only up to second order. This can be later updated to match the high-order polynomial after the GLL points have been distributed across the boundaries. This is the only general mean to describe curvature currrently in Nek5000 and corresponds to a HEX20 representation.</p>
 <blockquote>
-<div><div class="align-center figure" id="id13">
+<div><div class="align-center figure" id="id12">
 <span id="fig-edges"></span><img alt="edge-numbering" src="_images/3dcube.png" />
-<p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">Edge numbering in <code class="docutils literal"><span class="pre">.rea</span></code> file, the edge number is in between parenthesis. The other
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Edge numbering in <code class="docutils literal"><span class="pre">.rea</span></code> file, the edge number is in between parenthesis. The other
 numbers represent vertices.</span></p>
 </div>
 </div></blockquote>
-<p>For better understanding let us focus on what the data in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 10</span></a> signifies. Edge 9 of element 2 has a edge  midpoint at (0.125713, -0.992067, 0.00000)  and so on. For edge numbering the reader is advised to check Fig. <a class="reference internal" href="#fig-edges"><span class="std std-numref">Fig. 3</span></a>, which illustrates the relationship between vertex numbering and edge numbering.</p>
+<p>For better understanding let us focus on what the data in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 10</span></a> signifies. Edge 9 of element 2 has a edge  midpoint at (0.125713, -0.992067, 0.00000)  and so on. For edge numbering the reader is advised to check Fig. <a class="reference internal" href="#fig-edges"><span class="std std-numref">Fig. 4</span></a>, which illustrates the relationship between vertex numbering and edge numbering.</p>
 <p>To maninpulate the geometry in Nek5000 at runtime, it is possible to use  <code class="docutils literal"><span class="pre">usrdat2</span></code>. In this subroutine the user can deform the geometry to match the intended surface, followed by a call to the subroutine <code class="docutils literal"><span class="pre">fixgeom</span></code> which can realign the point distribution in the interior of the element.</p>
 <blockquote>
-<div><div class="align-center figure" id="id14">
+<div><div class="align-center figure" id="id13">
 <span id="fig-ex1"></span><img alt="edge-numbering" src="_images/base1.png" />
-<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">Example mesh - without curvature. Square dots represent example vertices.</span></p>
+<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Example mesh - without curvature. Square dots represent example vertices.</span></p>
 </div>
 </div></blockquote>
 <p>We also note, that, unlike the geometry data, each curvature entry (as shown in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 10</span></a>) is formatted and the format is <strong>dependent on the total number of elements</strong>. Three cases exist as shown in the code below:</p>
@@ -1678,11 +1677,11 @@ numbers represent vertices.</span></p>
 <li>For a total number of elements 1,000 - 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i6,5g14.6,1x,a1)</span></code>.</li>
 <li>For a total number of elements above 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i12,5g14.6,1x,a1)</span></code>.</li>
 </ul>
-<div class="align-center figure" id="id15">
+<div class="align-center figure" id="id14">
 <span id="fig-ex2"></span><img alt="edge-numbering" src="_images/modified1.png" />
-<p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">Example mesh - with curvature. Circular dots represent example midsize points.</span></p>
+<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Example mesh - with curvature. Circular dots represent example midsize points.</span></p>
 </div>
-<p>To further illustrate the usage of curvature data, let us examine an example of <code class="docutils literal"><span class="pre">.rea</span></code> file with and wiuthout curvature information and the corresponding mesh representation. <a class="reference internal" href="#fig-ex1"><span class="std std-numref">Fig. 4</span></a> represents a 12 element box mesh (2x2x3, with periodic conditions in <span class="math">\(z\)</span>) without curvature, while <a class="reference internal" href="#fig-ex2"><span class="std std-numref">Fig. 5</span></a> presents the same mesh with a sinusoidal deformation in direction <span class="math">\(y\)</span>. Only two edges per element are curved.</p>
+<p>To further illustrate the usage of curvature data, let us examine an example of <code class="docutils literal"><span class="pre">.rea</span></code> file with and wiuthout curvature information and the corresponding mesh representation. <a class="reference internal" href="#fig-ex1"><span class="std std-numref">Fig. 5</span></a> represents a 12 element box mesh (2x2x3, with periodic conditions in <span class="math">\(z\)</span>) without curvature, while <a class="reference internal" href="#fig-ex2"><span class="std std-numref">Fig. 6</span></a> presents the same mesh with a sinusoidal deformation in direction <span class="math">\(y\)</span>. Only two edges per element are curved.</p>
 <p>The input for the mesh without curvature is:</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>          12  3          12 NEL,NDIM,NELV
       ELEMENT             1 [    1a]    GROUP     0
@@ -2045,11 +2044,11 @@ numbers represent vertices.</span></p>
 </div>
 <p>and the data is stored as illustarted in <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 11</span></a>. For each field boundary conditions are listed for each face of each element.</p>
 <p>Boundary conditions are given in order per each element, see <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 11</span></a> column <code class="docutils literal"><span class="pre">IEL</span></code>, and faces listed in ascending order 1-6 in column <code class="docutils literal"><span class="pre">IFACE</span></code>. Note that the header in <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 11</span></a> does not appear in the actual <code class="docutils literal"><span class="pre">.rea</span></code>.</p>
-<p>The ordering for faces each element is shown in <a class="reference internal" href="#fig-forder"><span class="std std-numref">Fig. 6</span></a>. A total equivalent to <span class="math">\(6N_{field}\)</span> boundary conditions are listed for each field, where <span class="math">\(N_{field}\)</span> is the number of elements for the specific field. <span class="math">\(N_{field}\)</span> is equal to the total number of fluid elements for the velocity and equal to the total number of elements (including solid elements) for temperature. For the passive scalars it will depend on the specific choice, but typically scalars are solved on the temeprature mesh (solid+fluid).</p>
+<p>The ordering for faces each element is shown in <a class="reference internal" href="#fig-forder"><span class="std std-numref">Fig. 7</span></a>. A total equivalent to <span class="math">\(6N_{field}\)</span> boundary conditions are listed for each field, where <span class="math">\(N_{field}\)</span> is the number of elements for the specific field. <span class="math">\(N_{field}\)</span> is equal to the total number of fluid elements for the velocity and equal to the total number of elements (including solid elements) for temperature. For the passive scalars it will depend on the specific choice, but typically scalars are solved on the temeprature mesh (solid+fluid).</p>
 <blockquote>
-<div><div class="align-center figure" id="id16">
+<div><div class="align-center figure" id="id15">
 <span id="fig-forder"></span><img alt="edge-numbering" src="_images/3dcube_2.png" />
-<p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">Face ordering for each element.</span></p>
+<p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Face ordering for each element.</span></p>
 </div>
 </div></blockquote>
 <p>Each BC letter condition is formed by three characters. Common BCs include:</p>
@@ -2066,8 +2065,8 @@ numbers represent vertices.</span></p>
 </ul>
 <p>Many of the BCs support either a constant specification or a user defined specification which may be an arbitrary function.   For example, a constant Dirichlet BC for velocity is specified by <code class="docutils literal"><span class="pre">V</span></code>, while a user defined BC is specified by <code class="docutils literal"><span class="pre">v</span></code>.   This upper/lower-case distinction is  used for all cases.   There are about 70 different types of boundary conditions in all, including free-surface, moving boundary, heat flux, convective cooling, etc. The above cases are just the most used types.</p>
 <blockquote>
-<div><span id="tab-bcs"></span><table border="1" class="docutils" id="id17">
-<caption><span class="caption-number">Table 11 </span><span class="caption-text">Formatting of boundary conditions input.</span><a class="headerlink" href="#id17" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-bcs"></span><table border="1" class="docutils" id="id16">
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">Formatting of boundary conditions input.</span><a class="headerlink" href="#id16" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="10%" />
@@ -2273,101 +2272,6 @@ dimensional, <span class="math">\(\mu / \rho\)</span> represents the kinematic v
 dimensions of <span class="math">\(length^{2}/time\)</span>.</p>
 </div>
 </div>
-<div class="section" id="data-layout">
-<h2>Data Layout<a class="headerlink" href="#data-layout" title="Permalink to this headline">¶</a></h2>
-<p>Nek5000 was designed with two principal performance criteria in mind,
-namely, <em>single-node</em> performance and <em>parallel</em> performance.</p>
-<p>A key precept in obtaining good single node performance was to use,
-wherever possible, unit-stride memory addressing, which is realized by
-using contiguously declared arrays and then accessing the data in
-the correct order.   Data locality is thus central to good serial
-performance.   To ensure that this performance is not compromised
-in parallel, the parallel message-passing data model is used, in which
-each processor has its own local (private) address space.  Parallel
-data, therefore, is laid out just as in the serial case, save that there
-are multiple copies of the arrays—one per processor, each containing
-different data.  Unlike the shared memory model, this distributed memory
-model makes data locality transparent and thus simplifies the task of
-analyzing and optimizing parallel performance.</p>
-<p>Some fundamentals of Nek5000’s internal data layout are given below.</p>
-<ol class="arabic">
-<li><p class="first">Data is laid out as  <span class="math">\(u_{ijk}^e = u(i,j,k,e)\)</span></p>
-<p><code class="docutils literal"><span class="pre">i=1,...,nx1</span></code>   (<code class="docutils literal"><span class="pre">nx1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
-<code class="docutils literal"><span class="pre">j=1,...,ny1</span></code>   (<code class="docutils literal"><span class="pre">ny1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
-<code class="docutils literal"><span class="pre">k=1,...,nz1</span></code>   (<code class="docutils literal"><span class="pre">nz1</span> <span class="pre">=</span> <span class="pre">lx1</span></code> or 1, according to ndim=3 or 2)</p>
-<p><code class="docutils literal"><span class="pre">e=1,...,nelv</span></code>, where <code class="docutils literal"><span class="pre">nelv</span></code> <span class="math">\(\leq\)</span> <code class="docutils literal"><span class="pre">lelv</span></code>, and <code class="docutils literal"><span class="pre">lelv</span></code> is the upper
-bound on number of elements, <em>per processor</em>.</p>
-</li>
-<li><p class="first">Fortran data is stored in column major order (opposite of C).</p>
-</li>
-<li><p class="first">All data arrays are thus contiguous, even when <span class="math">\({\tt nelv} &lt; {\tt lelv}\)</span>.</p>
-</li>
-<li><p class="first">Data accesses are thus primarily unit-stride (see chap.8 of DFM
-for importance of this point), and in particular, all data on
-a given processor can be accessed as, e.g.,</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>which is equivalent but superior (WHY?) to:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
-<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
-<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
-<span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>which is equivalent but vastly superior (WHY?) to:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
-<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
-<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
-<span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p class="first">All data arrays are stored according to the SPMD programming
-model, in which address spaces that are local to each processor
-are private — not accessible to other processors except through
-interprocessor data-transfer (i.e., message passing).  Thus</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>means different things on different processors and <code class="docutils literal"><span class="pre">nelv</span></code> may
-differ from one processor to the next.</p>
-</li>
-<li><p class="first">For the most part, low-level loops such as above are expressed in
-higher level routines only through subroutine calls, e.g.,:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>where <code class="docutils literal"><span class="pre">n:=nx1*ny1*nz1*nelv</span></code>.   Notable exceptions are in places where
-performance is critical, e.g., in the middle of certain iterative
-solvers.</p>
-</li>
-</ol>
-</div>
 </div>
 
 
@@ -2380,10 +2284,10 @@ solvers.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="geometry.html" class="btn btn-neutral float-right" title="Geometry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="geometry.html" class="btn btn-neutral float-right" title="Mesh Generation and Conversion" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="quickstart.html" class="btn btn-neutral" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="tutorials.html" class="btn btn-neutral" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
