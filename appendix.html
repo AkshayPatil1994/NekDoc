@@ -98,11 +98,18 @@
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Appendices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#legacy-geometry-and-parameters-file-rea">Legacy Geometry and Parameters File (.rea)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parameters-and-logical-switches">Parameters and logical switches</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#mesh-and-boundary-condition-info">Mesh and boundary condition info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#output-info">Output info</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#build-options">Build Options</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#parallelism-in-nek5000">Parallelism in Nek5000</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#data-layout">Data Layout</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-rea-file">List of Parameters in .rea File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#available-parameters">Available Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#available-logical-switches">Available Logical Switches</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#logical-switches">Logical switches</a></li>
@@ -192,12 +199,854 @@
             
   <div class="section" id="appendices">
 <h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="legacy-geometry-and-parameters-file-rea">
+<h2>Legacy Geometry and Parameters File (.rea)<a class="headerlink" href="#legacy-geometry-and-parameters-file-rea" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">.rea</span></code> file consists of several sections. The mesh specifications  with <strong>geometry</strong>, <strong>curvature</strong> and <strong>boundary conditions</strong> are in the second section.</p>
+<div class="section" id="parameters-and-logical-switches">
+<h3>Parameters and logical switches<a class="headerlink" href="#parameters-and-logical-switches" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><strong>parameters</strong></dt>
+<dd>These control the runtime parameters such as viscosity,
+conductivity, number of steps, timestep size, order of the timestepping,
+frequency of output, iteration tolerances, flow rate, filter strength,
+etc.   There are also a number of free parameters that the user can
+use as handles to be passed into the user defined routines in the <code class="docutils literal"><span class="pre">.usr</span></code> file.</dd>
+<dt><strong>passive scalar data</strong></dt>
+<dd><p class="first">This information can be specified also in the <code class="docutils literal"><span class="pre">uservp</span></code> routine in the <code class="docutils literal"><span class="pre">.usr</span></code>
+file. If specified in the <code class="docutils literal"><span class="pre">.rea</span></code> file then the coefficients for the conductivity
+term are listed in ascending order for passive scalars ranging <code class="docutils literal"><span class="pre">1..9</span></code>
+followed by the values for the <span class="math">\(\rho c_p\)</span> coefficients.</p>
+<div class="last highlight-none"><div class="highlight"><pre><span></span>4  Lines of passive scalar data follows 2 CONDUCT; 2 RHOCP
+   1.00000       1.00000       1.00000       1.00000       1.00000
+   1.00000       1.00000       1.00000       1.00000
+   1.00000       1.00000       1.00000       1.00000       1.00000
+   1.00000       1.00000       1.00000       1.00000
+</pre></div>
+</div>
+</dd>
+<dt><strong>logicals</strong></dt>
+<dd>These determine whether one is computing a steady or unsteady
+solution, whether advection is turned on, etc.</dd>
+</dl>
+<p>Next we have the logical switches as follow, a detailed explanation to be found in <a class="reference internal" href="#sec-switches"><span class="std std-ref">Logical switches</span></a></p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>         13  LOGICAL SWITCHES FOLLOW
+T     IFFLOW
+T     IFHEAT
+T     IFTRAN
+T T F F F F F F F F F IFNAV &amp; IFADVC (convection in P.S. fields)
+F F T T T T T T T T T T IFTMSH (IF mesh for this field is T mesh)
+F     IFAXIS
+F     IFSTRS
+F     IFSPLIT
+F     IFMGRID
+F     IFMODEL
+F     IFKEPS
+F     IFMVBD
+F     IFCHAR
+</pre></div>
+</div>
+</div>
+<div class="section" id="mesh-and-boundary-condition-info">
+<h3>Mesh and boundary condition info<a class="headerlink" href="#mesh-and-boundary-condition-info" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><strong>geometry</strong></dt>
+<dd><p class="first">The geometry is specified in an arcane format specifying
+the <span class="math">\(xyz\)</span> locations of each of the eight points for each element,
+or the <span class="math">\(xy\)</span> locations of each of the four points for each element in 2D.
+A line of the following type may be encountered at the beginning
+of the mesh section of the <code class="docutils literal"><span class="pre">.rea</span></code> file:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>3.33333       3.33333     -0.833333      -1.16667     XFAC,YFAC,XZERO,YZERO
+</pre></div>
+</div>
+<p>This part is to be read by Prenek and provides the origin of the system of
+coordinates <code class="docutils literal"><span class="pre">XZERO;YZERO</span></code> as well as the size of the cartesian units
+<code class="docutils literal"><span class="pre">XFAC;YFAC</span></code>. This one line has no impact on the mesh as being read in Nek5000.</p>
+<p>The header of the mesh data may have the following representation:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>**MESH DATA** 6 lines are X,Y,Z;X,Y,Z. Columns corners 1-4;5-8
+     226  3         192           NEL,NDIM,NELV
+</pre></div>
+</div>
+<p>The header states first how many elements are available in total (226), what
+dimension is the the problem (here three dimensional), and how many elements
+are in the fluid mesh (192).</p>
+<blockquote>
+<div><span id="tab-element"></span><table border="1" class="docutils" id="id2">
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="31%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head" colspan="5"><code class="docutils literal"><span class="pre">ELEMENT</span> <span class="pre">1</span> <span class="pre">[</span> <span class="pre">1A]</span> <span class="pre">GROUP</span> <span class="pre">0</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td colspan="5"><code class="docutils literal"><span class="pre">Face</span> <span class="pre">{1,2,3,4}</span></code></td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(x_{1,\ldots,4}=\)</span></td>
+<td>0.000000E+00</td>
+<td>0.171820E+00</td>
+<td>0.146403E+00</td>
+<td>0.000000E+00</td>
+</tr>
+<tr class="row-even"><td><span class="math">\(y_{1,\ldots,4}=\)</span></td>
+<td>0.190000E+00</td>
+<td>0.168202E+00</td>
+<td>0.343640E+00</td>
+<td>0.380000E+00</td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(z_{1,\ldots,4}=\)</span></td>
+<td>0.000000E+00</td>
+<td>0.000000E+00</td>
+<td>0.000000E+00</td>
+<td>0.000000E+00</td>
+</tr>
+<tr class="row-even"><td colspan="5"><code class="docutils literal"><span class="pre">Face</span> <span class="pre">{5,6,7,8}</span></code></td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(x_{5,\ldots,8}=\)</span></td>
+<td>0.000000E+00</td>
+<td>0.171820E+00</td>
+<td>0.146403E+00</td>
+<td>0.000000E+00</td>
+</tr>
+<tr class="row-even"><td><span class="math">\(y_{5,\ldots,8}=\)</span></td>
+<td>0.190000E+00</td>
+<td>0.168202E+00</td>
+<td>0.343640E+00</td>
+<td>0.380000E+00</td>
+</tr>
+<tr class="row-odd"><td><span class="math">\(z_{5,\ldots,8}=\)</span></td>
+<td>0.250000E+00</td>
+<td>0.250000E+00</td>
+<td>0.250000E+00</td>
+<td>0.250000E+00</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>Following the header, all elements are listed. The fluid elements are listed
+first, followed by all solid elements if present. In this case there are (34)
+solid elements.</p>
+<p>The data following the header is formatted as shown in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 15</span></a>. This provides all the coordinates of an element for top and bottom faces. The numbering of the vertices is shown in Fig. <a class="reference internal" href="#fig-elorder"><span class="std std-numref">Fig. 10</span></a>. The header for each element as in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 15</span></a>, i.e. <code class="docutils literal"><span class="pre">[1A]</span> <span class="pre">GROUP</span></code> is reminiscent of older Nek5000 format and does not impact the mesh generation at this stage. (We are inquiring whether other groups still use it.)</p>
+<blockquote class="last">
+<div><div class="align-center figure" id="id3">
+<span id="fig-elorder"></span><img alt="rea-geometry" src="_images/3dcube_1.png" />
+<p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file (sketch of one element ordering - Preprocessor
+corner notation)</span></p>
+</div>
+</div></blockquote>
+</dd>
+<dt><strong>curvature</strong></dt>
+<dd><p class="first">This section describes the curvature of the elements. It is expressed as deformation of the linear elements.
+Therefore, if no elements are curved (if only linear elements are present) the section remains empty.</p>
+<p>The section header may look like this:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>640 Curved sides follow IEDGE,IEL,CURVE(I),I=1,5, CCURVE
+</pre></div>
+</div>
+<p>Curvature information is provided by edge and element. Therefore up to 12 curvature entries can be present for each element.
+Only non-trivial curvature data needs to be provided, i.e., edges that correspond to linear elements, since they have no curvature, will have no entry.
+The formatting for the curvature data is provided in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 16</span></a>.</p>
+<blockquote>
+<div><span id="tab-midside"></span><table border="1" class="docutils" id="id4">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">Curvature information specification</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="11%" />
+<col width="9%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="14%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal"><span class="pre">IEDGE</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">IEL</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CURVE(1)</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CURVE(2)</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CURVE(3)</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CURVE(4)</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CURVE(5)</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CCURVE</span></code></th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>9</td>
+<td>2</td>
+<td>0.125713</td>
+<td>-0.992067</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>m</td>
+</tr>
+<tr class="row-odd"><td>10</td>
+<td>38</td>
+<td>0.125713</td>
+<td>-0.992067</td>
+<td>3.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>m</td>
+</tr>
+<tr class="row-even"><td>1</td>
+<td>40</td>
+<td>1.00000</td>
+<td>0.000000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>There are several types of possible curvature information represented by <code class="docutils literal"><span class="pre">CCURVE</span></code>. This include:</p>
+<ul class="simple">
+<li>‘C’ stands for circle and is given by the radius of the circle,  in <code class="docutils literal"><span class="pre">CURVE(1)</span></code>, all other compoentns of the <code class="docutils literal"><span class="pre">CURVE</span></code> array are not used but need to be present.</li>
+<li>‘s’ stands for sphere and is given by the radius and the center of the sphere, thus filling the first 4 components of the <code class="docutils literal"><span class="pre">CURVE</span></code> array. The fifth component needs to be present but is not utilized.</li>
+<li>‘m’ is given by the coordinates of the midside-node, thus using the first 3 components of the <code class="docutils literal"><span class="pre">CURVE</span></code> array, and leads to a second order reconstruction of the face.  The fourth and fifth components need to be present but are not utilized.</li>
+</ul>
+<p>Both ‘C’ and ‘s’ types allow for a surface of as high order as the polynomial used in the spectral method, since they have an underlying analytical description, any circle arc can be fully determined by the radius and end points. However for the ‘m’ curved element descriptor the surface can be reconstructed only up to second order. This can be later updated to match the high-order polynomial after the GLL points have been distributed across the boundaries. This is the only general mean to describe curvature currrently in Nek5000 and corresponds to a HEX20 representation.</p>
+<blockquote>
+<div><div class="align-center figure" id="id5">
+<span id="fig-edges"></span><img alt="edge-numbering" src="_images/3dcube.png" />
+<p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Edge numbering in <code class="docutils literal"><span class="pre">.rea</span></code> file, the edge number is in between parenthesis. The other
+numbers represent vertices.</span></p>
+</div>
+</div></blockquote>
+<p>For better understanding let us focus on what the data in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 16</span></a> signifies. Edge 9 of element 2 has a edge  midpoint at (0.125713, -0.992067, 0.00000)  and so on. For edge numbering the reader is advised to check Fig. <a class="reference internal" href="#fig-edges"><span class="std std-numref">Fig. 11</span></a>, which illustrates the relationship between vertex numbering and edge numbering.</p>
+<p>To maninpulate the geometry in Nek5000 at runtime, it is possible to use  <code class="docutils literal"><span class="pre">usrdat2</span></code>. In this subroutine the user can deform the geometry to match the intended surface, followed by a call to the subroutine <code class="docutils literal"><span class="pre">fixgeom</span></code> which can realign the point distribution in the interior of the element.</p>
+<blockquote>
+<div><div class="align-center figure" id="id6">
+<span id="fig-ex1"></span><img alt="edge-numbering" src="_images/base1.png" />
+<p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Example mesh - without curvature. Square dots represent example vertices.</span></p>
+</div>
+</div></blockquote>
+<p>We also note, that, unlike the geometry data, each curvature entry (as shown in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 16</span></a>) is formatted and the format is <strong>dependent on the total number of elements</strong>. Three cases exist as shown in the code below:</p>
+<blockquote>
+<div><div class="highlight-fortranfixed"><div class="highlight"><pre><span></span><span class="nl">     </span>           <span class="k">if</span> <span class="p">(</span><span class="n">nelgt</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="mi">1000</span><span class="p">)</span> <span class="k">then</span>
+<span class="nl">     </span>              <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(i3,i3,5g14.6,1x,a1)&#39;</span><span class="p">)</span> <span class="n">i</span><span class="p">,</span><span class="n">eg</span><span class="p">,</span>
+<span class="nl">$    </span>              <span class="p">(</span><span class="n">vcurve</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">cc</span>
+<span class="nl">     </span>           <span class="k">else if</span> <span class="p">(</span><span class="n">nelgt</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="mi">1000000</span><span class="p">)</span> <span class="k">then</span>
+<span class="nl">     </span>              <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(i2,i6,5g14.6,1x,a1)&#39;</span><span class="p">)</span> <span class="n">i</span><span class="p">,</span><span class="n">eg</span><span class="p">,</span>
+<span class="nl">$    </span>              <span class="p">(</span><span class="n">vcurve</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">cc</span>
+<span class="nl">     </span>           <span class="k">else</span>
+<span class="nl">     </span>              <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(i2,i12,5g14.6,1x,a1)&#39;</span><span class="p">)</span> <span class="n">i</span><span class="p">,</span><span class="n">eg</span><span class="p">,</span>
+<span class="nl">$    </span>              <span class="p">(</span><span class="n">vcurve</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="n">cc</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The fortran format is as follows:</p>
+<ul class="simple">
+<li>For a total number of elements below 1,000 the format is <code class="docutils literal"><span class="pre">(i3,i3,5g14.6,1x,a1)</span></code>.</li>
+<li>For a total number of elements 1,000 - 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i6,5g14.6,1x,a1)</span></code>.</li>
+<li>For a total number of elements above 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i12,5g14.6,1x,a1)</span></code>.</li>
+</ul>
+<div class="align-center figure" id="id7">
+<span id="fig-ex2"></span><img alt="edge-numbering" src="_images/modified1.png" />
+<p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Example mesh - with curvature. Circular dots represent example midsize points.</span></p>
+</div>
+<p>To further illustrate the usage of curvature data, let us examine an example of <code class="docutils literal"><span class="pre">.rea</span></code> file with and wiuthout curvature information and the corresponding mesh representation. <a class="reference internal" href="#fig-ex1"><span class="std std-numref">Fig. 12</span></a> represents a 12 element box mesh (2x2x3, with periodic conditions in <span class="math">\(z\)</span>) without curvature, while <a class="reference internal" href="#fig-ex2"><span class="std std-numref">Fig. 13</span></a> presents the same mesh with a sinusoidal deformation in direction <span class="math">\(y\)</span>. Only two edges per element are curved.</p>
+<p>The input for the mesh without curvature is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>          12  3          12 NEL,NDIM,NELV
+      ELEMENT             1 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+   0.000000       0.000000       0.000000       0.000000    
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             2 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+   0.000000       0.000000       0.000000       0.000000    
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             3 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+   0.000000       0.000000       0.000000       0.000000    
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             4 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+   0.000000       0.000000       0.000000       0.000000    
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             5 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             6 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             7 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             8 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             9 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            10 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            11 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            12 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+  ***** CURVED SIDE DATA *****
+         0 Curved sides follow IEDGE,IEL,CURVE(I),I=1,5, CCURVE
+  ***** BOUNDARY CONDITIONS *****
+  *****    FLUID   BOUNDARY CONDITIONS *****
+ W    1  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    1  2   2.00000       4.00000       0.00000       0.00000       0.00000    
+ E    1  3   3.00000       1.00000       0.00000       0.00000       0.00000    
+ v    1  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ P    1  5   9.00000       6.00000       0.00000       0.00000       0.00000    
+ E    1  6   5.00000       5.00000       0.00000       0.00000       0.00000    
+ W    2  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O    2  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    2  3   4.00000       1.00000       0.00000       0.00000       0.00000    
+ E    2  4   1.00000       2.00000       0.00000       0.00000       0.00000    
+ P    2  5   10.0000       6.00000       0.00000       0.00000       0.00000    
+ E    2  6   6.00000       5.00000       0.00000       0.00000       0.00000    
+ E    3  1   1.00000       3.00000       0.00000       0.00000       0.00000    
+ E    3  2   4.00000       4.00000       0.00000       0.00000       0.00000    
+ W    3  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v    3  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ P    3  5   11.0000       6.00000       0.00000       0.00000       0.00000    
+ E    3  6   7.00000       5.00000       0.00000       0.00000       0.00000    
+ E    4  1   2.00000       3.00000       0.00000       0.00000       0.00000    
+ O    4  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W    4  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    4  4   3.00000       2.00000       0.00000       0.00000       0.00000    
+ P    4  5   12.0000       6.00000       0.00000       0.00000       0.00000    
+ E    4  6   8.00000       5.00000       0.00000       0.00000       0.00000    
+ W    5  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    5  2   6.00000       4.00000       0.00000       0.00000       0.00000    
+ E    5  3   7.00000       1.00000       0.00000       0.00000       0.00000    
+ v    5  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    5  5   1.00000       6.00000       0.00000       0.00000       0.00000    
+ E    5  6   9.00000       5.00000       0.00000       0.00000       0.00000    
+ W    6  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O    6  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    6  3   8.00000       1.00000       0.00000       0.00000       0.00000    
+ E    6  4   5.00000       2.00000       0.00000       0.00000       0.00000    
+ E    6  5   2.00000       6.00000       0.00000       0.00000       0.00000    
+ E    6  6   10.0000       5.00000       0.00000       0.00000       0.00000    
+ E    7  1   5.00000       3.00000       0.00000       0.00000       0.00000    
+ E    7  2   8.00000       4.00000       0.00000       0.00000       0.00000    
+ W    7  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v    7  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    7  5   3.00000       6.00000       0.00000       0.00000       0.00000    
+ E    7  6   11.0000       5.00000       0.00000       0.00000       0.00000    
+ E    8  1   6.00000       3.00000       0.00000       0.00000       0.00000    
+ O    8  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W    8  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    8  4   7.00000       2.00000       0.00000       0.00000       0.00000    
+ E    8  5   4.00000       6.00000       0.00000       0.00000       0.00000    
+ E    8  6   12.0000       5.00000       0.00000       0.00000       0.00000    
+ W    9  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    9  2   10.0000       4.00000       0.00000       0.00000       0.00000    
+ E    9  3   11.0000       1.00000       0.00000       0.00000       0.00000    
+ v    9  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    9  5   5.00000       6.00000       0.00000       0.00000       0.00000    
+ P    9  6   1.00000       5.00000       0.00000       0.00000       0.00000    
+ W   10  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O   10  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   10  3   12.0000       1.00000       0.00000       0.00000       0.00000    
+ E   10  4   9.00000       2.00000       0.00000       0.00000       0.00000    
+ E   10  5   6.00000       6.00000       0.00000       0.00000       0.00000    
+ P   10  6   2.00000       5.00000       0.00000       0.00000       0.00000    
+ E   11  1   9.00000       3.00000       0.00000       0.00000       0.00000    
+ E   11  2   12.0000       4.00000       0.00000       0.00000       0.00000    
+ W   11  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v   11  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   11  5   7.00000       6.00000       0.00000       0.00000       0.00000    
+ P   11  6   3.00000       5.00000       0.00000       0.00000       0.00000    
+ E   12  1   10.0000       3.00000       0.00000       0.00000       0.00000    
+ O   12  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W   12  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   12  4   11.0000       2.00000       0.00000       0.00000       0.00000    
+ E   12  5   8.00000       6.00000       0.00000       0.00000       0.00000    
+ P   12  6   4.00000       5.00000       0.00000       0.00000       0.00000   
+</pre></div>
+</div>
+<p>The input for the mesh with curvature is:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>          12  3          12 NEL,NDIM,NELV
+      ELEMENT             1 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+   0.000000       0.000000       0.000000       0.000000    
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             2 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+   0.000000       0.000000       0.000000       0.000000    
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             3 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+   0.000000       0.000000       0.000000       0.000000    
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             4 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+   0.000000       0.000000       0.000000       0.000000    
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+      ELEMENT             5 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             6 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             7 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             8 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.5000000E-01  0.5000000E-01  0.5000000E-01  0.5000000E-01
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+      ELEMENT             9 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   0.000000       1.000000       1.000000       0.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            10 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   1.000000       2.000000       2.000000       1.000000    
+ -0.5000000     -0.5000000       0.000000       0.000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            11 [    1a]    GROUP     0
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   0.000000       1.000000       1.000000       0.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+      ELEMENT            12 [    1a]    GROUP     0
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1000000      0.1000000      0.1000000      0.1000000    
+   1.000000       2.000000       2.000000       1.000000    
+   0.000000       0.000000      0.5000000      0.5000000    
+  0.1500000      0.1500000      0.1500000      0.1500000    
+  ***** CURVED SIDE DATA *****
+        24 Curved sides follow IEDGE,IEL,CURVE(I),I=1,5, CCURVE
+  1  1  0.500000     -0.550000       0.00000       0.00000       0.00000     m
+  5  1  0.500000     -0.550000      0.500000E-01   0.00000       0.00000     m
+  1  2   1.50000     -0.450000       0.00000       0.00000       0.00000     m
+  5  2   1.50000     -0.450000      0.500000E-01   0.00000       0.00000     m
+  3  3  0.500000      0.550000       0.00000       0.00000       0.00000     m
+  7  3  0.500000      0.550000      0.500000E-01   0.00000       0.00000     m
+  3  4   1.50000      0.450000       0.00000       0.00000       0.00000     m
+  7  4   1.50000      0.450000      0.500000E-01   0.00000       0.00000     m
+  1  5  0.500000     -0.550000      0.500000E-01   0.00000       0.00000     m
+  5  5  0.500000     -0.550000      0.100000       0.00000       0.00000     m
+  1  6   1.50000     -0.450000      0.500000E-01   0.00000       0.00000     m
+  5  6   1.50000     -0.450000      0.100000       0.00000       0.00000     m
+  3  7  0.500000      0.550000      0.500000E-01   0.00000       0.00000     m
+  7  7  0.500000      0.550000      0.100000       0.00000       0.00000     m
+  3  8   1.50000      0.450000      0.500000E-01   0.00000       0.00000     m
+  7  8   1.50000      0.450000      0.100000       0.00000       0.00000     m
+  1  9  0.500000     -0.550000      0.100000       0.00000       0.00000     m
+  5  9  0.500000     -0.550000      0.150000       0.00000       0.00000     m
+  1 10   1.50000     -0.450000      0.100000       0.00000       0.00000     m
+  5 10   1.50000     -0.450000      0.150000       0.00000       0.00000     m
+  3 11  0.500000      0.550000      0.100000       0.00000       0.00000     m
+  7 11  0.500000      0.550000      0.150000       0.00000       0.00000     m
+  3 12   1.50000      0.450000      0.100000       0.00000       0.00000     m
+  7 12   1.50000      0.450000      0.150000       0.00000       0.00000     m
+  ***** BOUNDARY CONDITIONS *****
+  *****    FLUID   BOUNDARY CONDITIONS *****
+ W    1  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    1  2   2.00000       4.00000       0.00000       0.00000       0.00000    
+ E    1  3   3.00000       1.00000       0.00000       0.00000       0.00000    
+ v    1  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ P    1  5   9.00000       6.00000       0.00000       0.00000       0.00000    
+ E    1  6   5.00000       5.00000       0.00000       0.00000       0.00000    
+ W    2  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O    2  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    2  3   4.00000       1.00000       0.00000       0.00000       0.00000    
+ E    2  4   1.00000       2.00000       0.00000       0.00000       0.00000    
+ P    2  5   10.0000       6.00000       0.00000       0.00000       0.00000    
+ E    2  6   6.00000       5.00000       0.00000       0.00000       0.00000    
+ E    3  1   1.00000       3.00000       0.00000       0.00000       0.00000    
+ E    3  2   4.00000       4.00000       0.00000       0.00000       0.00000    
+ W    3  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v    3  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ P    3  5   11.0000       6.00000       0.00000       0.00000       0.00000    
+ E    3  6   7.00000       5.00000       0.00000       0.00000       0.00000    
+ E    4  1   2.00000       3.00000       0.00000       0.00000       0.00000    
+ O    4  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W    4  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    4  4   3.00000       2.00000       0.00000       0.00000       0.00000    
+ P    4  5   12.0000       6.00000       0.00000       0.00000       0.00000    
+ E    4  6   8.00000       5.00000       0.00000       0.00000       0.00000    
+ W    5  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    5  2   6.00000       4.00000       0.00000       0.00000       0.00000    
+ E    5  3   7.00000       1.00000       0.00000       0.00000       0.00000    
+ v    5  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    5  5   1.00000       6.00000       0.00000       0.00000       0.00000    
+ E    5  6   9.00000       5.00000       0.00000       0.00000       0.00000    
+ W    6  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O    6  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    6  3   8.00000       1.00000       0.00000       0.00000       0.00000    
+ E    6  4   5.00000       2.00000       0.00000       0.00000       0.00000    
+ E    6  5   2.00000       6.00000       0.00000       0.00000       0.00000    
+ E    6  6   10.0000       5.00000       0.00000       0.00000       0.00000    
+ E    7  1   5.00000       3.00000       0.00000       0.00000       0.00000    
+ E    7  2   8.00000       4.00000       0.00000       0.00000       0.00000    
+ W    7  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v    7  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    7  5   3.00000       6.00000       0.00000       0.00000       0.00000    
+ E    7  6   11.0000       5.00000       0.00000       0.00000       0.00000    
+ E    8  1   6.00000       3.00000       0.00000       0.00000       0.00000    
+ O    8  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W    8  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    8  4   7.00000       2.00000       0.00000       0.00000       0.00000    
+ E    8  5   4.00000       6.00000       0.00000       0.00000       0.00000    
+ E    8  6   12.0000       5.00000       0.00000       0.00000       0.00000    
+ W    9  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    9  2   10.0000       4.00000       0.00000       0.00000       0.00000    
+ E    9  3   11.0000       1.00000       0.00000       0.00000       0.00000    
+ v    9  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E    9  5   5.00000       6.00000       0.00000       0.00000       0.00000    
+ P    9  6   1.00000       5.00000       0.00000       0.00000       0.00000    
+ W   10  1   0.00000       0.00000       0.00000       0.00000       0.00000    
+ O   10  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   10  3   12.0000       1.00000       0.00000       0.00000       0.00000    
+ E   10  4   9.00000       2.00000       0.00000       0.00000       0.00000    
+ E   10  5   6.00000       6.00000       0.00000       0.00000       0.00000    
+ P   10  6   2.00000       5.00000       0.00000       0.00000       0.00000    
+ E   11  1   9.00000       3.00000       0.00000       0.00000       0.00000    
+ E   11  2   12.0000       4.00000       0.00000       0.00000       0.00000    
+ W   11  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ v   11  4   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   11  5   7.00000       6.00000       0.00000       0.00000       0.00000    
+ P   11  6   3.00000       5.00000       0.00000       0.00000       0.00000    
+ E   12  1   10.0000       3.00000       0.00000       0.00000       0.00000    
+ O   12  2   0.00000       0.00000       0.00000       0.00000       0.00000    
+ W   12  3   0.00000       0.00000       0.00000       0.00000       0.00000    
+ E   12  4   11.0000       2.00000       0.00000       0.00000       0.00000    
+ E   12  5   8.00000       6.00000       0.00000       0.00000       0.00000    
+ P   12  6   4.00000       5.00000       0.00000       0.00000       0.00000   
+ 
+</pre></div>
+</div>
+<p class="last">Note that element and boundary condition information are identical between the two cases.</p>
+</dd>
+<dt><strong>boundary conditions</strong></dt>
+<dd><p class="first">Boundary conditions (BCs) are specified for each field in sequence: velocity, temperature and passive scalars. The section header for each field will be as follows (example for the velocity):</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>***** FLUID   BOUNDARY CONDITIONS *****
+</pre></div>
+</div>
+<p>and the data is stored as illustarted in <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 17</span></a>. For each field boundary conditions are listed for each face of each element.</p>
+<p>Boundary conditions are given in order per each element, see <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 17</span></a> column <code class="docutils literal"><span class="pre">IEL</span></code>, and faces listed in ascending order 1-6 in column <code class="docutils literal"><span class="pre">IFACE</span></code>. Note that the header in <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 17</span></a> does not appear in the actual <code class="docutils literal"><span class="pre">.rea</span></code>.</p>
+<p>The ordering for faces each element is shown in <a class="reference internal" href="#fig-forder"><span class="std std-numref">Fig. 14</span></a>. A total equivalent to <span class="math">\(6N_{field}\)</span> boundary conditions are listed for each field, where <span class="math">\(N_{field}\)</span> is the number of elements for the specific field. <span class="math">\(N_{field}\)</span> is equal to the total number of fluid elements for the velocity and equal to the total number of elements (including solid elements) for temperature. For the passive scalars it will depend on the specific choice, but typically scalars are solved on the temeprature mesh (solid+fluid).</p>
+<blockquote>
+<div><div class="align-center figure" id="id8">
+<span id="fig-forder"></span><img alt="edge-numbering" src="_images/3dcube_2.png" />
+<p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Face ordering for each element.</span></p>
+</div>
+</div></blockquote>
+<p>Each BC letter condition is formed by three characters. Common BCs include:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">E</span></code> - internal boundary condition. No additional information needs to be provided.</li>
+<li><code class="docutils literal"><span class="pre">SYM</span></code> - symmetry boundary condition. No additional information needs to be provided.</li>
+<li><code class="docutils literal"><span class="pre">P</span></code> - periodic boundary conditions,  which indicates that an element face is connected to another element to establish a periodic BC. The connecting element and face need be  to specified in <code class="docutils literal"><span class="pre">CONN-IEL</span></code> and <code class="docutils literal"><span class="pre">CONN-IFACE</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">v</span></code> - imposed velocity boundary conditions (inlet). The value is specified in the user subroutines. No additional information needs to be provided in the <code class="docutils literal"><span class="pre">.rea</span></code> file.</li>
+<li><code class="docutils literal"><span class="pre">W</span></code> - wall boundary condition (no-slip) for the velocity. No additional information needs to be provided.</li>
+<li><code class="docutils literal"><span class="pre">O</span></code> - outlet boundary condition (velocity). No additional information needs to be provided.</li>
+<li><code class="docutils literal"><span class="pre">t</span></code> - imposed temperature  boundary conditions (inlet). The value is specified in the user subroutines. No additional information needs to be provided in the <code class="docutils literal"><span class="pre">.rea</span></code> file.</li>
+<li><code class="docutils literal"><span class="pre">f</span></code> - imposed heat flux  boundary conditions (temperature). The value is specified in the user subroutines. No additional information needs to be provided in the <code class="docutils literal"><span class="pre">.rea</span></code> file.</li>
+<li><code class="docutils literal"><span class="pre">I</span></code> - adiabatic boundary conditions (temeperature). No additional information needs to be provided.</li>
+</ul>
+<p>Many of the BCs support either a constant specification or a user defined specification which may be an arbitrary function.   For example, a constant Dirichlet BC for velocity is specified by <code class="docutils literal"><span class="pre">V</span></code>, while a user defined BC is specified by <code class="docutils literal"><span class="pre">v</span></code>.   This upper/lower-case distinction is  used for all cases.   There are about 70 different types of boundary conditions in all, including free-surface, moving boundary, heat flux, convective cooling, etc. The above cases are just the most used types.</p>
+<blockquote>
+<div><span id="tab-bcs"></span><table border="1" class="docutils" id="id9">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">Formatting of boundary conditions input.</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="10%" />
+<col width="10%" />
+<col width="13%" />
+<col width="16%" />
+<col width="19%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><code class="docutils literal"><span class="pre">CBC</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">IEL</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">IFACE</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CONN-IEL</span></code></th>
+<th class="head"><code class="docutils literal"><span class="pre">CONN-IFACE</span></code></th>
+<th class="head">&#160;</th>
+<th class="head">&#160;</th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>E</td>
+<td>1</td>
+<td>1</td>
+<td>4.00000</td>
+<td>3.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+</tr>
+<tr class="row-even"><td>W</td>
+<td>5</td>
+<td>3</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+<td><code class="docutils literal"><span class="pre">..</span></code></td>
+</tr>
+<tr class="row-even"><td>P</td>
+<td>23</td>
+<td>5</td>
+<td>149.000</td>
+<td>6.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+<td>0.00000</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>As in the case of the curvature entries, the boundary conditions entries are formatted and <strong>the format is dependent on the total number of elements</strong>.
+The code below shows an example of writing statement for boundary conditions:</p>
+<blockquote>
+<div><div class="highlight-fortranfixed"><div class="highlight"><pre><span></span><span class="nl">     </span>        <span class="k">if</span> <span class="p">(</span><span class="n">nlg</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="mi">1000</span><span class="p">)</span> <span class="k">then</span>
+<span class="nl">     </span>           <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(a1,a3,2i3,5g14.6)&#39;</span><span class="p">)</span>
+<span class="nl">$    </span>           <span class="n">chtemp</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">eg</span><span class="p">,</span><span class="n">i</span><span class="p">,(</span><span class="n">vbc</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">ii</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nl">     </span>        <span class="k">else if</span> <span class="p">(</span><span class="n">nlg</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="mi">100000</span><span class="p">)</span> <span class="k">then</span>
+<span class="nl">     </span>           <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(a1,a3,i5,i1,5g14.6)&#39;</span><span class="p">)</span>
+<span class="nl">$    </span>           <span class="n">chtemp</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">eg</span><span class="p">,</span><span class="n">i</span><span class="p">,(</span><span class="n">vbc</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">ii</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nl">     </span>        <span class="k">else if</span> <span class="p">(</span><span class="n">nlg</span><span class="p">.</span><span class="n">lt</span><span class="p">.</span><span class="mi">1000000</span><span class="p">)</span> <span class="k">then</span>
+<span class="nl">     </span>           <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(a1,a3,i6,5g14.6)&#39;</span><span class="p">)</span>
+<span class="nl">$    </span>           <span class="n">chtemp</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">eg</span><span class="p">,(</span><span class="n">vbc</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">ii</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nl">     </span>        <span class="k">else</span>
+<span class="nl">     </span>           <span class="k">write</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;(a1,a3,i12,5g18.11)&#39;</span><span class="p">)</span>
+<span class="nl">$    </span>           <span class="n">chtemp</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="n">eg</span><span class="p">,(</span><span class="n">vbc</span><span class="p">(</span><span class="n">ii</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">kb</span><span class="p">),</span><span class="n">ii</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nl">     </span>        <span class="k">end if</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>The fortran format is as follows:</p>
+<ul class="simple">
+<li>For a total number of elements below 1,000 the format is <code class="docutils literal"><span class="pre">(a1,a3,2i3,5g14.6)</span></code>.</li>
+<li>For a total number of elements 1,000 - 99,999 the format is <code class="docutils literal"><span class="pre">(a1,a3,i5,i1,5g14.6)</span></code>.</li>
+<li>For a total number of elements 100,000 - 999,999 the format is <code class="docutils literal"><span class="pre">(a1,a3,i6,5g14.6)</span></code>.</li>
+<li>For a total number of elements above 999,999 the format is <code class="docutils literal"><span class="pre">(a1,a3,i12,5g18.11)</span></code>.</li>
+</ul>
+<p>We note that:</p>
+<ul class="last simple">
+<li>The first item in the format for each of the four cases is a string containing a space.</li>
+<li>The second item in the format for each of the four cases is a string specifying the boundary condition type.</li>
+<li>In cases where the total number of elements is bigger than 99,999, the <code class="docutils literal"><span class="pre">IFACE</span></code> item is omitted. Given that Nek5000 already knows the ordering of the actual faces within each element in column <code class="docutils literal"><span class="pre">IFACE</span></code> is in fact not needed.</li>
+<li>The number of significant digits increases in the fourth case. This is needed for periodic boundary conditions.</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="output-info">
+<h3>Output info<a class="headerlink" href="#output-info" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt><strong>restart conditions</strong></dt>
+<dd>Here, one can specify a file to use as an initial condition.
+The initial condition need not be of the same polynomial order
+as the current simulation.   One can also specify that, for example,
+the velocity is to come from one file and the temperature from another.
+The initial time is taken from the last specified restart file, but
+this can be overridden.</dd>
+<dt><strong>history points</strong></dt>
+<dd><p class="first">The following section defines history points in the <code class="docutils literal"><span class="pre">.rea</span></code> file, see example <code class="docutils literal"><span class="pre">vortex/r1854a.rea</span></code>, or <code class="docutils literal"><span class="pre">shear4/shear4.rea</span></code>:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>0 PACKETS OF DATA FOLLOW
+***** HISTORY AND INTEGRAL DATA *****
+    56 POINTS. H code, I,J,H,IEL
+UVWP    H     31     31   1   6
+UVWP    H     31     31   31  6
+UVWP    H     31     31   31  54
+ &quot;      &quot;      &quot;      &quot;    &quot;   &quot;
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">&quot;56</span> <span class="pre">POINTS&quot;</span></code> line needs to be followed by 56 lines of the type shown. However, in each of the following lines, which have the <code class="docutils literal"><span class="pre">UVWP</span></code> etc., location is CRUCIAL, it
+must be layed out exactly as indicated above (these lines contain character strings, they use formatted reads), it is therefore advisable to refer to the examples <code class="docutils literal"><span class="pre">vortex,</span> <span class="pre">shear4</span></code>.  If you want to pick points close to the center of element 1 and are running with <code class="docutils literal"><span class="pre">lx1=10</span></code>, say, you might choose <code class="docutils literal"><span class="pre">UVWP</span> <span class="pre">H</span> <span class="pre">5</span> <span class="pre">5</span> <span class="pre">5</span> <span class="pre">1</span></code>. (the indicated point would really be at the middle of the element only if <code class="docutils literal"><span class="pre">lx1=9</span></code>)</p>
+<p class="last">The <code class="docutils literal"><span class="pre">UVWP</span></code> tells the code to write the 3 velocity components and pressure to the <code class="docutils literal"><span class="pre">.sch</span></code> file at
+each timestep (or, more precisely, whenever <code class="docutils literal"><span class="pre">mod(istep,iohis)=0</span></code>, where <code class="docutils literal"><span class="pre">iohis=param(52))</span></code>.
+Note that if you have more than one history point then they are written sequentially at each
+timestep. Thus 10 steps in the first example with <code class="docutils literal"><span class="pre">param(52)=2</span></code> would write <code class="docutils literal"><span class="pre">(10/2)*56</span> <span class="pre">=</span> <span class="pre">280</span></code>
+lines to the <code class="docutils literal"><span class="pre">.sch</span></code> file, with 4 entries per line. The “H” indicates that the entry corresponds to a requested history point. A note of caution: if the <code class="docutils literal"><span class="pre">ijk</span></code> values (5 5 5 in the preceding example line) exceed <code class="docutils literal"><span class="pre">lx1,ly1,lz1</span></code> of your SIZE file, then they are truncated to that value. For example, if <code class="docutils literal"><span class="pre">lx1=10</span></code> for the data at the top (31 31 31) then the code will use <code class="docutils literal"><span class="pre">ijk</span></code> of (10 10 10), plus the given element number, in identifying the history point. It is often useful to set <code class="docutils literal"><span class="pre">ijk</span></code> to large values (i.e., &gt; <code class="docutils literal"><span class="pre">lx1</span></code>) because the endpoints of the spectral element mesh are invariant when <code class="docutils literal"><span class="pre">lx1</span></code> is changed.</p>
+</dd>
+<dt><strong>output specifications</strong></dt>
+<dd>Outputs are discussed in a separate section of the manual, available online.</dd>
+</dl>
+<p>It is important to note that Nek5000 currently supports two input file
+formats, ASCII and binary.   The <code class="docutils literal"><span class="pre">.rea</span></code> file format
+described above is ASCII.  For the binary format, all sections
+of the <code class="docutils literal"><span class="pre">.rea</span></code> file having storage requirements that scale with
+number of elements (i.e., geometry, curvature, and boundary
+conditions) are moved to a second, <code class="docutils literal"><span class="pre">.re2</span></code>, file and
+written in binary.   The remaining sections continue to
+reside in the <code class="docutils literal"><span class="pre">.rea</span></code> file.   The distinction between
+the ASCII and binary formats is indicated in the <code class="docutils literal"><span class="pre">.rea</span></code>
+file by having a negative number of elements.
+There are converters, <code class="docutils literal"><span class="pre">reatore2</span></code> and <code class="docutils literal"><span class="pre">re2torea</span></code>, in the Nek5000
+tools directory to change between formats.   The binary file
+format is the default and important for <code class="docutils literal"><span class="pre">I/O</span></code> performance when the
+number of elements is large ( <span class="math">\(&gt;100000\)</span>, say).</p>
+</div>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><span class="math">\(\rho\)</span>, the density, is taken to be time-independent and
+constant; however, in a multi-fluid system
+different fluids can have different value of constant density.</li>
+<li><span class="math">\(\mu\)</span>, the dynamic viscosity can vary arbitrarily in
+time and space; it can also be a function of temperature
+(if the energy equation is included) and strain rate
+invariants (if the stress formulation is selected).</li>
+<li><span class="math">\(\sigma\)</span>, the surface-tension coefficient can vary
+arbitrarily in
+time and space; it can also be a function of temperature
+and passive scalars.</li>
+<li><span class="math">\(\overline{\beta}\)</span>, the effective thermal expansion
+coefficient, is
+assumed time-independent and constant.</li>
+<li><span class="math">\({\bf f}(t)\)</span>, the body force per unit mass term can
+vary with time, space, temperature and passive scalars.</li>
+<li><span class="math">\(\rho c_{p}\)</span>, the volumetric specific heat, can vary
+arbitrarily with time, space and temperature.</li>
+<li><span class="math">\(\rho L\)</span>, the volumetric latent heat of fusion at a front,
+is taken to be time-independent and constant; however,
+different constants can be assigned to different fronts.</li>
+<li><span class="math">\(k\)</span>, the thermal conductivity, can vary with time,
+space and temperature.</li>
+<li><span class="math">\(q_{vol}\)</span>, the volumetric heat generation, can vary with
+time, space and temperature.</li>
+<li><span class="math">\(h_{c}\)</span>, the convection heat transfer coefficient, can vary
+with time, space and temperature.</li>
+<li><span class="math">\(h_{rad}\)</span>, the Stefan-Boltzmann constant/view-factor product,
+can vary with time, space and temperature.</li>
+<li><span class="math">\(T_{\infty}\)</span>, the environmental temperature, can vary
+with time and space.</li>
+<li><span class="math">\(T_{melt}\)</span>, the melting temperature at a front, is taken
+with time and space; however, different melting temperature
+can be assigned to different fronts.</li>
+</ul>
+<p>In the solution of the governing equations together with
+the boundary and initial conditions, Nek5000 treats the
+above parameters as pure numerical values; their
+physical significance depends on the user’s choice of units.
+The system of units used is arbitrary (MKS, English, CGS,
+etc.). However, the system chosen must be used consistently
+throughout. For instance, if the equations and geometry
+have been non-dimensionalized, the <span class="math">\(\mu / \rho\)</span> in the fluid
+momentum equation is in fact
+the inverse Reynolds number, whereas if the equations are
+dimensional, <span class="math">\(\mu / \rho\)</span> represents the kinematic viscosity with
+dimensions of <span class="math">\(length^{2}/time\)</span>.</p>
+</div>
+</div>
 <div class="section" id="build-options">
 <h2>Build Options<a class="headerlink" href="#build-options" title="Permalink to this headline">¶</a></h2>
 <p>The shell script <code class="docutils literal"><span class="pre">makenek</span></code> is designed to assist the compilation process of Nek5000. The script will create a <code class="docutils literal"><span class="pre">makefile</span></code> based on the user settings section in <code class="docutils literal"><span class="pre">makenek</span></code>. The GNU gmake utility is used to build Nek5000.
 Available configurations options:</p>
-<span id="tab-bdms"></span><table border="1" class="colwidths-given docutils" id="id1">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">Compiler options</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<span id="tab-bdms"></span><table border="1" class="colwidths-given docutils" id="id10">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Compiler options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="24%" />
 <col width="14%" />
@@ -301,7 +1150,7 @@ Available configurations options:</p>
 <li>on proc 0, <code class="docutils literal"><span class="pre">nelt=2</span></code>  (<code class="docutils literal"><span class="pre">nelt</span></code> = no elements in temperature domain)</li>
 <li>on proc 1, <code class="docutils literal"><span class="pre">nelt=3</span></code>  (<code class="docutils literal"><span class="pre">nelv</span></code> = no elements in fluid domain, usually = <code class="docutils literal"><span class="pre">nelt</span></code>)</li>
 </ul>
-<div class="align-center figure" id="id2">
+<div class="align-center figure" id="id11">
 <span id="fig-procsplit"></span><img alt="element-splitting" src="_images/serial_parallel.png" />
 <p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">A simple SEM row of elements and a potential splitting</span></p>
 </div>
@@ -438,8 +1287,8 @@ solvers.</p>
 </div>
 <div class="section" id="list-of-parameters-in-rea-file">
 <h2>List of Parameters in .rea File<a class="headerlink" href="#list-of-parameters-in-rea-file" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>This section tells Nek5000</p>
 <ul class="simple">
 <li>If the input file reflects a 2D or 3D job (it should match the <code class="docutils literal"><span class="pre">ldim</span></code> parameter in the SIZE file).</li>
@@ -821,7 +1670,7 @@ solvers.</p>
 <div class="section" id="available-logical-switches">
 <h3>Available Logical Switches<a class="headerlink" href="#available-logical-switches" title="Permalink to this headline">¶</a></h3>
 <p>This part of <code class="docutils literal"><span class="pre">.rea</span></code> file starts with such a line:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">n</span>   <span class="n">LOGICAL</span> <span class="n">SWITCHES</span> <span class="n">FOLLOW</span>
+<div class="highlight-none"><div class="highlight"><pre><span></span>n   LOGICAL SWITCHES FOLLOW
 </pre></div>
 </div>
 <p>where <code class="docutils literal"><span class="pre">n</span></code> is the number of logical switches which is set in the following lines.</p>
@@ -1445,7 +2294,7 @@ representation of the number 6.54321 either in little or big endian.</p>
 </tbody>
 </table>
 <p>Example of a header::</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#std 4  6  6  1         36         36  0.1000000000000E+03     10000     0      1 XUP</span>
+<div class="highlight-none"><div class="highlight"><pre><span></span>#std 4  6  6  1         36         36  0.1000000000000E+03     10000     0      1 XUP
 </pre></div>
 </div>
 <p><code class="docutils literal"><span class="pre">wdsize</span></code> sets the precision of the floating point numbers in the file. This
@@ -1509,7 +2358,7 @@ Example code for reading the geometry field in python:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Paul Fischer, James Lottes,  Stefan Kerkemeier, Oana Marin, Katherine Heisey, Aleks Obabko, Elia Merzari, Yulia Peet, Ronald Rahaman.
+        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC.
 
     </p>
   </div>

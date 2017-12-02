@@ -221,19 +221,7 @@ resolve the boundary layers. The boundary conditions are periodic in the x-direc
 </div>
 <div class="section" id="usr-file">
 <h3>usr File<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h3>
-<p>The usr file implements various subroutines to allow the user to interact with the solver:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>uservp()   variable properties
-userf()    local acceleration term for fluid
-userq()    local source term for scalars
-userbc()   boundary conditions
-useric()   initial conditions
-userchk()  general purpose routine for checking errors etc.
-userqtl()  thermal divergence for lowMach number flows
-usrdat()   modify element vertices
-usrdat()   modify mesh coordinates
-usrdat3()  general purpose routine for initialization
-</pre></div>
-</div>
+<p>The usr file implements various subroutines to allow the user to interact with the solver. Details can be found in <a class="reference internal" href="user_files.html#user-files-usr"><span class="std std-ref">usr File</span></a>.</p>
 <p>To get started we copy the template to our case directory</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/zero.usr hillp.usr
 </pre></div>
@@ -326,8 +314,8 @@ density = 1
 viscosity = -100
 </pre></div>
 </div>
-<p>In choosing <code class="docutils literal"><span class="pre">viscosity</span> <span class="pre">=</span> <span class="pre">-100</span></code> we are actually setting the Reynolds number to be <span class="math">\(Re = \frac{ u_b h}{\nu} = 100\)</span>. This assumes that
-<span class="math">\(u_b \times h = 1\)</span> where <span class="math">\(u_b\)</span> denotes the bulk velocity and <span class="math">\(h\)</span> the hill height.</p>
+<p>In choosing <code class="docutils literal"><span class="pre">viscosity</span> <span class="pre">=</span> <span class="pre">-100</span></code> we are actually setting the Reynolds number. This assumes that
+<span class="math">\(\rho \times u_b \times h = 1\)</span> where <span class="math">\(u_b\)</span> denotes the bulk velocity and <span class="math">\(h\)</span> the hill height.</p>
 <p>We have set the calculation to stop at the physical time of <span class="math">\(T=200\)</span> (i.e. <code class="docutils literal"><span class="pre">endTime=200</span></code>) which is roughly 22 flow-thru time units (based on the bulk velocity <span class="math">\(u_b\)</span> and length of periodic pitch, <span class="math">\(L=9\)</span>).  Additional details on the names of keys in the <code class="docutils literal"><span class="pre">.par</span></code> file (i.e. <code class="docutils literal"><span class="pre">stopAt,</span> <span class="pre">numSteps,</span> <span class="pre">endTime,</span> <span class="pre">...</span></code> etc.) can be found in <a class="reference internal" href="user_files.html"><span class="doc">Case Files</span></a>.</p>
 </div>
 <div class="section" id="size-file">
@@ -424,7 +412,7 @@ to use Visit/Paraview. One can use the script <em>visnek</em>, to be found in <c
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Paul Fischer, James Lottes,  Stefan Kerkemeier, Oana Marin, Katherine Heisey, Aleks Obabko, Elia Merzari, Yulia Peet, Ronald Rahaman.
+        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC.
 
     </p>
   </div>

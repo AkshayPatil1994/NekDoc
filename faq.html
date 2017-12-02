@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; Nek5000 17.0 documentation</title>
+  <title>FAQ &mdash; Nek5000 17.0 documentation</title>
   
 
   
@@ -35,8 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
-        <link rel="prev" title="Appendices" href="appendix.html"/> 
+    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -141,13 +140,13 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+      <li>FAQ</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/bibliography.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/faq.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -160,56 +159,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <table class="docutils citation" frame="void" id="denville2002" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Denville2002]</td><td>Deville, M.O. and P.F. Fischer and E.H. Mund. <em>High-order methods for
-incompressible fluid flow.</em> Cambridge University Press, 2002.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="ho1989" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Ho1989]</td><td>Ho, L.W.  A Legendre spectral element method for simulation of incompressible unsteady
-viscous free-surface flows. Ph.D. thesis, Massachusetts Institute of Technology, 1989.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="maday1989" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Maday1989]</td><td>Maday, Y. and A.T. Patera. Spectral element methods for the Navier-Stokes equations.
-In <em>State-of-the-Art Surveys in Computational Mechanics</em>, pages 71–143. ASME, New York, 1989.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="orszag1980" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Orszag1980]</td><td>Orszag, S.A. “Spectral methods for problems in complex geometry.” <em>J. Comput.
-Phys.</em> <strong>37</strong>:70–92, 1980.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="patera1984" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Patera1984]</td><td>Patera, A.T. “A spectral element method for fluid dynamics : laminar flow in
-a channel expansion.” <em>J. Comput. Phys.</em> <strong>54</strong>:468–488, 1984.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="walsh1992" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Walsh1992]</td><td>Walsh, O. “Eddy solutions of the Navier-Stokes equations.” <em>The NSE II-Theory and
-Numerical Methods</em>, J.G. Heywood, K. Masuda, R. Rautmann, and V.A. Solonikkov, eds., Springer,
-306–309, 1992.</td></tr>
-</tbody>
-</table>
-<table class="docutils citation" frame="void" id="mellen2000" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Mellen2000]</td><td>Mellen, C. P., Fröhlich, J., Rodi, W. “Large-eddy simulation of the flow over periodic hills.” <em>16th
-IMACS World Congress</em>, Lausanne, Switzerland.</td></tr>
-</tbody>
-</table>
+  <div class="section" id="faq">
+<span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
+<p><strong>How can I properly reference Nek5000?</strong></p>
+<p>todo</p>
+<p><strong>What is the license for Nek5000?</strong></p>
+<p>todo</p>
+<p><strong>Where can I find support or ask questions about Nek5000?</strong></p>
+<p><strong>Which platforms are supported by Nek5000?</strong></p>
+<p>All posix compliant operations system. Microsoft Windows is not supported.</p>
+<p><strong>Which compilers work?</strong></p>
+<p>Currently GNU, Intel, PGI and IBM compilers are supported.</p>
+<p><strong>What is the difference between Pn/Pn and Pn/Pn2?</strong></p>
+<p><strong>What turbulence models are available in Nek5000?</strong></p>
+<p>Only implicit LES (filtering or relaxtion term) is available.</p>
+<p><strong>How do I specify/change the polynomial order?</strong></p>
+<p>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file.</p>
+<p><strong>What element types are supported?</strong></p>
+<p>Conformal curved quadrilateral/hexahedral elements.</p>
+<p><strong>How do I specify/change the solver runtime parameters?</strong></p>
+<p>See <code class="docutils literal"><span class="pre">.par</span></code> or <code class="docutils literal"><span class="pre">.rea</span></code> file.</p>
+<p><strong>What polynomial order should I use?</strong></p>
+<p>This depends what you are after. The sweet spot is typically <span class="math">\(N=7\)</span> (lx1=8)</p>
+<p><strong>How can I generate a mesh for use with Nek5000?</strong></p>
+<p><a href="#id2"><span class="problematic" id="id3">**</span></a>How do I solve for a scalar?</p>
+<p><a href="#id4"><span class="problematic" id="id5">**</span></a>Where are my solution files and how do I visualize them?</p>
+<p><a href="#id6"><span class="problematic" id="id7">**</span></a>How do I obtain values of variables at a specific point?</p>
+</div>
 
 
            </div>
@@ -218,13 +194,6 @@ IMACS World Congress</em>, Lausanne, Switzerland.</td></tr>
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
-        <a href="appendix.html" class="btn btn-neutral" title="Appendices" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
