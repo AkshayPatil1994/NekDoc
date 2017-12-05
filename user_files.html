@@ -94,10 +94,10 @@
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Case Files</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#session-file">SESSION File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#par-file">par File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#re2-file">re2 File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#usr-file">usr File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#session-name">SESSION.NAME</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#par">par</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#re2">re2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usr">usr</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#uservp">uservp()</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#userf">userf()</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">userf()</a></li>
@@ -109,8 +109,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#usrdat3">usrdat3()</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#size-file">SIZE File</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ma2-file">ma2 File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#size">SIZE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ma2">ma2</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#memory-requirements">Memory Requirements</a></li>
 </ul>
 </li>
@@ -194,8 +194,8 @@
 <li>ma2</li>
 <li>SESSION.NAME</li>
 </ul>
-<div class="section" id="session-file">
-<span id="user-files-session"></span><h2>SESSION File<a class="headerlink" href="#session-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="session-name">
+<span id="user-files-session"></span><h2>SESSION.NAME<a class="headerlink" href="#session-name" title="Permalink to this headline">¶</a></h2>
 <p>To run Nek5000, each simulation must have a SESSION.NAME file. This file is read in by the code and
 gives the path to the relevant files describing the structure and parameters of the simulation. The
 SESSION.NAME file is a file that contains the name of the simulation and the full path to
@@ -206,8 +206,8 @@ would look like:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="par-file">
-<span id="user-files-par"></span><h2>par File<a class="headerlink" href="#par-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="par">
+<span id="user-files-par"></span><h2>par<a class="headerlink" href="#par" title="Permalink to this headline">¶</a></h2>
 <p>The simulation paramaters are defined in the <code class="docutils literal"><span class="pre">.par</span></code> file.
 The keys are grouped in different sections and a specific value is assigned to each key.
 The <code class="docutils literal"><span class="pre">.par</span></code> file follows the structure exemplified below.</p>
@@ -230,7 +230,7 @@ key = value
 <li><code class="docutils literal"><span class="pre">PROBLEMTYPE</span></code></li>
 <li><code class="docutils literal"><span class="pre">MESH</span></code></li>
 <li><code class="docutils literal"><span class="pre">VELOCITY</span></code></li>
-<li><code class="docutils literal"><span class="pre">PRESSURE</span></code></li>
+<li><code class="docutils literal"><span class="pre">PRESSURE</span></code> (required for velocity)</li>
 <li><code class="docutils literal"><span class="pre">TEMPERATURE</span></code></li>
 <li><code class="docutils literal"><span class="pre">SCALAR%%</span></code></li>
 <li><code class="docutils literal"><span class="pre">CVODE</span></code></li>
@@ -238,13 +238,14 @@ key = value
 <p>When scalars are used, the keys of each scalar are defined under the section <code class="docutils literal"><span class="pre">SCALAR%%</span></code> varying
 between <code class="docutils literal"><span class="pre">SCALAR01</span></code> and <code class="docutils literal"><span class="pre">SCALAR99</span></code>. The descripton of the keys of each section is given in the
 following tables (all keys/values are case insensitive). The value assigned to each key can be a
-user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in the tables below.</p>
+user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in the tables below.
+Values in parentheses denote the default value.</p>
 <span id="tab-generalparams"></span><table border="1" class="docutils" id="id3">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text"><code class="docutils literal"><span class="pre">GENERAL</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
-<col width="29%" />
-<col width="17%" />
-<col width="53%" />
+<col width="28%" />
+<col width="19%" />
+<col width="52%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Key</th>
@@ -272,8 +273,8 @@ user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">stopAt</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">endTime</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">numStep</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(numSteps)</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">runTime</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -288,22 +289,18 @@ user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in
 </td>
 <td><div class="first last line-block">
 <div class="line">Final physical time at which we want to</div>
-<div class="line-block">
 <div class="line">our simulation to stop</div>
-</div>
 </div>
 </td>
 </tr>
-<tr class="row-odd"><td><code class="docutils literal"><span class="pre">numStep</span></code></td>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">numSteps</span></code></td>
 <td><div class="first last line-block">
 <div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
 <div class="line">Number of time steps instead of specifying</div>
-<div class="line-block">
 <div class="line">final physical time</div>
-</div>
 </div>
 </td>
 </tr>
@@ -313,15 +310,15 @@ user input (e.g. a &lt;real&gt; value) or one of the avaliable options listed in
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">Specifies the step size or in case of a
-a variable time step the maximum step size</div>
+<div class="line">Specifies the step size or in case of a</div>
+<div class="line">a variable time step the maximum step size</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">variableDT</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -336,14 +333,16 @@ a variable time step the maximum step size</div>
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">Sets target CFL number</div>
+<div class="line">Sets stability/target CFL number for</div>
+<div class="line">OIFS or variable time steps</div>
+<div class="line">(fixed to 0.5 for standard extrapolation</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">writeControl</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(timeStep)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">runTime</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">timeStep</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -365,6 +364,7 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">filtering</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(none)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">explicit</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">hpfrt</span></code></div>
 </div>
@@ -399,8 +399,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">writeDoublePrecision</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(yes)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -410,18 +410,19 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">writeNFiles</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(1)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
 <div class="line">Sets the number of output files</div>
+<div class="line">By default a parallel shared file is used</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">dealiasing</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(yes)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -431,7 +432,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">timeStepper</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">BDF2</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">BDF1</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(BDF2)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">BDF3</span></code></div>
 </div>
 </td>
@@ -442,7 +444,7 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">extrapolation</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">standard</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(standard)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">OIFS</span></code></div>
 </div>
 </td>
@@ -453,21 +455,21 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">optLevel</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(2)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">Optimization level (1-3,default is 1)</div>
+<div class="line">Optimization level</div>
 </div>
 </td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">logLevel</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(2)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">Logfile verbosity level (1-2, default is 1)</div>
+<div class="line">Verbosity level</div>
 </div>
 </td>
 </tr>
@@ -506,7 +508,7 @@ a variable time step the maximum step size</div>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">equation</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">incompNS</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(incompNS)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">lowMachNS</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">steadyStokes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">incompLinNS</span></code></div>
@@ -522,8 +524,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">axiSymmetry</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -533,8 +535,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">swirl</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -545,8 +547,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">cyclicBoundaries</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -556,7 +558,7 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">numberOfPerturbations</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(1)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -566,8 +568,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">solveBaseFlow</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -577,8 +579,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">variableProperties</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -588,8 +590,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">stressFormulation</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -599,8 +601,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">dp0dt</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -611,7 +613,7 @@ a variable time step the maximum step size</div>
 </tbody>
 </table>
 <span id="tab-fieldparams"></span><table border="1" class="docutils" id="id5">
-<caption><span class="caption-number">Table 3 </span><span class="caption-text"><code class="docutils literal"><span class="pre">COMMON</span></code> keys for all field varaibles in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 3 </span><span class="caption-text"><code class="docutils literal"><span class="pre">COMMON</span></code> keys for all field variables in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id5" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="26%" />
 <col width="18%" />
@@ -642,8 +644,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">residualProj</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -653,8 +655,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">writeToFieldFile</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(yes)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -686,7 +688,7 @@ a variable time step the maximum step size</div>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">motion</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">none</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(none)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">user</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">elasticity</span></code></div>
 </div>
@@ -698,7 +700,7 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">viscosity</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(0.4)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -708,7 +710,7 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">numberOfBCFields</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(nfields)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -721,14 +723,12 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">firstBCFieldIndex</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">&lt;real&gt;</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(1</span> <span class="pre">or</span> <span class="pre">2)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
 <div class="line">Field index of the first BC specified in <code class="docutils literal"><span class="pre">.re2</span></code></div>
-<div class="line-block">
 <div class="line">file</div>
-</div>
 </div>
 </td>
 </tr>
@@ -781,8 +781,8 @@ a variable time step the maximum step size</div>
 <caption><span class="caption-number">Table 6 </span><span class="caption-text"><code class="docutils literal"><span class="pre">PRESSURE</span></code> keys in the <code class="docutils literal"><span class="pre">.par</span></code> file</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="28%" />
-<col width="18%" />
-<col width="53%" />
+<col width="20%" />
+<col width="52%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Key</th>
@@ -799,7 +799,7 @@ a variable time step the maximum step size</div>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">preconditioner</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">semg_xxt</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(semg_xxt)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">semg_amg</span></code></div>
 </div>
 </td>
@@ -836,20 +836,20 @@ a variable time step the maximum step size</div>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">solver</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">helm</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(helm)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">cvode</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">none</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
-<div class="line">Scalar solver</div>
+<div class="line">Solver for scalar</div>
 </div>
 </td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">advection</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(yes)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -891,8 +891,8 @@ a variable time step the maximum step size</div>
 <tbody valign="top">
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">ConjugatedHeatTransfer</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(no)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -996,8 +996,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">stiff</span></code></td>
 <td><div class="first last line-block">
-<div class="line"><code class="docutils literal"><span class="pre">yes</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">no</span></code></div>
+<div class="line"><code class="docutils literal"><span class="pre">(yes)</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1007,8 +1007,8 @@ a variable time step the maximum step size</div>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">preconditioner</span></code></td>
 <td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">(none)</span></code></div>
 <div class="line"><code class="docutils literal"><span class="pre">user</span></code></div>
-<div class="line"><code class="docutils literal"><span class="pre">none</span></code></div>
 </div>
 </td>
 <td><div class="first last line-block">
@@ -1031,13 +1031,13 @@ a variable time step the maximum step size</div>
 </tbody>
 </table>
 </div>
-<div class="section" id="re2-file">
-<h2>re2 File<a class="headerlink" href="#re2-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="re2">
+<h2>re2<a class="headerlink" href="#re2" title="Permalink to this headline">¶</a></h2>
 <p>Stores the mesh and boundary condition.
 TODO: Add more details</p>
 </div>
-<div class="section" id="usr-file">
-<span id="user-files-usr"></span><h2>usr File<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="usr">
+<span id="user-files-usr"></span><h2>usr<a class="headerlink" href="#usr" title="Permalink to this headline">¶</a></h2>
 <p>This file implements the the user interface to Nek5000. What follows is a brief description of the available
 subroutines.</p>
 <div class="section" id="uservp">
@@ -1100,8 +1100,8 @@ step.</p>
 <p>This function can be used to initialize case/user specific data.</p>
 </div>
 </div>
-<div class="section" id="size-file">
-<h2>SIZE File<a class="headerlink" href="#size-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="size">
+<h2>SIZE<a class="headerlink" href="#size" title="Permalink to this headline">¶</a></h2>
 <p>SIZE file defines the problem size, i.e. spatial points at which the solution is to be evaluated within each element, number of elements per processor etc.
 The SIZE file governs the memory allocation for most of the arrays
 in Nek5000, with the exception of those required by the C utilities.
@@ -1142,8 +1142,8 @@ upper bounds on parameters in SIZE are (minimum being 1 unless otherwise noted):
 </div>
 <p>that defines addional internal parameters.</p>
 </div>
-<div class="section" id="ma2-file">
-<h2>ma2 File<a class="headerlink" href="#ma2-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ma2">
+<h2>ma2<a class="headerlink" href="#ma2" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Add more details</p>
 <div class="section" id="memory-requirements">
 <h3>Memory Requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h3>
