@@ -110,14 +110,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#size">SIZE</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ma2">ma2</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#memory-requirements">Memory Requirements</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#ma2">ma2</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
@@ -1145,23 +1142,6 @@ upper bounds on parameters in SIZE are (minimum being 1 unless otherwise noted):
 <div class="section" id="ma2">
 <h2>ma2<a class="headerlink" href="#ma2" title="Permalink to this headline">¶</a></h2>
 <p>TODO: Add more details</p>
-<div class="section" id="memory-requirements">
-<h3>Memory Requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h3>
-<p>The memory footprint of a Nek5000 run depends on many factors such as</p>
-<ul class="simple">
-<li>Local problem size per MPI rank (defined by <code class="docutils literal"><span class="pre">lx1</span></code> and <code class="docutils literal"><span class="pre">lelt</span></code>)</li>
-<li>Total number of elements <code class="docutils literal"><span class="pre">lelg</span></code></li>
-<li>Number of MPI ranks</li>
-<li>Size of residual projection space <code class="docutils literal"><span class="pre">mxprev</span></code></li>
-<li>Dimension of Krylov subspace <code class="docutils literal"><span class="pre">lgmres</span></code>.</li>
-<li>Solvers (XXT, AMG, Helmholz, CVODE, …)</li>
-<li>Number of scalars <code class="docutils literal"><span class="pre">ldimt</span></code></li>
-<li>Allocation policy (static, first touch, etc.)</li>
-</ul>
-<p>An a-priori estimate is hard to find and the output of the GNU SIZE utility does not
-take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.
-However, the true maximum memory usage is printed whenever Nek5000 exits.</p>
-</div>
 </div>
 </div>
 

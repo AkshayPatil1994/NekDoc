@@ -107,7 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance Considerations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
@@ -189,81 +189,81 @@ in a production environment!</p>
 <div class="section" id="directory-structure">
 <h2>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
 <p>Here’s a brief description of each top-level directory:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">core</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/core</p>
+<p>contains the Nek5000 application sources.</p>
 </div>
-<p>contains the Nek5000 application sources:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="nb">bin</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/bin</p>
+<p>contains scripts for running nek5000 and manipulating its output.</p>
 </div>
-<p>contains scripts for running nek5000 and manipulating its output:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">tools</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/tools</p>
+<p>contains the sources for the pre- and post-processing tools which are stand-alone.</p>
 </div>
-<p>contains the sources for the pre- and post-processing tools which are stand-alone:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">short</span><span class="o">-</span><span class="n">tests</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/short-tests</p>
+<p>contains light-weight regression tests for verification.</p>
 </div>
-<p>contains light-weight regression tests for verification:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">run</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/run</p>
+<p>consistent place for users to place their problem cases.</p>
 </div>
-<p>consistent place for users to place their problem cases:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">examples</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/examples</p>
+<p>contains example problems.</p>
 </div>
-<p>contains example problems:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">doc</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">/doc</p>
+<p>contains the user documentation.</p>
 </div>
-<p>contains the user documentation:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="mi">3</span><span class="n">rd_party</span>
-</pre></div>
-</div>
+<div class="topic">
+<p class="topic-title first">/3rd_party</p>
 <p>its purpose it to provide a consistent place for 3rd party code.</p>
+</div>
 </div>
 <div class="section" id="case-files">
 <h2>Case files<a class="headerlink" href="#case-files" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">SIZE</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">SIZE</p>
+<p>contains some hardwired runtime parameters to dimension static arrays.</p>
 </div>
-<p>contains some hardwired runtime parameters to dimension static arrays:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">par</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.par</p>
+<p>contains runtime parameters.</p>
 </div>
-<p>contains runtime parameters:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">re2</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.re2</p>
+<p>contains mesh and boundary data.</p>
 </div>
-<p>contains mesh and boundary data:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">ma2</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.ma2</p>
+<p>contains partioning data.</p>
 </div>
-<p>contains partioning data:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">usr</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.usr</p>
+<p>contains user specific code to initialize solver, set source terms and boundary conditions or to manipulate solver internals.</p>
 </div>
-<p>contains user specific code to initialize solver, set source terms and boundary conditions or to manipulate solver internals:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">his</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.his</p>
+<p>contains probing points.</p>
 </div>
-<p>contains probing points:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">f00000</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.f00000</p>
+<p>contains checkpoint data.</p>
 </div>
-<p>contains checkpoint data:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">nek5000</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.nek5000</p>
+<p>contains metadata for VisIt or ParaView.</p>
 </div>
-<p>contains metadata for VisIt:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">rea</span> <span class="p">(</span><span class="n">legacy</span><span class="p">)</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.rea (legacy)</p>
+<p>contains runtime parameters and mesh in ASCII. Replaced by .par and .re2 file.</p>
 </div>
-<p>contains runtime parameters and mesh in ASCII. Replaced by .par and .re2 file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">foo</span><span class="o">.</span><span class="n">map</span> <span class="p">(</span><span class="n">legacy</span><span class="p">)</span>
-</pre></div>
+<div class="topic">
+<p class="topic-title first">foo.map (legacy)</p>
+<p>contains partioning data in ASCII.</p>
 </div>
-<p>contains partioning data in ASCII</p>
 <p>Note: The old legacy files (.rea &amp; .map) are recommended for debugging purposes only.</p>
 </div>
 <div class="section" id="scripts">
@@ -292,7 +292,7 @@ cd eddy
 genmap                       # run partioner, on input type eddy_uv
 makenek eddy_uv              # build case, edit script to change settings
 nekbmpi eddy_uv 2            # run Nek5000 on 2 ranks in the background
-echo -2 &gt;ioinfo              # stop Nek5000 run and dump checkpoint
+tail logfile                 # view solver output
 visnek eddy_uv; visit -o eddy_uv.nek5000 # requires a VisIt/Paraview installation
 </pre></div>
 </div>

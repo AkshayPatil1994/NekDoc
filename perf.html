@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Performance Considerations &mdash; Nek5000 17.0 documentation</title>
+  <title>Performance and Memory Considerations &mdash; Nek5000 17.0 documentation</title>
   
 
   
@@ -95,7 +95,11 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance Considerations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Performance and Memory Considerations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#performance-tips">Performance Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memory-requirements">Memory Requirements</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
@@ -142,7 +146,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Performance Considerations</li>
+      <li>Performance and Memory Considerations</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -161,20 +165,36 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="performance-considerations">
-<h1>Performance Considerations<a class="headerlink" href="#performance-considerations" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="performance-and-memory-considerations">
+<h1>Performance and Memory Considerations<a class="headerlink" href="#performance-and-memory-considerations" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="performance-tips">
+<h2>Performance Tips<a class="headerlink" href="#performance-tips" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Design your mesh for a polynomial order N=7 (<code class="docutils literal"><span class="pre">lx1=8</span></code> in SIZE)</li>
-<li>Turn on dealiasing only if needed and try to minimize the polynomial order used for the fine grid (e.g. <code class="docutils literal"><span class="pre">lxd=10</span></code> in SIZE)</li>
-<li>Ensure that you have at least 20 elements per MPI process (the more the better)</li>
-<li>Use AMG instead of XXT coarse grid solver (sweet spot depends on number of processors and elements)</li>
+<li>Turn on dealiasing only if needed and try to minimize the polynomial order used for overintegration (e.g. <code class="docutils literal"><span class="pre">lxd=10</span></code> in SIZE)</li>
+<li>Ensure that you have enough elements (say &gt;20) per MPI process</li>
+<li>Use AMG instead of XXT coarse grid solver</li>
 <li>Make sure <code class="docutils literal"><span class="pre">usrchk()</span></code> does not contain time consuming operations getting called in the time loop</li>
 <li>Enable tuned MxM implementation for your platform (see <code class="docutils literal"><span class="pre">makenek</span></code> options)</li>
-<li>Make sure residual projection for pressure is turned on and experiment with velocity to see if it reduced the solver time</li>
-<li>Tune your pressure/velocity solver tolerances (typically 1e-4 for pressure and 1e-8 velocity are acceptable)</li>
-<li>Try to maximize the timestep by switch in 2nd order in time and OIFS (target a Courant number of 4 or 2)</li>
-<li><code class="docutils literal"><span class="pre">.re2</span></code> and <code class="docutils literal"><span class="pre">.ma2</span></code> are strongly recommended</li>
+<li>Make sure residual projection for pressure is turned on and experiment with velocity projection to see if it reduced the solver time</li>
+<li>Tune your pressure/velocity solver tolerances (typically tolerances around 1e-5/1e-8 are acceptable)</li>
+<li>Try to maximize the timestep by switch in 2nd order in time and OIFS (target a Courant number of between 2-4)</li>
+<li>Use binary input files e.g. <code class="docutils literal"><span class="pre">.re2</span></code> and <code class="docutils literal"><span class="pre">.ma2</span></code> to minimize solver initialization time</li>
 </ul>
+</div>
+<div class="section" id="memory-requirements">
+<h2>Memory Requirements<a class="headerlink" href="#memory-requirements" title="Permalink to this headline">¶</a></h2>
+<p>The memory footprint of a Nek5000 run depends on many factors and is printed to
+screen whenever Nek5000 exits. What follows is a rough a-priori estimate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lx1</span><span class="o">*</span><span class="n">ly1</span><span class="o">*</span><span class="n">lz1</span><span class="o">*</span><span class="n">lelt</span> <span class="o">*</span> <span class="mi">3000</span><span class="n">byte</span> <span class="o">+</span> <span class="n">lelg</span> <span class="o">*</span> <span class="mi">12</span><span class="n">byte</span> <span class="o">+</span> <span class="n">MPI</span>
+</pre></div>
+</div>
+<p>The memory allocated by MPI will depend heavily on the total number of
+ranks and the considered MPI implementation. For large ranks counts (say &gt; 100‘000) it’s
+easily 50-100MB.</p>
+<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
+take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+</div>
 </div>
 
 
