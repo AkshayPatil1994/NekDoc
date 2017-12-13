@@ -98,24 +98,18 @@
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Appendices</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#legacy-geometry-and-parameters-file-rea">Legacy Geometry and Parameters File (.rea)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#rea-file-legacy">rea File (legacy)</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#parameters-and-logical-switches">Parameters and logical switches</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#mesh-and-boundary-condition-info">Mesh and boundary condition info</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#output-info">Output info</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#build-options">Build Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#parallelism-in-nek5000">Parallelism in Nek5000</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#data-layout">Data Layout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-rea-file">List of Parameters in .rea File</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#available-parameters">Available Parameters</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#available-logical-switches">Available Logical Switches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#internal-input-parameters-switches">Internal Input Parameters/Switches</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#logical-switches">Logical switches</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#list-of-parameters-in-size-file">List of Parameters in SIZE File</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#commonly-used-variables">Commonly used Variables</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#solution-variables">Solution Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#geometry-variables">Geometry Variables</a></li>
@@ -124,10 +118,9 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#commonly-used-subroutines">Commonly used Subroutines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#commonly-used-functions">Commonly used Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#history-points">History Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#grid-to-grid-interpolation">Grid-to-Grid Interpolation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#field-file-format">Field File Format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#output-field-file-format">Output (Field File) Format</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#header">Header</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#data">Data</a></li>
 </ul>
@@ -199,8 +192,8 @@
             
   <div class="section" id="appendices">
 <h1>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="legacy-geometry-and-parameters-file-rea">
-<h2>Legacy Geometry and Parameters File (.rea)<a class="headerlink" href="#legacy-geometry-and-parameters-file-rea" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rea-file-legacy">
+<h2>rea File (legacy)<a class="headerlink" href="#rea-file-legacy" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal"><span class="pre">.rea</span></code> file consists of several sections. The mesh specifications  with <strong>geometry</strong>, <strong>curvature</strong> and <strong>boundary conditions</strong> are in the second section.</p>
 <div class="section" id="parameters-and-logical-switches">
 <h3>Parameters and logical switches<a class="headerlink" href="#parameters-and-logical-switches" title="Permalink to this headline">¶</a></h3>
@@ -270,8 +263,8 @@ coordinates <code class="docutils literal"><span class="pre">XZERO;YZERO</span><
 dimension is the the problem (here three dimensional), and how many elements
 are in the fluid mesh (192).</p>
 <blockquote>
-<div><span id="tab-element"></span><table border="1" class="docutils" id="id2">
-<caption><span class="caption-number">Table 15 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-element"></span><table border="1" class="docutils" id="id1">
+<caption><span class="caption-number">Table 15 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="31%" />
 <col width="17%" />
@@ -332,7 +325,7 @@ first, followed by all solid elements if present. In this case there are (34)
 solid elements.</p>
 <p>The data following the header is formatted as shown in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 15</span></a>. This provides all the coordinates of an element for top and bottom faces. The numbering of the vertices is shown in Fig. <a class="reference internal" href="#fig-elorder"><span class="std std-numref">Fig. 10</span></a>. The header for each element as in <a class="reference internal" href="#tab-element"><span class="std std-numref">Table 15</span></a>, i.e. <code class="docutils literal"><span class="pre">[1A]</span> <span class="pre">GROUP</span></code> is reminiscent of older Nek5000 format and does not impact the mesh generation at this stage. (We are inquiring whether other groups still use it.)</p>
 <blockquote class="last">
-<div><div class="align-center figure" id="id3">
+<div><div class="align-center figure" id="id2">
 <span id="fig-elorder"></span><img alt="rea-geometry" src="_images/3dcube_1.png" />
 <p class="caption"><span class="caption-number">Fig. 10 </span><span class="caption-text">Geometry description in <code class="docutils literal"><span class="pre">.rea</span></code> file (sketch of one element ordering - Preprocessor
 corner notation)</span></p>
@@ -350,8 +343,8 @@ Therefore, if no elements are curved (if only linear elements are present) the s
 Only non-trivial curvature data needs to be provided, i.e., edges that correspond to linear elements, since they have no curvature, will have no entry.
 The formatting for the curvature data is provided in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 16</span></a>.</p>
 <blockquote>
-<div><span id="tab-midside"></span><table border="1" class="docutils" id="id4">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">Curvature information specification</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-midside"></span><table border="1" class="docutils" id="id3">
+<caption><span class="caption-number">Table 16 </span><span class="caption-text">Curvature information specification</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="11%" />
 <col width="9%" />
@@ -412,7 +405,7 @@ The formatting for the curvature data is provided in <a class="reference interna
 </ul>
 <p>Both ‘C’ and ‘s’ types allow for a surface of as high order as the polynomial used in the spectral method, since they have an underlying analytical description, any circle arc can be fully determined by the radius and end points. However for the ‘m’ curved element descriptor the surface can be reconstructed only up to second order. This can be later updated to match the high-order polynomial after the GLL points have been distributed across the boundaries. This is the only general mean to describe curvature currrently in Nek5000 and corresponds to a HEX20 representation.</p>
 <blockquote>
-<div><div class="align-center figure" id="id5">
+<div><div class="align-center figure" id="id4">
 <span id="fig-edges"></span><img alt="edge-numbering" src="_images/3dcube.png" />
 <p class="caption"><span class="caption-number">Fig. 11 </span><span class="caption-text">Edge numbering in <code class="docutils literal"><span class="pre">.rea</span></code> file, the edge number is in between parenthesis. The other
 numbers represent vertices.</span></p>
@@ -421,7 +414,7 @@ numbers represent vertices.</span></p>
 <p>For better understanding let us focus on what the data in <a class="reference internal" href="#tab-midside"><span class="std std-numref">Table 16</span></a> signifies. Edge 9 of element 2 has a edge  midpoint at (0.125713, -0.992067, 0.00000)  and so on. For edge numbering the reader is advised to check Fig. <a class="reference internal" href="#fig-edges"><span class="std std-numref">Fig. 11</span></a>, which illustrates the relationship between vertex numbering and edge numbering.</p>
 <p>To maninpulate the geometry in Nek5000 at runtime, it is possible to use  <code class="docutils literal"><span class="pre">usrdat2</span></code>. In this subroutine the user can deform the geometry to match the intended surface, followed by a call to the subroutine <code class="docutils literal"><span class="pre">fixgeom</span></code> which can realign the point distribution in the interior of the element.</p>
 <blockquote>
-<div><div class="align-center figure" id="id6">
+<div><div class="align-center figure" id="id5">
 <span id="fig-ex1"></span><img alt="edge-numbering" src="_images/base1.png" />
 <p class="caption"><span class="caption-number">Fig. 12 </span><span class="caption-text">Example mesh - without curvature. Square dots represent example vertices.</span></p>
 </div>
@@ -446,7 +439,7 @@ numbers represent vertices.</span></p>
 <li>For a total number of elements 1,000 - 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i6,5g14.6,1x,a1)</span></code>.</li>
 <li>For a total number of elements above 999,999 the format is <code class="docutils literal"><span class="pre">(i2,i12,5g14.6,1x,a1)</span></code>.</li>
 </ul>
-<div class="align-center figure" id="id7">
+<div class="align-center figure" id="id6">
 <span id="fig-ex2"></span><img alt="edge-numbering" src="_images/modified1.png" />
 <p class="caption"><span class="caption-number">Fig. 13 </span><span class="caption-text">Example mesh - with curvature. Circular dots represent example midsize points.</span></p>
 </div>
@@ -815,7 +808,7 @@ numbers represent vertices.</span></p>
 <p>Boundary conditions are given in order per each element, see <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 17</span></a> column <code class="docutils literal"><span class="pre">IEL</span></code>, and faces listed in ascending order 1-6 in column <code class="docutils literal"><span class="pre">IFACE</span></code>. Note that the header in <a class="reference internal" href="#tab-bcs"><span class="std std-numref">Table 17</span></a> does not appear in the actual <code class="docutils literal"><span class="pre">.rea</span></code>.</p>
 <p>The ordering for faces each element is shown in <a class="reference internal" href="#fig-forder"><span class="std std-numref">Fig. 14</span></a>. A total equivalent to <span class="math">\(6N_{field}\)</span> boundary conditions are listed for each field, where <span class="math">\(N_{field}\)</span> is the number of elements for the specific field. <span class="math">\(N_{field}\)</span> is equal to the total number of fluid elements for the velocity and equal to the total number of elements (including solid elements) for temperature. For the passive scalars it will depend on the specific choice, but typically scalars are solved on the temeprature mesh (solid+fluid).</p>
 <blockquote>
-<div><div class="align-center figure" id="id8">
+<div><div class="align-center figure" id="id7">
 <span id="fig-forder"></span><img alt="edge-numbering" src="_images/3dcube_2.png" />
 <p class="caption"><span class="caption-number">Fig. 14 </span><span class="caption-text">Face ordering for each element.</span></p>
 </div>
@@ -834,8 +827,8 @@ numbers represent vertices.</span></p>
 </ul>
 <p>Many of the BCs support either a constant specification or a user defined specification which may be an arbitrary function.   For example, a constant Dirichlet BC for velocity is specified by <code class="docutils literal"><span class="pre">V</span></code>, while a user defined BC is specified by <code class="docutils literal"><span class="pre">v</span></code>.   This upper/lower-case distinction is  used for all cases.   There are about 70 different types of boundary conditions in all, including free-surface, moving boundary, heat flux, convective cooling, etc. The above cases are just the most used types.</p>
 <blockquote>
-<div><span id="tab-bcs"></span><table border="1" class="docutils" id="id9">
-<caption><span class="caption-number">Table 17 </span><span class="caption-text">Formatting of boundary conditions input.</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
+<div><span id="tab-bcs"></span><table border="1" class="docutils" id="id8">
+<caption><span class="caption-number">Table 17 </span><span class="caption-text">Formatting of boundary conditions input.</span><a class="headerlink" href="#id8" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="10%" />
@@ -989,64 +982,13 @@ tools directory to change between formats.   The binary file
 format is the default and important for <code class="docutils literal"><span class="pre">I/O</span></code> performance when the
 number of elements is large ( <span class="math">\(&gt;100000\)</span>, say).</p>
 </div>
-<div class="section" id="parameters">
-<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><span class="math">\(\rho\)</span>, the density, is taken to be time-independent and
-constant; however, in a multi-fluid system
-different fluids can have different value of constant density.</li>
-<li><span class="math">\(\mu\)</span>, the dynamic viscosity can vary arbitrarily in
-time and space; it can also be a function of temperature
-(if the energy equation is included) and strain rate
-invariants (if the stress formulation is selected).</li>
-<li><span class="math">\(\sigma\)</span>, the surface-tension coefficient can vary
-arbitrarily in
-time and space; it can also be a function of temperature
-and passive scalars.</li>
-<li><span class="math">\(\overline{\beta}\)</span>, the effective thermal expansion
-coefficient, is
-assumed time-independent and constant.</li>
-<li><span class="math">\({\bf f}(t)\)</span>, the body force per unit mass term can
-vary with time, space, temperature and passive scalars.</li>
-<li><span class="math">\(\rho c_{p}\)</span>, the volumetric specific heat, can vary
-arbitrarily with time, space and temperature.</li>
-<li><span class="math">\(\rho L\)</span>, the volumetric latent heat of fusion at a front,
-is taken to be time-independent and constant; however,
-different constants can be assigned to different fronts.</li>
-<li><span class="math">\(k\)</span>, the thermal conductivity, can vary with time,
-space and temperature.</li>
-<li><span class="math">\(q_{vol}\)</span>, the volumetric heat generation, can vary with
-time, space and temperature.</li>
-<li><span class="math">\(h_{c}\)</span>, the convection heat transfer coefficient, can vary
-with time, space and temperature.</li>
-<li><span class="math">\(h_{rad}\)</span>, the Stefan-Boltzmann constant/view-factor product,
-can vary with time, space and temperature.</li>
-<li><span class="math">\(T_{\infty}\)</span>, the environmental temperature, can vary
-with time and space.</li>
-<li><span class="math">\(T_{melt}\)</span>, the melting temperature at a front, is taken
-with time and space; however, different melting temperature
-can be assigned to different fronts.</li>
-</ul>
-<p>In the solution of the governing equations together with
-the boundary and initial conditions, Nek5000 treats the
-above parameters as pure numerical values; their
-physical significance depends on the user’s choice of units.
-The system of units used is arbitrary (MKS, English, CGS,
-etc.). However, the system chosen must be used consistently
-throughout. For instance, if the equations and geometry
-have been non-dimensionalized, the <span class="math">\(\mu / \rho\)</span> in the fluid
-momentum equation is in fact
-the inverse Reynolds number, whereas if the equations are
-dimensional, <span class="math">\(\mu / \rho\)</span> represents the kinematic viscosity with
-dimensions of <span class="math">\(length^{2}/time\)</span>.</p>
-</div>
 </div>
 <div class="section" id="build-options">
 <h2>Build Options<a class="headerlink" href="#build-options" title="Permalink to this headline">¶</a></h2>
 <p>The shell script <code class="docutils literal"><span class="pre">makenek</span></code> is designed to assist the compilation process of Nek5000. The script will create a <code class="docutils literal"><span class="pre">makefile</span></code> based on the user settings section in <code class="docutils literal"><span class="pre">makenek</span></code>. The GNU gmake utility is used to build Nek5000.
 Available configurations options:</p>
-<span id="tab-bdms"></span><table border="1" class="colwidths-given docutils" id="id10">
-<caption><span class="caption-number">Table 18 </span><span class="caption-text">Compiler options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<span id="tab-bdms"></span><table border="1" class="colwidths-given docutils" id="id9">
+<caption><span class="caption-number">Table 18 </span><span class="caption-text">Compiler options</span><a class="headerlink" href="#id9" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="24%" />
 <col width="14%" />
@@ -1134,177 +1076,10 @@ Available configurations options:</p>
 </tbody>
 </table>
 </div>
-<div class="section" id="parallelism-in-nek5000">
-<h2>Parallelism in Nek5000<a class="headerlink" href="#parallelism-in-nek5000" title="Permalink to this headline">¶</a></h2>
-<p>The parallelism of Nek5000 is accomplished via domain decomposition methods and a suitable gather-scatter code. All this is implemented in such way that the user does not have to be concerned with the parallelism and only focus on the actual solvers while keeping in mind a few simple rules and routines that switch from local to global and back.</p>
-<ul class="simple">
-<li>Locally, the SEM is structured.</li>
-<li>Globally, the SEM is unstructured.</li>
-<li>Vectorization and serial performance derive from the structured aspects of the computation.</li>
-<li>Parallelism and geometric flexibility derive from the unstructured, element-by-element, operator evaluation.</li>
-<li>Elements, or groups of elements are distributed across processors, but an element is never subdivided.</li>
-</ul>
-<p>For the most part, the global element numbering is not relevant since Nek5000 assigns it randomly but following certain rules.</p>
-<p>There are two types of array sizes, starting with <code class="docutils literal"><span class="pre">lx1</span></code>, <code class="docutils literal"><span class="pre">lelv</span></code>, etc. which give an upper bound of the arrays. And <code class="docutils literal"><span class="pre">nx1</span></code>, <code class="docutils literal"><span class="pre">nelv</span></code>, etc. which give the actual number of elements/grid points per processors. For the example in <a class="reference internal" href="#fig-procsplit"><span class="std std-numref">Fig. 15</span></a> we have</p>
-<ul class="simple">
-<li>on proc 0, <code class="docutils literal"><span class="pre">nelt=2</span></code>  (<code class="docutils literal"><span class="pre">nelt</span></code> = no elements in temperature domain)</li>
-<li>on proc 1, <code class="docutils literal"><span class="pre">nelt=3</span></code>  (<code class="docutils literal"><span class="pre">nelv</span></code> = no elements in fluid domain, usually = <code class="docutils literal"><span class="pre">nelt</span></code>)</li>
-</ul>
-<div class="align-center figure" id="id11">
-<span id="fig-procsplit"></span><img alt="element-splitting" src="_images/serial_parallel.png" />
-<p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">A simple SEM row of elements and a potential splitting</span></p>
-</div>
-<p>Arrays <code class="docutils literal"><span class="pre">lglel</span></code> that distinguish which processor has which elements,</p>
-<ul class="simple">
-<li>on proc 0, <code class="docutils literal"><span class="pre">nelt=2,</span> <span class="pre">lglel=(2,5)</span></code>, local element <code class="docutils literal"><span class="pre">1-&gt;2</span></code> and <code class="docutils literal"><span class="pre">2-&gt;5</span></code></li>
-<li>on proc 1, <code class="docutils literal"><span class="pre">nelt=3,</span> <span class="pre">lglel=(1,3,4)</span></code>, local element <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;3</span></code> and <code class="docutils literal"><span class="pre">4-&gt;3</span></code></li>
-</ul>
-<p>Now for global to local we have two common arrays (scaling as <code class="docutils literal"><span class="pre">nelgt</span></code>, but only two such arrays)</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">gllel=(1,1,2,3,2)</span></code>, assigns a global element to its local correspondent, i.e. global element <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;1</span></code> and <code class="docutils literal"><span class="pre">3-&gt;2</span></code> etc.</li>
-<li><code class="docutils literal"><span class="pre">gllnid=(1,0,1,1,0)</span></code>, assigns a global element to its processor, i.e. <code class="docutils literal"><span class="pre">1-&gt;1</span></code>, <code class="docutils literal"><span class="pre">2-&gt;0</span></code> and <code class="docutils literal"><span class="pre">3-&gt;1</span></code> etc.</li>
-</ul>
-<p>All data contiguously packed (and quad-aligned) <code class="docutils literal"><span class="pre">real</span>&#160; <span class="pre">u(lx1,ly1,lz1,lelt)</span></code> indicates that <code class="docutils literal"><span class="pre">u</span></code> is a collection of elements, <code class="docutils literal"><span class="pre">e=1,...,Nelt</span> <span class="pre">=&lt;</span> <span class="pre">lelt</span></code>, each of size <span class="math">\((N+1)d\)</span>, <span class="math">\(d\)</span> = 2 or 3.</p>
-<p><strong>Example: Summation</strong></p>
-<p>Serial version</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
-<span class="k">do </span><span class="n">iz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
-<span class="k">do </span><span class="n">iy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
-<span class="k">do </span><span class="n">ix</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
-<span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
-<span class="k">end do</span><span class="p">,...,</span><span class="k">end do</span>
-</pre></div>
-</div>
-<p>Second approach, serial version (works in parallel in Nek)</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">n</span><span class="o">=</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
-<span class="n">s</span><span class="o">=</span><span class="mi">0</span>
-<span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span>
-<span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-<p>Nek Parallel Version</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">glsum</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>If you want a local max <code class="docutils literal"><span class="pre">s=vlmax(u,n)</span></code>, or a global max <code class="docutils literal"><span class="pre">s=glmax(u,n)</span></code>.</p>
-</div>
-<div class="section" id="data-layout">
-<h2>Data Layout<a class="headerlink" href="#data-layout" title="Permalink to this headline">¶</a></h2>
-<p>Nek5000 was designed with two principal performance criteria in mind,
-namely, <em>single-node</em> performance and <em>parallel</em> performance.</p>
-<p>A key precept in obtaining good single node performance was to use,
-wherever possible, unit-stride memory addressing, which is realized by
-using contiguously declared arrays and then accessing the data in
-the correct order.   Data locality is thus central to good serial
-performance.   To ensure that this performance is not compromised
-in parallel, the parallel message-passing data model is used, in which
-each processor has its own local (private) address space.  Parallel
-data, therefore, is laid out just as in the serial case, save that there
-are multiple copies of the arrays—one per processor, each containing
-different data.  Unlike the shared memory model, this distributed memory
-model makes data locality transparent and thus simplifies the task of
-analyzing and optimizing parallel performance.</p>
-<p>Some fundamentals of Nek5000’s internal data layout are given below.</p>
-<ol class="arabic">
-<li><p class="first">Data is laid out as  <span class="math">\(u_{ijk}^e = u(i,j,k,e)\)</span></p>
-<p><code class="docutils literal"><span class="pre">i=1,...,nx1</span></code>   (<code class="docutils literal"><span class="pre">nx1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
-<code class="docutils literal"><span class="pre">j=1,...,ny1</span></code>   (<code class="docutils literal"><span class="pre">ny1</span> <span class="pre">=</span> <span class="pre">lx1</span></code>) <br />
-<code class="docutils literal"><span class="pre">k=1,...,nz1</span></code>   (<code class="docutils literal"><span class="pre">nz1</span> <span class="pre">=</span> <span class="pre">lx1</span></code> or 1, according to ndim=3 or 2)</p>
-<p><code class="docutils literal"><span class="pre">e=1,...,nelv</span></code>, where <code class="docutils literal"><span class="pre">nelv</span></code> <span class="math">\(\leq\)</span> <code class="docutils literal"><span class="pre">lelv</span></code>, and <code class="docutils literal"><span class="pre">lelv</span></code> is the upper
-bound on number of elements, <em>per processor</em>.</p>
-</li>
-<li><p class="first">Fortran data is stored in column major order (opposite of C).</p>
-</li>
-<li><p class="first">All data arrays are thus contiguous, even when <span class="math">\({\tt nelv} &lt; {\tt lelv}\)</span>.</p>
-</li>
-<li><p class="first">Data accesses are thus primarily unit-stride (see chap.8 of DFM
-for importance of this point), and in particular, all data on
-a given processor can be accessed as, e.g.,</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>which is equivalent but superior (WHY?) to:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
-<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
-<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
-<span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>which is equivalent but vastly superior (WHY?) to:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span>
-<span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">ny1</span>
-<span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nz1</span>
-<span class="k">do </span><span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">e</span><span class="p">)</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-</li>
-<li><p class="first">All data arrays are stored according to the SPMD programming
-model, in which address spaces that are local to each processor
-are private — not accessible to other processors except through
-interprocessor data-transfer (i.e., message passing).  Thus</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nx1</span><span class="o">*</span><span class="n">ny1</span><span class="o">*</span><span class="n">nz1</span><span class="o">*</span><span class="n">nelv</span>
-   <span class="n">u</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">=</span> <span class="n">vx</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="k">end do</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>means different things on different processors and <code class="docutils literal"><span class="pre">nelv</span></code> may
-differ from one processor to the next.</p>
-</li>
-<li><p class="first">For the most part, low-level loops such as above are expressed in
-higher level routines only through subroutine calls, e.g.,:</p>
-<blockquote>
-<div><div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">call </span><span class="n">copy</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">vx</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-</pre></div>
-</div>
-</div></blockquote>
-<p>where <code class="docutils literal"><span class="pre">n:=nx1*ny1*nz1*nelv</span></code>.   Notable exceptions are in places where
-performance is critical, e.g., in the middle of certain iterative
-solvers.</p>
-</li>
-</ol>
-</div>
-<div class="section" id="list-of-parameters-in-rea-file">
-<h2>List of Parameters in .rea File<a class="headerlink" href="#list-of-parameters-in-rea-file" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id1">
-<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<p>This section tells Nek5000</p>
-<ul class="simple">
-<li>If the input file reflects a 2D or 3D job (it should match the <code class="docutils literal"><span class="pre">ldim</span></code> parameter in the SIZE file).</li>
-<li>The combination of heat transfer, Stokes, Navier-Stokes, steady or unsteady to be run.</li>
-<li>The relevant physical parameters.</li>
-<li>The solution algorithm within Nek5000 to use.</li>
-<li>The timestep size or Courant number to use, or whether to run variable DT (<span class="math">\(dt\)</span>), etc.</li>
-</ul>
-<p>A <code class="docutils literal"><span class="pre">.rea</span></code> file starts with the following three parameters:</p>
-<p><strong>NEKTON VERSION</strong> the version of Nek5000</p>
-<p><strong>DIMENSIONAL RUN</strong> number of spatial dimensions (<code class="docutils literal"><span class="pre">NDIM</span></code> =2,3 - has to match the setting in the SIZE file).</p>
-<p><strong>PARAMETERS FOLLOW</strong> the number of parameters which are going to be followed in the <code class="docutils literal"><span class="pre">.rea</span></code> file.(<code class="docutils literal"><span class="pre">NPARAM</span></code>)</p>
-<p>The latter specifies how many lines of <code class="docutils literal"><span class="pre">.rea</span></code> file, starting from the next line, are the parameters and have to be read by the program.</p>
-</div>
-<div class="section" id="available-parameters">
-<h3>Available Parameters<a class="headerlink" href="#available-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="internal-input-parameters-switches">
+<h2>Internal Input Parameters/Switches<a class="headerlink" href="#internal-input-parameters-switches" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h3>
 <style> .red {color:red} </style><div class="line-block">
 <div class="line"><strong>P001  DENSITY</strong> density for the case of constant properties (for variable density see parameter <code class="docutils literal"><span class="pre">P030</span></code>).</div>
 <div class="line"><br /></div>
@@ -1667,14 +1442,6 @@ solvers.</p>
 <div class="line"><strong>P118  NELZ</strong> number of elements in <span class="math">\(z\)</span> for FTP</div>
 </div>
 </div>
-<div class="section" id="available-logical-switches">
-<h3>Available Logical Switches<a class="headerlink" href="#available-logical-switches" title="Permalink to this headline">¶</a></h3>
-<p>This part of <code class="docutils literal"><span class="pre">.rea</span></code> file starts with such a line:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>n   LOGICAL SWITCHES FOLLOW
-</pre></div>
-</div>
-<p>where <code class="docutils literal"><span class="pre">n</span></code> is the number of logical switches which is set in the following lines.</p>
-</div>
 <div class="section" id="logical-switches">
 <span id="sec-switches"></span><h3>Logical switches<a class="headerlink" href="#logical-switches" title="Permalink to this headline">¶</a></h3>
 <p>Note that by default all logical switches are set to false.</p>
@@ -1691,50 +1458,6 @@ solvers.</p>
 <p><strong>IFCHAR</strong> use characteristics for convection operator.</p>
 <p><strong>IFSYNC</strong> use mpi barriers to provide better timing information.</p>
 <p><strong>IFUSERVP</strong> user-defined properties (e.g., <span class="math">\(\mu\)</span>, <span class="math">\(\rho\)</span> varying with space and time.</p>
-</div>
-</div>
-<div class="section" id="list-of-parameters-in-size-file">
-<h2>List of Parameters in SIZE File<a class="headerlink" href="#list-of-parameters-in-size-file" title="Permalink to this headline">¶</a></h2>
-<div class="line-block">
-<div class="line"><strong>ldim</strong>: number of spatial dimensions (2 or 3).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lx1</strong>: number of (GLL) points in the <span class="math">\(x\)</span> -direction within each element of mesh1 (velocity) which is equal to the (polynomial order <span class="math">\(+1\)</span>) by definition.</div>
-<div class="line"><br /></div>
-<div class="line">(<code class="docutils literal"><span class="pre">lx1</span></code> recomeneded odd for better performance)</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lx2</strong>: number of (GLL) points in the <span class="math">\(x\)</span> -directions within each element of mesh2 (pressure). Use <code class="docutils literal"><span class="pre">lx2=lx1</span></code> for PN/PN formulation or <code class="docutils literal"><span class="pre">lx2=lx1-2</span></code> for PN/PN-2 formulation.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lxd</strong>: number of points for over integration (dealiasing), use three half rule e.g. for <code class="docutils literal"><span class="pre">lx1=8</span></code> use <code class="docutils literal"><span class="pre">lxd=12</span></code>.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lelx, lely, lelz</strong>: maximum number of elements per rank for global FDM (Fast Diagonalization Method) solver.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>ldimt</strong>:  maximum number of T-array fields (temperature + additional scalars).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lpmax</strong>: maximum number of ranks.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lpmin</strong>: minimum number of ranks.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lelg</strong>: maximum (global) number of elements (it is usually set more than the # of elements existing in the mesh, for making maximum use of memory is can be set to the exact number of mesh elements).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lelt</strong>: maximum number of local elements for T-mesh (per rank, <code class="docutils literal"><span class="pre">lelt</span></code> <span class="math">\(\geq\)</span> <code class="docutils literal"><span class="pre">lelg/np</span> <span class="pre">+1</span></code>).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lpelt</strong>: Number of elements of the perturbation field, number of perturbation fields</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lbelt</strong>: Total Number of elements of the B-field (MHD)</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lx1m</strong>: when the mesh is a moving type <code class="docutils literal"><span class="pre">lx1m=lx1</span></code>, otherwise it is set to 1.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lorder</strong>: maximum time integration order (2 or 3).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>maxobj</strong>: maximum number of objects. <span class="red">zero if not using objects?</span></div>
-<div class="line"><br /></div>
-<div class="line"><strong>maxmbr</strong>: maximum number of members in an object.</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lhis</strong>: maximum number of history points a single rank will read in (<code class="docutils literal"><span class="pre">NP*LHIS</span></code> <span class="math">\(&lt;\)</span> number of points in <code class="docutils literal"><span class="pre">hpts.in</span></code>).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>mxprev</strong>: maximum number of history entries for residual projection (recommended value: 20-30).</div>
-<div class="line"><br /></div>
-<div class="line"><strong>lgmres</strong>: dimension of Krylov subspace in GMRES (recommended value: 20-40).</div>
 </div>
 </div>
 <div class="section" id="commonly-used-variables">
@@ -2138,9 +1861,6 @@ solvers.</p>
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">col3(a,b,c,n)</span></code></dt>
 <dd>For <code class="docutils literal"><span class="pre">n</span></code> entries, calculates <code class="docutils literal"><span class="pre">a=b*c</span></code>.</dd>
 </dl>
-</div>
-<div class="section" id="commonly-used-functions">
-<h2>Commonly used Functions<a class="headerlink" href="#commonly-used-functions" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glmax(a,n)</span></code></p>
 <p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glamax(a,n)</span></code></p>
 <dl class="docutils">
@@ -2198,8 +1918,8 @@ supported. That means all fields included in base.fld will be overwritten. Usage
 </div>
 </div></blockquote>
 </div>
-<div class="section" id="field-file-format">
-<h2>Field File Format<a class="headerlink" href="#field-file-format" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="output-field-file-format">
+<h2>Output (Field File) Format<a class="headerlink" href="#output-field-file-format" title="Permalink to this headline">¶</a></h2>
 <p>The binary <code class="docutils literal"><span class="pre">.f%05d</span></code> file format is used to write and read data both in serial and parallel
 in Nek5000.</p>
 <p>The file is composed of:</p>
