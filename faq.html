@@ -35,7 +35,9 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/> 
+    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
+        <link rel="next" title="Appendices" href="appendix.html"/>
+        <link rel="prev" title="Theory" href="theory.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -88,13 +90,14 @@
               
             
             
-              <ul>
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
 
@@ -161,30 +164,75 @@
             
   <div class="section" id="faq">
 <span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
-<p><strong>How can I properly reference Nek5000?</strong></p>
-<p>todo</p>
-<p><strong>What is the license for Nek5000?</strong></p>
-<p>todo</p>
-<p><strong>Where can I find support or ask questions about Nek5000?</strong></p>
-<p><strong>Which platforms are supported by Nek5000?</strong></p>
+<div class="topic">
+<p class="topic-title first">How can I properly reference Nek5000?</p>
+<p>If you use our software, please cite the following:</p>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">NEK5000</span> <span class="n">Version</span> <span class="n">X</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span> <span class="n">Release</span> <span class="n">date</span><span class="o">.</span> <span class="n">Argonne</span> <span class="n">National</span> <span class="n">Laboratory</span><span class="p">,</span> <span class="n">Illinois</span><span class="o">.</span>
+<span class="n">Available</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nek5000</span><span class="o">.</span><span class="n">mcs</span><span class="o">.</span><span class="n">anl</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="topic">
+<p class="topic-title first">Where can I find support or ask questions about Nek5000?</p>
+<p>For any questions not answered in this document, you can email the Nek5000 community at large via the <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">mailing list</a>.</p>
+</div>
+<div class="topic">
+<p class="topic-title first">Which platforms are supported by Nek5000?</p>
 <p>All posix compliant operations system. Microsoft Windows is not supported.</p>
-<p><strong>Which compilers work?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">Which compilers work?</p>
 <p>Currently GNU, Intel, PGI and IBM compilers are supported.</p>
-<p><strong>What is the difference between Pn/Pn and Pn/Pn2?</strong></p>
-<p><strong>What turbulence models are available in Nek5000?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">What is the difference between Pn/Pn and Pn/Pn-2?</p>
+<p>In brief, in the Pn/Pn formulation the pressure equation is solved on the same mesh as the velocity equations (<span class="math">\(P_n\)</span>), whereas in Pn/Pn-2 it is solved on a GLL mesh of lower order (<span class="math">\(P_{n-2}\)</span>).
+Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontinuous pressure solution while Pn/Pn is able to better predict the wall shear.</p>
+</div>
+<div class="topic">
+<p class="topic-title first">What turbulence models are available in Nek5000?</p>
 <p>Only implicit LES (filtering or relaxtion term) is available.</p>
-<p><strong>How do I specify/change the polynomial order?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">How do I specify/change the polynomial order?</p>
 <p>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file.</p>
-<p><strong>What element types are supported?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">What element types are supported?</p>
 <p>Conformal curved quadrilateral/hexahedral elements.</p>
-<p><strong>How do I specify/change the solver runtime parameters?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">How do I specify/change the solver runtime parameters?</p>
 <p>See <code class="docutils literal"><span class="pre">.par</span></code> or <code class="docutils literal"><span class="pre">.rea</span></code> file.</p>
-<p><strong>What polynomial order should I use?</strong></p>
+</div>
+<div class="topic">
+<p class="topic-title first">What polynomial order should I use?</p>
 <p>This depends what you are after. The sweet spot is typically <span class="math">\(N=7\)</span> (lx1=8)</p>
-<p><strong>How can I generate a mesh for use with Nek5000?</strong></p>
-<p><a href="#id2"><span class="problematic" id="id3">**</span></a>How do I solve for a scalar?</p>
-<p><a href="#id4"><span class="problematic" id="id5">**</span></a>Where are my solution files and how do I visualize them?</p>
-<p><a href="#id6"><span class="problematic" id="id7">**</span></a>How do I obtain values of variables at a specific point?</p>
+</div>
+<div class="topic">
+<p class="topic-title first">How can I generate a mesh for use with Nek5000?</p>
+<p>Please see the section on <a class="reference external" href="https://nek5000.github.io/NekDoc/geometry.html">Mesh Generation and Conversion</a>.</p>
+</div>
+<div class="topic">
+<p class="topic-title first">How do I solve for a scalar?</p>
+<p>Nek5000 supports solving up to 99 additional scalars.  To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <code class="docutils literal"><span class="pre">.par</span></code> file (<a class="reference external" href="https://nek5000.github.io/NekDoc/user_files.html#par">for details</a>).</p>
+</div>
+<div class="topic">
+<p class="topic-title first">Where are my solution files and how do I visualize them?</p>
+<p>By default Nek5000 outputs solution files in the binary <code class="docutils literal"><span class="pre">0.f%05d</span></code> format.  These can be read by both VisIt and ParaView in conjunction with a meta-data file.  For more information see <a class="reference external" href="https://nek5000.github.io/NekDoc/quickstart.html#visualization">here</a>.</p>
+</div>
+<div class="topic">
+<p class="topic-title first">How do I obtain values of variables at a specific point?</p>
+<p>to do</p>
+</div>
+<div class="topic">
+<p class="topic-title first">Why is <code class="docutils literal"><span class="pre">userbc</span></code> only getting called for certain element faces?</p>
+<p><code class="docutils literal"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</p>
+</div>
+<div class="topic">
+<p class="topic-title first">The local coordinate axes of my elements are not aligned with the global coordinate system, is this normal?</p>
+<p>Yes, there is no guarantee that the elements are generated with any particular orientation (except if you use genbox).</p>
+</div>
 </div>
 
 
@@ -194,6 +242,15 @@
            </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="appendix.html" class="btn btn-neutral float-right" title="Appendices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="theory.html" class="btn btn-neutral" title="Theory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
