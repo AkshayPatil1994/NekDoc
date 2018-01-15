@@ -222,10 +222,6 @@ Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontin
 <p>By default Nek5000 outputs solution files in the binary <code class="docutils literal"><span class="pre">0.f%05d</span></code> format.  These can be read by both VisIt and ParaView in conjunction with a meta-data file.  For more information see <a class="reference external" href="https://nek5000.github.io/NekDoc/quickstart.html#visualization">here</a>.</p>
 </div>
 <div class="topic">
-<p class="topic-title first">How do I obtain values of variables at a specific point?</p>
-<p>to do</p>
-</div>
-<div class="topic">
 <p class="topic-title first">Why is <code class="docutils literal"><span class="pre">userbc</span></code> only getting called for certain element faces?</p>
 <p><code class="docutils literal"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</p>
 </div>
