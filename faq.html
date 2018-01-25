@@ -233,6 +233,11 @@ Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontin
 <p class="topic-title first">The local coordinate axes of my elements are not aligned with the global coordinate system, is this normal?</p>
 <p>Yes, there is no guarantee that the elements are generated with any particular orientation (except if you use genbox).</p>
 </div>
+<div class="topic">
+<p class="topic-title first">When trying to recompile after increasing the number of elements I get the error below. Why does this happen and how can I avoid it?</p>
+<p><code class="docutils literal"><span class="pre">relocation</span> <span class="pre">truncated</span> <span class="pre">to</span> <span class="pre">fit:</span> <span class="pre">R_X86_64</span> <span class="pre">against</span> <span class="pre">symbol</span> <span class="pre">'foo_'</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">COMMON</span> <span class="pre">section</span> <span class="pre">in</span> <span class="pre">obj/bar.o</span></code></p>
+<p>This happens when the resultant executable requires more memory allocation than available, usually because <code class="docutils literal"><span class="pre">lelt</span></code> is too large.  The best way to avoid this is to increase the minimum number of MPI ranks, <code class="docutils literal"><span class="pre">lpmin</span></code> in <code class="docutils literal"><span class="pre">SIZE</span></code>.  Alternatively, you can add <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> to the <code class="docutils literal"><span class="pre">FFLAGS</span></code> variable in <code class="docutils literal"><span class="pre">makenek</span></code>.</p>
+</div>
 </div>
 
 
