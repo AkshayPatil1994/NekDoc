@@ -212,11 +212,11 @@ in a production environment!</p>
 </div>
 <div class="topic">
 <p class="topic-title first">/examples</p>
-<p>contains example problems.</p>
+<p>contains example problems. Note: NOT included in the master branch on the GitHub repo.</p>
 </div>
 <div class="topic">
 <p class="topic-title first">/doc</p>
-<p>contains the user documentation.</p>
+<p>contains the user documentation. Note: NOT included in the master branch on the GitHub repo.</p>
 </div>
 <div class="topic">
 <p class="topic-title first">/3rd_party</p>
@@ -282,7 +282,9 @@ in a production environment!</p>
 </div>
 <div class="section" id="running-your-very-first-simulation">
 <h2>Running your very first simulation<a class="headerlink" href="#running-your-very-first-simulation" title="Permalink to this headline">¶</a></h2>
-<p>Hold your horses, this needs less than 5 min.</p>
+<p>Hold your horses, this needs less than 5 min.
+Begin by downloading the latest release tarball from <a class="reference external" href="https://github.com/Nek5000/Nek5000/releases">here</a>.
+Then follow the instructions below</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>cd ~
 tar -xvzf Nek5000_X.Y.tar.gz
 export PATH=$HOME/Nek5000/bin:$PATH
@@ -297,6 +299,7 @@ tail logfile                 # view solver output
 visnek eddy_uv; visit -o eddy_uv.nek5000 # requires a VisIt/Paraview installation
 </pre></div>
 </div>
+<p>Note that this will not work if you clone the master branch from GitHub, as the <code class="docutils literal"><span class="pre">examples</span></code> folder is NOT included.</p>
 </div>
 <div class="section" id="meshing">
 <h2>Meshing<a class="headerlink" href="#meshing" title="Permalink to this headline">¶</a></h2>
