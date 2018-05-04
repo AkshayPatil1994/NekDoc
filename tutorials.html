@@ -294,30 +294,30 @@ This can be done in the subroutine <code class="docutils literal"><span class="p
 <div class="section" id="control-parameters">
 <h3>Control parameters<a class="headerlink" href="#control-parameters" title="Permalink to this headline">¶</a></h3>
 <p>The par (parameter) file for this case is given as</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span>#
-# nek parameter file
-#
-[GENERAL]
-stopAt = endTime
-endTime  = 200
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1"># nek parameter file</span>
+<span class="c1">#</span>
+<span class="k">[GENERAL]</span>
+<span class="na">stopAt</span> <span class="o">=</span> <span class="s">endTime</span>
+<span class="na">endTime</span>  <span class="o">=</span> <span class="s">200</span>
 
-variableDT = yes
-timeStepper = bdf2
+<span class="na">variableDT</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">timeStepper</span> <span class="o">=</span> <span class="s">bdf2</span>
 
-writeControl = runTime
-writeInterval = 20
+<span class="na">writeControl</span> <span class="o">=</span> <span class="s">runTime</span>
+<span class="na">writeInterval</span> <span class="o">=</span> <span class="s">20</span>
 
-[PROBLEMTYPE]
-equation = incompNS
+<span class="k">[PROBLEMTYPE]</span>
+<span class="na">equation</span> <span class="o">=</span> <span class="s">incompNS</span>
 
-[PRESSURE]
-residualTol = 1e-5
-residualProj = yes
+<span class="k">[PRESSURE]</span>
+<span class="na">residualTol</span> <span class="o">=</span> <span class="s">1e-5</span>
+<span class="na">residualProj</span> <span class="o">=</span> <span class="s">yes</span>
 
-[VELOCITY]
-residualTol = 1e-8
-density = 1
-viscosity = -100
+<span class="k">[VELOCITY]</span>
+<span class="na">residualTol</span> <span class="o">=</span> <span class="s">1e-8</span>
+<span class="na">density</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">viscosity</span> <span class="o">=</span> <span class="s">-100</span>
 </pre></div>
 </div>
 <p>In choosing <code class="docutils literal"><span class="pre">viscosity</span> <span class="pre">=</span> <span class="pre">-100</span></code> we are actually setting the Reynolds number. This assumes that
