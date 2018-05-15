@@ -222,7 +222,7 @@ resolve the boundary layers. The boundary conditions are periodic in the x-direc
 </pre></div>
 </div>
 <p>On input provide the input file name (e.g. <code class="docutils literal"><span class="pre">hillp.box</span></code>).
-The tool will produce a binary mesh and boundary data file <code class="docutils literal"><span class="pre">hillp.re2</span></code>.</p>
+The tool will produce a binary mesh and boundary data file <code class="docutils literal"><span class="pre">box.re2</span></code> which should be renamed to <code class="docutils literal"><span class="pre">hillp.re2</span></code>.</p>
 </div>
 <div class="section" id="usr-file">
 <h3>usr File<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h3>
@@ -242,6 +242,9 @@ with <span class="math">\(y\in [0,3]\)</span> and <span class="math">\(x\in [0,9
 <span class="math">\((3-y)(A+A\tanh(|x-B|-C)\)</span>, goes to zero.  So that near <span class="math">\(y = 3\)</span>, the mesh recovers its original form.</p>
 <p>In Nek5000, we can specify this through <code class="docutils literal"><span class="pre">usrdat2</span></code> in the usr file as follows</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">usrdat2</span>
+
+<span class="c">! implicit none</span>
+
 <span class="k">include</span> <span class="s1">&#39;SIZE&#39;</span>
 <span class="k">include</span> <span class="s1">&#39;TOTAL&#39;</span>
 
@@ -276,14 +279,19 @@ with <span class="math">\(y\in [0,3]\)</span> and <span class="math">\(x\in [0,9
 <p>The next step is to specify the initial conditions.
 This can be done in the subroutine <code class="docutils literal"><span class="pre">useric</span></code> as follows:</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">useric</span><span class="p">(</span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">ieg</span><span class="p">)</span>
+
+<span class="c">! implicit none</span>
+
+<span class="kt">integer </span><span class="n">ix</span><span class="p">,</span><span class="n">iy</span><span class="p">,</span><span class="n">iz</span><span class="p">,</span><span class="n">eg</span>
+
 <span class="k">include</span> <span class="s1">&#39;SIZE&#39;</span>
 <span class="k">include</span> <span class="s1">&#39;TOTAL&#39;</span>
+<span class="k">include</span> <span class="s1">&#39;NEKUSE&#39;</span>
 
-<span class="n">iel</span> <span class="o">=</span> <span class="n">gllel</span><span class="p">(</span><span class="n">ieg</span><span class="p">)</span>
-
-<span class="n">ux</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">uy</span> <span class="o">=</span> <span class="mf">0.0</span>
-<span class="n">uz</span> <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">ux</span>   <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">uy</span>   <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">uz</span>   <span class="o">=</span> <span class="mf">0.0</span>
+<span class="n">temp</span> <span class="o">=</span> <span class="mf">0.0</span>
 
 <span class="k">return</span>
 <span class="k">end</span>
@@ -293,7 +301,8 @@ This can be done in the subroutine <code class="docutils literal"><span class="p
 </div>
 <div class="section" id="control-parameters">
 <h3>Control parameters<a class="headerlink" href="#control-parameters" title="Permalink to this headline">¶</a></h3>
-<p>The par (parameter) file for this case is given as</p>
+<p>The control parameters for any case are given in the <code class="docutils literal"><span class="pre">.par</span></code> file.
+For this case, using any text editor, create a new file called <code class="docutils literal"><span class="pre">hillp.par</span></code> and type in the following</p>
 <div class="highlight-ini"><div class="highlight"><pre><span></span><span class="c1">#</span>
 <span class="c1"># nek parameter file</span>
 <span class="c1">#</span>
@@ -302,6 +311,7 @@ This can be done in the subroutine <code class="docutils literal"><span class="p
 <span class="na">endTime</span>  <span class="o">=</span> <span class="s">200</span>
 
 <span class="na">variableDT</span> <span class="o">=</span> <span class="s">yes</span>
+<span class="na">targetCFL</span> <span class="o">=</span> <span class="s">0.4</span>
 <span class="na">timeStepper</span> <span class="o">=</span> <span class="s">bdf2</span>
 
 <span class="na">writeControl</span> <span class="o">=</span> <span class="s">runTime</span>
@@ -327,8 +337,9 @@ This can be done in the subroutine <code class="docutils literal"><span class="p
 <div class="section" id="size-file">
 <h3>SIZE file<a class="headerlink" href="#size-file" title="Permalink to this headline">¶</a></h3>
 <p>The static memory layout of Nek5000 requires the user to set some solver parameters through a so called <code class="docutils literal"><span class="pre">SIZE</span></code> file.
-Typically it’s a good idea to start from our template:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/SIZE.template .
+Typically it’s a good idea to start from our template.
+Copy the <code class="docutils literal"><span class="pre">SIZE.template</span></code> file from the core directory and rename it <code class="docutils literal"><span class="pre">SIZE</span></code> in the working directory:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/SIZE.template SIZE
 </pre></div>
 </div>
 <p>Then, adjust the following parameters in the BASIC section</p>
@@ -365,7 +376,7 @@ Additional details on the parameters in the <code class="docutils literal"><span
 <div class="highlight-bash"><div class="highlight"><pre><span></span>genmap
 </pre></div>
 </div>
-<p>On input specify <code class="docutils literal"><span class="pre">hillp</span></code> as your casename and press enter to use the default tolerance. This step will produce <code class="docutils literal"><span class="pre">hillp.map</span></code> which needs to be generated only once.</p>
+<p>On input specify <code class="docutils literal"><span class="pre">hillp</span></code> as your casename and press enter to use the default tolerance. This step will produce <code class="docutils literal"><span class="pre">hillp.ma2</span></code> which needs to be generated only once.</p>
 <p>Now you are all set, just run</p>
 <div class="highlight-bash"><div class="highlight"><pre><span></span>nekbmpi hillp <span class="m">4</span>
 </pre></div>
