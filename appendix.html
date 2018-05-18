@@ -93,7 +93,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
@@ -119,7 +119,6 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#commonly-used-subroutines">Commonly used Subroutines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#history-points">History Points</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#grid-to-grid-interpolation">Grid-to-Grid Interpolation</a></li>
 </ul>
 </li>
@@ -1816,7 +1815,7 @@ Available configurations options:</p>
 </div>
 </div>
 <div class="section" id="commonly-used-subroutines">
-<h2>Commonly used Subroutines<a class="headerlink" href="#commonly-used-subroutines" title="Permalink to this headline">¶</a></h2>
+<span id="append-subroutines"></span><h2>Commonly used Subroutines<a class="headerlink" href="#commonly-used-subroutines" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">rescale_x(x,x0,x1)</span></code></dt>
 <dd>Rescales the array <code class="docutils literal"><span class="pre">x</span></code> to be in the range <code class="docutils literal"><span class="pre">(x0,x1)</span></code>. This is usually called from <code class="docutils literal"><span class="pre">usrdat2</span></code> in the <code class="docutils literal"><span class="pre">.usr</span></code> file</dd>
@@ -1882,32 +1881,16 @@ Available configurations options:</p>
 <dl class="docutils">
 <dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">i8glsum(x,n)</span></code></dt>
 <dd>Computes the global sum of <code class="docutils literal"><span class="pre">x</span></code>, where the prefix, <code class="docutils literal"><span class="pre">i</span></code> specifies type integer, and <code class="docutils literal"><span class="pre">i8</span></code> specifies type integer*8.</dd>
+<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">surface_int(dphi,dS,phi,ielem,iside)</span></code></dt>
+<dd>Computes the surface integral of scalar array <code class="docutils literal"><span class="pre">phi</span></code> over face <code class="docutils literal"><span class="pre">iside</span></code> of element <code class="docutils literal"><span class="pre">ielem</span></code>.
+The resulting integral is storted in <code class="docutils literal"><span class="pre">dphi</span></code> and the area in <code class="docutils literal"><span class="pre">dS</span></code>.</dd>
 </dl>
 </div>
-<div class="section" id="history-points">
-<h2>History Points<a class="headerlink" href="#history-points" title="Permalink to this headline">¶</a></h2>
-<p>Assuming a case named <code class="docutils literal"><span class="pre">foo</span></code>, a list of monitor points can be defined in file <code class="docutils literal"><span class="pre">foo.his</span></code> to evaluate velocity,
-temperature, pressure and passive scalars. Results will be appended to this file each time subroutine <code class="docutils literal"><span class="pre">hpts()</span></code>
-is called. Depending on the numnber of monitoring points you may need to increase parameter <code class="docutils literal"><span class="pre">lhis</span></code> in SIZE.
-Usage example:</p>
-<ul>
-<li><p class="first">setup an ASCII file called <code class="docutils literal"><span class="pre">foo.his</span></code>, e.g.:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>3 !number of monitoring points
-1.1 -1.2 1.0
-. . .
-x y z
-</pre></div>
-</div>
-</li>
-<li><p class="first">add <code class="docutils literal"><span class="pre">call</span> <span class="pre">hpts()</span></code> to <code class="docutils literal"><span class="pre">userchk()</span></code></p>
-</li>
-</ul>
-</div>
 <div class="section" id="grid-to-grid-interpolation">
-<h2>Grid-to-Grid Interpolation<a class="headerlink" href="#grid-to-grid-interpolation" title="Permalink to this headline">¶</a></h2>
-<p>To restart from an existing field file onto a new mesh you can call the generic field file
-reader interpolation subroutine in userchk. Note that selection of specific fields to read is not currently
-supported. That means all fields included in base.fld will be overwritten. Usage example:</p>
+<span id="append-g2g"></span><h2>Grid-to-Grid Interpolation<a class="headerlink" href="#grid-to-grid-interpolation" title="Permalink to this headline">¶</a></h2>
+<p>To restart from an existing field file onto a new mesh you can call the generic field file reader interpolation subroutine in userchk.
+Note that selection of specific fields to read is not currently supported and the source file must include the coordinates.
+That means all fields included in <code class="docutils literal"><span class="pre">foo.f00001</span></code> will be overwritten. Usage example:</p>
 <blockquote>
 <div><div class="highlight-none"><div class="highlight"><pre><span></span>if (istep.eq.0) call gfldr(&#39;foo.f00001&#39;)
 </pre></div>

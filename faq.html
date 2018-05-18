@@ -93,15 +93,18 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general-info">General Info</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#compiling">Compiling</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#problem-formulation-models">Problem Formulation/Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pre-post-processing">Pre/Post Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-compiling-and-running">Installing, Compiling, and Running</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computational-speed">Computational Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#problem-setup">Problem Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#physical-models">Physical Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-processing">Pre-Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-Processing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
@@ -187,8 +190,8 @@ For more information see the <code class="docutils literal"><span class="pre">LI
 <blockquote>
 <div>For any questions not answered in this document, you can email the Nek5000 community at large via the <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">mailing list</a>.</div></blockquote>
 </div>
-<div class="section" id="compiling">
-<h2>Compiling<a class="headerlink" href="#compiling" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-compiling-and-running">
+<h2>Installing, Compiling, and Running<a class="headerlink" href="#installing-compiling-and-running" title="Permalink to this headline">¶</a></h2>
 <p><strong>Which platforms are supported by Nek5000?</strong></p>
 <blockquote>
 <div>All posix compliant operations system.
@@ -203,9 +206,34 @@ Compiling and running on Microsoft Windows 10 has been demonstrated using CMake 
 The best way to avoid this is to increase the minimum number of MPI ranks, <code class="docutils literal"><span class="pre">lpmin</span></code> in <code class="docutils literal"><span class="pre">SIZE</span></code>.
 Alternatively, you can add <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> to the <code class="docutils literal"><span class="pre">FFLAGS</span></code> variable in <code class="docutils literal"><span class="pre">makenek</span></code>.</p>
 </div></blockquote>
+<p><strong>How do I launch a parallel run?</strong></p>
+<blockquote>
+<div>Assuming your machine has MPI configured correctly and you have pointed your <code class="docutils literal"><span class="pre">makenek</span></code> file to the correct compilers, parallel runs can be launced with the included <code class="docutils literal"><span class="pre">nekmpi</span></code> and <code class="docutils literal"><span class="pre">nekbmpi</span></code> scripts.
+If you are running on a cluster, consult your sysadmin to write an appropriate submission script.</div></blockquote>
+<p><strong>How do I run the examples?</strong></p>
+<blockquote>
+<div>The examples are included by default in the release tarball and the entire suite can be run with the NekTests.py script.
+Each example should contain the appropriate files to be run manually as well.</div></blockquote>
 </div>
-<div class="section" id="problem-formulation-models">
-<h2>Problem Formulation/Models<a class="headerlink" href="#problem-formulation-models" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="computational-speed">
+<h2>Computational Speed<a class="headerlink" href="#computational-speed" title="Permalink to this headline">¶</a></h2>
+<p><strong>How many elements should I have per processor?</strong></p>
+<blockquote>
+<div>This is highly dependent on the computer architecture you are using and ranges anywhere from a couple 100 in a workstation environment down to under 10 on a Blue Gene.
+This will also depend on the polynomial order, with a higher order running more efficiently on more cores.
+If possible, we recommend running a short scaling test by recording the amount of time required to run a set numer of time steps for various MPI ranks to find your particular strong-scaling limit.</div></blockquote>
+</div>
+<div class="section" id="problem-setup">
+<h2>Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
+<p><strong>Why is it important to non-dimensionalize my case?</strong></p>
+<blockquote>
+<div>Nek5000 can be run with dimensions, but the solver tolerances assume the case has been non-dimensionalized properly.
+Additionally, cases which have been non-dimensionalized tend to be more stable and run faster.</div></blockquote>
+<p><strong>How do I choose solver tolerances?</strong></p>
+<blockquote>
+<div>Depends on how accurate you need your simulation to be.
+Typical values are <span class="math">\(10^{-6}\)</span> for velocity and scalars and <span class="math">\(10^{-5}\)</span> for pressure.
+Note that solver tolerances do not represent the accuracy of the solution, but rather the accuracy in the update per time step, so these errors will accumulate for long running simulations.</div></blockquote>
 <p><strong>What is the difference between Pn/Pn and Pn/Pn-2?</strong></p>
 <blockquote>
 <div>In brief, in the Pn/Pn formulation the pressure equation is solved on the same mesh as the velocity equations (<span class="math">\(P_n\)</span>), whereas in Pn/Pn-2 it is solved on a GLL mesh of lower order (<span class="math">\(P_{n-2}\)</span>).
@@ -218,32 +246,42 @@ Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontin
 <div>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file.</div></blockquote>
 <p><strong>How do I specify/change the solver runtime parameters?</strong></p>
 <blockquote>
-<div>See <code class="docutils literal"><span class="pre">.par</span></code> or <code class="docutils literal"><span class="pre">.rea</span></code> file.</div></blockquote>
+<div>See the section on the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
 <p><strong>Why is ``userbc`` only called for certain element faces?</strong></p>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</div></blockquote>
+</div>
+<div class="section" id="physical-models">
+<h2>Physical Models<a class="headerlink" href="#physical-models" title="Permalink to this headline">¶</a></h2>
 <p><strong>How do I solve for a scalar?</strong></p>
 <blockquote>
-<div>Nek5000 supports solving up to 99 additional scalars.  To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <code class="docutils literal"><span class="pre">.par</span></code> file (<a class="reference external" href="https://nek5000.github.io/NekDoc/user_files.html#par">for details</a>).</div></blockquote>
+<div>Nek5000 supports solving up to 99 additional scalars.
+To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
 <p><strong>What turbulence models are available in Nek5000?</strong></p>
 <blockquote>
 <div>LES with explicit filtering (spectral damping) or high-pass filtering is available.
 Other turbulence models are available through user file implementation including: dynamic Smagorinsky (turbChannel example), k-ω, k-ω SST, etc. (contact the developers for more information).</div></blockquote>
 </div>
-<div class="section" id="pre-post-processing">
-<h2>Pre/Post Processing<a class="headerlink" href="#pre-post-processing" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pre-processing">
+<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">¶</a></h2>
 <p><strong>How can I generate a mesh for use with Nek5000?</strong></p>
 <blockquote>
-<div>Please see the section on <a class="reference external" href="https://nek5000.github.io/NekDoc/geometry.html">Mesh Generation and Conversion</a>.</div></blockquote>
+<div>Please see the section on <a class="reference internal" href="geometry.html#mesh-gen"><span class="std std-ref">Mesh Generation and Conversion</span></a>.</div></blockquote>
 <p><strong>What element types are supported?</strong></p>
 <blockquote>
 <div>Conformal curved quadrilateral/hexahedral elements.</div></blockquote>
+<p><strong>How do I convert a mesh to Nek5000?</strong></p>
+<blockquote>
+<div>We currently support conversion from the exodus file format with the <code class="docutils literal"><span class="pre">exo2nek</span></code> utility.</div></blockquote>
+</div>
+<div class="section" id="post-processing">
+<h2>Post-Processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h2>
 <p><strong>The local coordinate axes of my elements are not aligned with the global coordinate system, is this normal?</strong></p>
 <blockquote>
 <div>Yes, there is no guarantee that the elements are generated with any particular orientation (except if you use genbox).</div></blockquote>
 <p><strong>Where are my solution files and how do I visualize them?</strong></p>
 <blockquote>
-<div>By default Nek5000 outputs solution files in the binary <code class="docutils literal"><span class="pre">0.f%05d</span></code> format.  These can be read by both VisIt and ParaView in conjunction with a meta-data file.  For more information see <a class="reference external" href="https://nek5000.github.io/NekDoc/quickstart.html#visualization">here</a>.</div></blockquote>
+<div>By default Nek5000 outputs solution files in the binary <code class="docutils literal"><span class="pre">0.f%05d</span></code> format.  These can be read by both VisIt and ParaView in conjunction with a meta-data file.  For more information see <a class="reference internal" href="quickstart.html#qstart-vis"><span class="std std-ref">Visualization</span></a>.</div></blockquote>
 <p><strong>I have calculated additional fields from my solution (e.g. vorticity), how do I visualize them?</strong></p>
 <blockquote>
 <div>Using the <code class="docutils literal"><span class="pre">.par</span></code> file, define an additional scalar and include <code class="docutils literal"><span class="pre">solver</span> <span class="pre">=</span> <span class="pre">none</span></code>, for example:</div></blockquote>
@@ -253,6 +291,13 @@ solver = none
 </div>
 <blockquote>
 <div>Then store the calculated field in <code class="docutils literal"><span class="pre">t(1,1,1,1,iscal+1)</span></code> where <code class="docutils literal"><span class="pre">iscal</span></code> is your passive scalar index (in this example 1).</div></blockquote>
+<p><strong>How do I obtain values of variables at a specific point?</strong></p>
+<blockquote>
+<div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="case_files.html#case-files-his"><span class="std std-ref">History Points</span></a> file.</div></blockquote>
+<p><strong>How do I compute an integral over a boundary patch?</strong></p>
+<blockquote>
+<div>The included subroutine <code class="docutils literal"><span class="pre">surface_int</span></code> can be called in a loop over the appropriate element faces.
+This subroutine is further described in the section on <a class="reference internal" href="routines.html#append-subroutines"><span class="std std-ref">Commonly used Subroutines</span></a>.</div></blockquote>
 </div>
 </div>
 

@@ -36,7 +36,7 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
-        <link rel="next" title="Case Files" href="user_files.html"/>
+        <link rel="next" title="Case Files" href="case_files.html"/>
         <link rel="prev" title="Quickstart" href="quickstart.html"/> 
 
   
@@ -110,7 +110,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="user_files.html">Case Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
 <li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
@@ -226,7 +226,7 @@ The tool will produce a binary mesh and boundary data file <code class="docutils
 </div>
 <div class="section" id="usr-file">
 <h3>usr File<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="user_files.html#user-files-usr"><span class="std std-ref">usr</span></a> file implements various subroutines to allow the user to interact with the solver.</p>
+<p>The <a class="reference internal" href="case_files.html#case-files-usr"><span class="std std-ref">usr</span></a> file implements various subroutines to allow the user to interact with the solver.</p>
 <p>To get started we copy the template to our case directory</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/zero.usr hillp.usr
 </pre></div>
@@ -332,7 +332,7 @@ For this case, using any text editor, create a new file called <code class="docu
 </div>
 <p>In choosing <code class="docutils literal"><span class="pre">viscosity</span> <span class="pre">=</span> <span class="pre">-100</span></code> we are actually setting the Reynolds number. This assumes that
 <span class="math">\(\rho \times u_b \times h = 1\)</span> where <span class="math">\(u_b\)</span> denotes the bulk velocity and <span class="math">\(h\)</span> the hill height.</p>
-<p>We have set the calculation to stop at the physical time of <span class="math">\(T=200\)</span> (<code class="docutils literal"><span class="pre">endTime=200</span></code>) which is roughly 22 flow-thru time units (based on the bulk velocity <span class="math">\(u_b\)</span> and length of periodic pitch, <span class="math">\(L=9\)</span>).  Additional details on the names of keys in the <code class="docutils literal"><span class="pre">.par</span></code> file can be found <a class="reference internal" href="user_files.html#user-files-par"><span class="std std-ref">here</span></a>.</p>
+<p>We have set the calculation to stop at the physical time of <span class="math">\(T=200\)</span> (<code class="docutils literal"><span class="pre">endTime=200</span></code>) which is roughly 22 flow-thru time units (based on the bulk velocity <span class="math">\(u_b\)</span> and length of periodic pitch, <span class="math">\(L=9\)</span>).  Additional details on the names of keys in the <code class="docutils literal"><span class="pre">.par</span></code> file can be found <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="size-file">
 <h3>SIZE file<a class="headerlink" href="#size-file" title="Permalink to this headline">¶</a></h3>
@@ -360,7 +360,7 @@ Copy the <code class="docutils literal"><span class="pre">SIZE.template</span></
 </pre></div>
 </div>
 <p>For this tutorial we have set our polynomial order to be <span class="math">\(N=7\)</span> - this is defined in the <code class="docutils literal"><span class="pre">SIZE</span></code> file above as <code class="docutils literal"><span class="pre">lx1=8</span></code> which indices that there are 8 points in each spatial dimension of every element.
-Additional details on the parameters in the <code class="docutils literal"><span class="pre">SIZE</span></code> file are given in <a class="reference internal" href="user_files.html"><span class="doc">Case Files</span></a>.</p>
+Additional details on the parameters in the <code class="docutils literal"><span class="pre">SIZE</span></code> file are given in <a class="reference internal" href="case_files.html"><span class="doc">Case Files</span></a>.</p>
 </div>
 <div class="section" id="compilation">
 <h3>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h3>
@@ -417,7 +417,7 @@ to use Visit/Paraview. One can use the script <em>visnek</em>, to be found in <c
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user_files.html" class="btn btn-neutral float-right" title="Case Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="case_files.html" class="btn btn-neutral float-right" title="Case Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="quickstart.html" class="btn btn-neutral" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
