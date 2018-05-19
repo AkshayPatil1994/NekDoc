@@ -92,16 +92,12 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Quickstart</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#downloading-the-code">Downloading the code</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#directory-structure">Directory structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#case-files">Case files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scripts">Scripts</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-your-very-first-simulation">Running your very first simulation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#meshing">Meshing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visualization">Visualization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#reporting-bugs">Reporting Bugs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#contributing">Contributing</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
@@ -175,17 +171,6 @@
             
   <div class="section" id="quickstart">
 <span id="qstart"></span><h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="downloading-the-code">
-<h2>Downloading the code<a class="headerlink" href="#downloading-the-code" title="Permalink to this headline">¶</a></h2>
-<p>All release tarballs can be found <a class="reference external" href="https://github.com/Nek5000/Nek5000/releases">here</a>.
-We do <strong>not</strong> recommend using the master branch on <a class="reference external" href="https://github.com/Nek5000/Nek5000">GitHub</a>
-in a production environment!</p>
-<p>If you use our software, please cite the following:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">NEK5000</span> <span class="n">Version</span> <span class="n">X</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span> <span class="n">Release</span> <span class="n">date</span><span class="o">.</span> <span class="n">Argonne</span> <span class="n">National</span> <span class="n">Laboratory</span><span class="p">,</span> <span class="n">Illinois</span><span class="o">.</span>
-<span class="n">Available</span><span class="p">:</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">nek5000</span><span class="o">.</span><span class="n">mcs</span><span class="o">.</span><span class="n">anl</span><span class="o">.</span><span class="n">gov</span><span class="o">.</span>
-</pre></div>
-</div>
-</div>
 <div class="section" id="directory-structure">
 <h2>Directory structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
 <p>Here’s a brief description of each top-level directory:</p>
@@ -310,31 +295,6 @@ visnek eddy_uv; visit -o eddy_uv.nek5000 # requires a VisIt/Paraview installatio
 <p>Nek5000 output (<code class="docutils literal"><span class="pre">.fld</span></code> or <code class="docutils literal"><span class="pre">0.f%05d</span></code>) files can be read by <a class="reference external" href="https://wci.llnl.gov/simulation/computer-codes/visit/">VisIt</a> or
 <a class="reference external" href="https://www.paraview.org/">ParaView</a>. This requires using <code class="docutils literal"><span class="pre">visnek</span></code> to generate a metadata file.
 There is also an build-in X-Window based postprocessor called <code class="docutils literal"><span class="pre">POSTNEK</span></code> located in tools.</p>
-</div>
-<div class="section" id="troubleshooting">
-<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
-<p>If you run into problems compiling, installing, or running Nek5000, first check the User’s Guide.
-If you are not able to find a solution to your problem there, please send a message
-to the User’s Group <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">mailing list</a>.</p>
-</div>
-<div class="section" id="reporting-bugs">
-<h2>Reporting Bugs<a class="headerlink" href="#reporting-bugs" title="Permalink to this headline">¶</a></h2>
-<p>Nek5000 is hosted on GitHub and all bugs are reported and tracked through the <a class="reference external" href="https://github.com/Nek5000/Nek5000/issues">Issues</a> feature on GitHub.
-However, GitHub Issues should not be used for common troubleshooting purposes. If you are having trouble
-installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
-If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
-you may create an Issue on GitHub.</p>
-</div>
-<div class="section" id="contributing">
-<h2>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h2>
-<p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
-<ul class="simple">
-<li>follow the usual “fork-and-pull” Git workflow</li>
-<li>all development happens on the master branch</li>
-<li>anything in master is always deployable</li>
-<li>upcoming releases get their own tags out of master</li>
-</ul>
-<p>If you are planning a large contribution, we encourage you to discuss the concept here on GitHub and interact with us frequently to ensure that your effort is well-directed.</p>
 </div>
 </div>
 
