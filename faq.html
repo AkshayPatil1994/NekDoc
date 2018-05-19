@@ -36,8 +36,8 @@
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
     <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/>
-        <link rel="next" title="Appendices" href="appendix.html"/>
-        <link rel="prev" title="Theory" href="theory.html"/> 
+        <link rel="next" title="Tutorials" href="tutorials.html"/>
+        <link rel="prev" title="Quickstart" href="quickstart.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -92,21 +92,20 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-compiling-and-running">Installing, Compiling, and Running</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pre-processing">Pre-Processing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#problem-setup">Problem Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#physical-models">Physical Models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#computational-speed">Computational Speed</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-Processing</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
 
@@ -186,19 +185,29 @@
 <blockquote>
 <div>Nek5000 is licensed under BSD.
 For more information see the <code class="docutils literal"><span class="pre">LICENSE</span></code> file included with the distribution in the root level directory.</div></blockquote>
-<p><strong>Where can I find support or ask questions about Nek5000?</strong></p>
+<p><strong>Where can I get help?</strong></p>
 <blockquote>
-<div>For any questions not answered in this document, you can email the Nek5000 community at large via the <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">mailing list</a>.</div></blockquote>
+<div>If you have a question, first check the mailing list <a class="reference external" href="https://lists.mcs.anl.gov/pipermail/nek5000-users/">archive</a> to see if your question is already answered somewhere.
+The mailing list also serves as a primary
+support channel. Please subscribe <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">here</a>.
+Postings from email addresses that are not on the list are held for moderation</div></blockquote>
 </div>
 <div class="section" id="installing-compiling-and-running">
 <h2>Installing, Compiling, and Running<a class="headerlink" href="#installing-compiling-and-running" title="Permalink to this headline">¶</a></h2>
+<p><strong>What version of the code should I use?</strong></p>
+<blockquote>
+<div>We strongly recommend to always use the latest <a class="reference external" href="https://github.com/Nek5000/Nek5000/releases">release</a>  available.</div></blockquote>
 <p><strong>Which platforms are supported by Nek5000?</strong></p>
 <blockquote>
 <div>All posix compliant operations system.
 Compiling and running on Microsoft Windows 10 has been demonstrated using CMake and MinGW, although this is <strong>not</strong> supported.</div></blockquote>
+<p><strong>Can Nek5000 run on GPUs?</strong></p>
+<blockquote>
+<div>Currently there is no support for GPUs. We are actively working on a high-performance GPU version but this is
+a topic of active research.</div></blockquote>
 <p><strong>Which compilers work?</strong></p>
 <blockquote>
-<div>Currently GNU, Intel, PGI and IBM compilers are supported.</div></blockquote>
+<div>Currently Intel, PGI, IBM and GNU compilers are supported.</div></blockquote>
 <p><strong>How much memory is required?</strong></p>
 <p>The memory footprint of a run depends on many factors and is printed to
 screen whenever Nek5000 exits. What follows is a rough a-priori estimate:</p>
@@ -206,8 +215,7 @@ screen whenever Nek5000 exits. What follows is a rough a-priori estimate:</p>
 </pre></div>
 </div>
 <p>The memory allocated by MPI will depend heavily on the total number of
-ranks and the considered MPI implementation. For large ranks counts (say &gt; 100‘000) it’s
-easily 50-100MB.</p>
+ranks and the considered MPI implementation. For large rank counts (say &gt; 100‘000) it’s easily 50-100MB.</p>
 <p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
 take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
 <p><strong>Why does the compiler issue relocation errors?</strong></p>
@@ -215,12 +223,16 @@ take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
 <div><p><code class="docutils literal"><span class="pre">relocation</span> <span class="pre">truncated</span> <span class="pre">to</span> <span class="pre">fit:</span> <span class="pre">R_X86_64</span> <span class="pre">against</span> <span class="pre">symbol</span> <span class="pre">'foo_'</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">COMMON</span> <span class="pre">section</span> <span class="pre">in</span> <span class="pre">obj/bar.o</span></code></p>
 <p>This happens when the resultant executable requires more memory allocation than available, usually because <code class="docutils literal"><span class="pre">lelt</span></code> is too large.
 The best way to avoid this is to increase the minimum number of MPI ranks, <code class="docutils literal"><span class="pre">lpmin</span></code> in <code class="docutils literal"><span class="pre">SIZE</span></code>.
-Alternatively, you can add <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> to the <code class="docutils literal"><span class="pre">FFLAGS</span></code> variable in <code class="docutils literal"><span class="pre">makenek</span></code>.</p>
+Alternatively, you can add <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> to the <code class="docutils literal"><span class="pre">FFLAGS/CFLAGS</span></code> variable in <code class="docutils literal"><span class="pre">makenek</span></code>.</p>
 </div></blockquote>
+<p><strong>Why does the code use static memory allocation?</strong></p>
+<blockquote>
+<div>It is easy to program, produces fast code and is less error prone. The drawback of recompilation is not relevant
+as full rebuild takes less than 1 minute.</div></blockquote>
 <p><strong>How do I launch a parallel run?</strong></p>
 <blockquote>
-<div>Assuming your machine has MPI configured correctly and you have pointed your <code class="docutils literal"><span class="pre">makenek</span></code> file to the correct compilers, parallel runs can be launced with the included <code class="docutils literal"><span class="pre">nekmpi</span></code> and <code class="docutils literal"><span class="pre">nekbmpi</span></code> scripts.
-If you are running on a cluster, consult your sysadmin to write an appropriate submission script.</div></blockquote>
+<div>Assuming your machine has MPI installed correctly, parallel runs can be launced with the included <code class="docutils literal"><span class="pre">nekmpi</span></code> and <code class="docutils literal"><span class="pre">nekbmpi</span></code> scripts in <code class="docutils literal"><span class="pre">Nek5000/bin</span></code>.
+If you are running on a machine with a queuing system, consult your sysadmin how to submit a job.</div></blockquote>
 <p><strong>How do I run the examples?</strong></p>
 <blockquote>
 <div>The examples are included by default in the release tarball (see example directory). There is nothing special you need
@@ -237,9 +249,6 @@ to do as they are ready to run.</div></blockquote>
 <p><strong>How do I convert a mesh to Nek5000?</strong></p>
 <blockquote>
 <div>We currently support conversion from the exodus file format with the <code class="docutils literal"><span class="pre">exo2nek</span></code> utility.</div></blockquote>
-</div>
-<div class="section" id="problem-setup">
-<h2>Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
 <p><strong>Why is it important to non-dimensionalize my case?</strong></p>
 <blockquote>
 <div>Nek5000 can be run with dimensions, but we STRONGLY recommend that the case has been non-dimensionalized properly.
@@ -270,13 +279,13 @@ Note, do not use <span class="math">\(N&lt;5\)</span> as this results in a very 
 <p><strong>Why is ``userbc`` only called for certain element faces?</strong></p>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</div></blockquote>
-</div>
-<div class="section" id="physical-models">
-<h2>Physical Models<a class="headerlink" href="#physical-models" title="Permalink to this headline">¶</a></h2>
 <p><strong>How do I solve for a scalar?</strong></p>
 <blockquote>
 <div>Nek5000 supports solving up to 99 additional scalars.
 To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
+</div>
+<div class="section" id="physical-models">
+<h2>Physical Models<a class="headerlink" href="#physical-models" title="Permalink to this headline">¶</a></h2>
 <p><strong>What turbulence models are available in Nek5000?</strong></p>
 <blockquote>
 <div>For LES we provide an explicit filtering approach or a relaxation term model.
@@ -284,6 +293,10 @@ RANS turbulence models (k-ω, k-ω SST, etc.) are not an integral part of the co
 </div>
 <div class="section" id="computational-speed">
 <h2>Computational Speed<a class="headerlink" href="#computational-speed" title="Permalink to this headline">¶</a></h2>
+<p><strong>Are there any compiler specific flags I should use?</strong></p>
+<blockquote>
+<div>Compile with vector instructions like AVX, AVX2 using FFLAGS and CFLAGS
+in makenek.</div></blockquote>
 <p><strong>How many elements should I have per processes?</strong></p>
 <blockquote>
 <div>The upper limit is given by the available memory. The lower limit is (technically) 1 but you may want to have more
@@ -293,20 +306,16 @@ On most machines you need more than 10 elements per MPI rank to get a parallel e
 <blockquote>
 <div>This depends, you may want to turn it on e.g. for pressure but noti for velocity. All this is case specific and a simple
 experiment will show if it pays off or not.</div></blockquote>
-<p><strong>What can I do to get best performance?</strong></p>
+<p><strong>What other things can I do to get best performance?</strong></p>
 <blockquote>
 <div><ul class="simple">
 <li>Design your mesh for a polynomial order N=7</li>
-<li>Reduce polynomial order used for overintegration (strict 3/2 rule might be overly conservative)</li>
-<li>Fine tune the number of elements per MPI rank to get a reasonable parallel efficiency</li>
+<li>Tune your solver tolerances</li>
+<li>Increase time step size by switching to 2nd order BDF and OIFS extrapolation (target Courant number 2-5)</li>
 <li>Use AMG instead of XXT as coarse grid solver</li>
 <li>Avoid unnecessary time consuming operations in <code class="docutils literal"><span class="pre">usrchk/userbc</span></code></li>
-<li>Enable tuned MxM implementation for your platform (see <code class="docutils literal"><span class="pre">makenek</span></code> options)</li>
-<li>Compile with vector instructions like AVX, AVX2 using FFLAGS and CFLAGS in makenek</li>
-<li>Try to use residual projection</li>
-<li>Tune your solver tolerances</li>
-<li>Increase time step size (target Courant number 2-4) by switching to 2nd order BDF and OIFS extrapolation</li>
 <li>Use binary input files e.g. <code class="docutils literal"><span class="pre">.re2</span></code> and <code class="docutils literal"><span class="pre">.ma2</span></code> to minimize solver initialization time</li>
+<li>Use a high performance MXM implementation for your platform (see <code class="docutils literal"><span class="pre">makenek</span></code> options)</li>
 </ul>
 </div></blockquote>
 </div>
@@ -321,21 +330,29 @@ experiment will show if it pays off or not.</div></blockquote>
 <li>increase spatial resolution</li>
 <li>provide a better initial condition</li>
 <li>check that your boundary conditions are meaningful and correctly implemented</li>
-<li>visualize the solution and look for unexpected anomalies</li>
+<li>visualize the solution and look for anomalies</li>
 </ul>
 </div></blockquote>
 </div>
 <div class="section" id="post-processing">
 <h2>Post-Processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h2>
+<p><strong>What options are available</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li>For data analysis you use Nek5000’s internal machinery through the usr file.</li>
+<li>Solution files can be read by VisIt and Paraview. For more information see <a class="reference internal" href="quickstart.html#qstart-vis"><span class="std std-ref">Visualization</span></a>.</li>
+<li>Various user contributions in <a class="reference external" href="https://github.com/Nek5000/NekBazaar/">NekBazaar</a></li>
+</ul>
+</div></blockquote>
 <p><strong>The local coordinate axes of my elements are not aligned with the global coordinate system, is this normal?</strong></p>
 <blockquote>
 <div>Yes, there is no guarantee that the elements are generated with any particular orientation (except if you use genbox).</div></blockquote>
-<p><strong>Where are my solution files and how do I visualize them?</strong></p>
+<p><strong>Where are my solution files?</strong></p>
 <blockquote>
-<div>By default Nek5000 outputs solution files in the binary <code class="docutils literal"><span class="pre">0.f%05d</span></code> format.  These can be read by both VisIt and ParaView in conjunction with a meta-data file.  For more information see <a class="reference internal" href="quickstart.html#qstart-vis"><span class="std std-ref">Visualization</span></a>.</div></blockquote>
+<div>By default Nek5000 outputs solution files in binary (filename: <code class="docutils literal"><span class="pre">&lt;casename&gt;.f%05d</span></code>) .</div></blockquote>
 <p><strong>I have calculated additional fields from my solution (e.g. vorticity), how do I visualize them?</strong></p>
 <blockquote>
-<div>Using the <code class="docutils literal"><span class="pre">.par</span></code> file, define an additional scalar and include <code class="docutils literal"><span class="pre">solver</span> <span class="pre">=</span> <span class="pre">none</span></code>, for example:</div></blockquote>
+<div>Using the <code class="docutils literal"><span class="pre">.par</span></code> file, define an additional scalar, for example:</div></blockquote>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[SCALAR01] #vorticity
 solver = none
 </pre></div>
@@ -344,11 +361,8 @@ solver = none
 <div>Then store the calculated field in <code class="docutils literal"><span class="pre">t(1,1,1,1,iscal+1)</span></code> where <code class="docutils literal"><span class="pre">iscal</span></code> is your passive scalar index (in this example 1).</div></blockquote>
 <p><strong>How do I obtain values of variables at a specific point?</strong></p>
 <blockquote>
-<div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="case_files.html#case-files-his"><span class="std std-ref">History Points</span></a> file.</div></blockquote>
-<p><strong>How do I compute an integral over a boundary patch?</strong></p>
-<blockquote>
-<div>The included subroutine <code class="docutils literal"><span class="pre">surface_int</span></code> can be called in a loop over the appropriate element faces.
-This subroutine is further described in the section on <a class="reference internal" href="routines.html#append-subroutines"><span class="std std-ref">Commonly used Subroutines</span></a>.</div></blockquote>
+<div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="case_files.html#case-files-his"><span class="std std-ref">History Points</span></a> file.
+You can also use the spectral interpolation tool (see examples for more details).</div></blockquote>
 </div>
 </div>
 
@@ -362,10 +376,10 @@ This subroutine is further described in the section on <a class="reference inter
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="appendix.html" class="btn btn-neutral float-right" title="Appendices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="tutorials.html" class="btn btn-neutral float-right" title="Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="theory.html" class="btn btn-neutral" title="Theory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="quickstart.html" class="btn btn-neutral" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
