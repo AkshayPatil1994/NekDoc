@@ -95,15 +95,15 @@
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
-<li class="toctree-l1"><a class="reference internal" href="perf.html">Performance and Memory Considerations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">FAQ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#general-info">General Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general">General</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#installing-compiling-and-running">Installing, Compiling, and Running</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#computational-speed">Computational Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-processing">Pre-Processing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#problem-setup">Problem Setup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#physical-models">Physical Models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#pre-processing">Pre-Processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#computational-speed">Computational Speed</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#post-processing">Post-Processing</a></li>
 </ul>
 </li>
@@ -173,8 +173,8 @@
             
   <div class="section" id="faq">
 <span id="id1"></span><h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="general-info">
-<h2>General Info<a class="headerlink" href="#general-info" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
 <p><strong>How can I properly reference Nek5000?</strong></p>
 <blockquote>
 <div>If you use our software, please cite the following:</div></blockquote>
@@ -199,7 +199,18 @@ Compiling and running on Microsoft Windows 10 has been demonstrated using CMake 
 <p><strong>Which compilers work?</strong></p>
 <blockquote>
 <div>Currently GNU, Intel, PGI and IBM compilers are supported.</div></blockquote>
-<p><strong>When trying to recompile after increasing the number of elements I get the error below. Why does this happen and how can I avoid it?</strong></p>
+<p><strong>How much memory is required?</strong></p>
+<p>The memory footprint of a run depends on many factors and is printed to
+screen whenever Nek5000 exits. What follows is a rough a-priori estimate:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lx1</span><span class="o">*</span><span class="n">ly1</span><span class="o">*</span><span class="n">lz1</span><span class="o">*</span><span class="n">lelt</span> <span class="o">*</span> <span class="mi">3000</span><span class="n">byte</span> <span class="o">+</span> <span class="n">lelg</span> <span class="o">*</span> <span class="mi">12</span><span class="n">byte</span> <span class="o">+</span> <span class="n">MPI</span>
+</pre></div>
+</div>
+<p>The memory allocated by MPI will depend heavily on the total number of
+ranks and the considered MPI implementation. For large ranks counts (say &gt; 100‘000) it’s
+easily 50-100MB.</p>
+<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
+take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+<p><strong>Why does the compiler issue relocation errors?</strong></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">relocation</span> <span class="pre">truncated</span> <span class="pre">to</span> <span class="pre">fit:</span> <span class="pre">R_X86_64</span> <span class="pre">against</span> <span class="pre">symbol</span> <span class="pre">'foo_'</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">COMMON</span> <span class="pre">section</span> <span class="pre">in</span> <span class="pre">obj/bar.o</span></code></p>
 <p>This happens when the resultant executable requires more memory allocation than available, usually because <code class="docutils literal"><span class="pre">lelt</span></code> is too large.
@@ -212,38 +223,47 @@ Alternatively, you can add <code class="docutils literal"><span class="pre">-mcm
 If you are running on a cluster, consult your sysadmin to write an appropriate submission script.</div></blockquote>
 <p><strong>How do I run the examples?</strong></p>
 <blockquote>
-<div>The examples are included by default in the release tarball and the entire suite can be run with the NekTests.py script.
-Each example should contain the appropriate files to be run manually as well.</div></blockquote>
+<div>The examples are included by default in the release tarball (see example directory). There is nothing special you need
+to do as they are ready to run.</div></blockquote>
 </div>
-<div class="section" id="computational-speed">
-<h2>Computational Speed<a class="headerlink" href="#computational-speed" title="Permalink to this headline">¶</a></h2>
-<p><strong>How many elements should I have per processor?</strong></p>
+<div class="section" id="pre-processing">
+<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">¶</a></h2>
+<p><strong>How can I generate a mesh for use with Nek5000?</strong></p>
 <blockquote>
-<div>This is highly dependent on the computer architecture you are using and ranges anywhere from a couple 100 in a workstation environment down to under 10 on a Blue Gene.
-This will also depend on the polynomial order, with a higher order running more efficiently on more cores.
-If possible, we recommend running a short scaling test by recording the amount of time required to run a set numer of time steps for various MPI ranks to find your particular strong-scaling limit.</div></blockquote>
+<div>Please see the section on <a class="reference internal" href="geometry.html#mesh-gen"><span class="std std-ref">Mesh Generation and Conversion</span></a>.</div></blockquote>
+<p><strong>What element types are supported?</strong></p>
+<blockquote>
+<div>Conformal curved quadrilateral/hexahedral elements.</div></blockquote>
+<p><strong>How do I convert a mesh to Nek5000?</strong></p>
+<blockquote>
+<div>We currently support conversion from the exodus file format with the <code class="docutils literal"><span class="pre">exo2nek</span></code> utility.</div></blockquote>
 </div>
 <div class="section" id="problem-setup">
 <h2>Problem Setup<a class="headerlink" href="#problem-setup" title="Permalink to this headline">¶</a></h2>
 <p><strong>Why is it important to non-dimensionalize my case?</strong></p>
 <blockquote>
-<div>Nek5000 can be run with dimensions, but the solver tolerances assume the case has been non-dimensionalized properly.
-Additionally, cases which have been non-dimensionalized tend to be more stable and run faster.</div></blockquote>
+<div>Nek5000 can be run with dimensions, but we STRONGLY recommend that the case has been non-dimensionalized properly.
+An advantage of the nondimensional form is that physical simulation times, tolerances, etc. tend to
+obtains the nondimensional form be easy to set based on prior experience with other simulations.</div></blockquote>
 <p><strong>How do I choose solver tolerances?</strong></p>
 <blockquote>
 <div>Depends on how accurate you need your simulation to be.
-Typical values are <span class="math">\(10^{-6}\)</span> for velocity and scalars and <span class="math">\(10^{-5}\)</span> for pressure.
-Note that solver tolerances do not represent the accuracy of the solution, but rather the accuracy in the update per time step, so these errors will accumulate for long running simulations.</div></blockquote>
-<p><strong>What is the difference between Pn/Pn and Pn/Pn-2?</strong></p>
+Typical values (for engineering type of problems) are <span class="math">\(10^{-7}\)</span> for velocity and scalars.
+In Pn/Pn-2 the pressure tolerance is equal to error in divergence. This is contrast to Pn/Pn where the divergence
+error is mainly a function of spatial resolution and a tolerance of <span class="math">\(10^{-4}\)</span> is typically good enough.
+Note the tolerances are related to the residual in the linear solve and do not represent the accuracy of the solution.</div></blockquote>
+<p><strong>What formulation Pn/Pn or Pn/Pn-2 should I use?</strong></p>
 <blockquote>
-<div>In brief, in the Pn/Pn formulation the pressure equation is solved on the same mesh as the velocity equations (<span class="math">\(P_n\)</span>), whereas in Pn/Pn-2 it is solved on a GLL mesh of lower order (<span class="math">\(P_{n-2}\)</span>).
-Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontinuous pressure solution while Pn/Pn is able to better predict the wall shear.</div></blockquote>
+<div>There is no simple answer but we typically recommend to use the Pn/Pn formulation altough not all features are
+supported (at least for now).</div></blockquote>
 <p><strong>What polynomial order should I use?</strong></p>
 <blockquote>
-<div>This depends what you are after. The sweet spot is typically <span class="math">\(N=7\)</span> (lx1=8)</div></blockquote>
+<div>This depends what you are after. The code supports a large range of polynomial orders e.g. <cite>N=1-32</cite> but the sweet spot
+is typically <span class="math">\(N=7\)</span> (lx1=8). Unless you have a very good reason to change it do not deviate from this best partice.
+Note, do not use <span class="math">\(N&lt;5\)</span> as this results in a very poor performance.</div></blockquote>
 <p><strong>How do I specify/change the polynomial order?</strong></p>
 <blockquote>
-<div>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file.</div></blockquote>
+<div>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file. Note, the polynomial order is <span class="math">\(N=lx1-1\)</span>.</div></blockquote>
 <p><strong>How do I specify/change the solver runtime parameters?</strong></p>
 <blockquote>
 <div>See the section on the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
@@ -259,20 +279,51 @@ Typically Pn/Pn-2 is more stable and slightly faster, but will yield a discontin
 To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
 <p><strong>What turbulence models are available in Nek5000?</strong></p>
 <blockquote>
-<div>LES with explicit filtering (spectral damping) or high-pass filtering is available.
-Other turbulence models are available through user file implementation including: dynamic Smagorinsky (turbChannel example), k-ω, k-ω SST, etc. (contact the developers for more information).</div></blockquote>
+<div>For LES we provide an explicit filtering approach or a relaxation term model.
+RANS turbulence models (k-ω, k-ω SST, etc.) are not an integral part of the code but available through the examples.</div></blockquote>
 </div>
-<div class="section" id="pre-processing">
-<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Permalink to this headline">¶</a></h2>
-<p><strong>How can I generate a mesh for use with Nek5000?</strong></p>
+<div class="section" id="computational-speed">
+<h2>Computational Speed<a class="headerlink" href="#computational-speed" title="Permalink to this headline">¶</a></h2>
+<p><strong>How many elements should I have per processes?</strong></p>
 <blockquote>
-<div>Please see the section on <a class="reference internal" href="geometry.html#mesh-gen"><span class="std std-ref">Mesh Generation and Conversion</span></a>.</div></blockquote>
-<p><strong>What element types are supported?</strong></p>
+<div>The upper limit is given by the available memory. The lower limit is (technically) 1 but you may want to have more
+elements (work) to get a reasonable (whatever that means for you) parallel efficiency.
+On most machines you need more than 10 elements per MPI rank to get a parallel efficiency of 0.5 (assuming N=7).</div></blockquote>
+<p><strong>Should I use residual projection?</strong></p>
 <blockquote>
-<div>Conformal curved quadrilateral/hexahedral elements.</div></blockquote>
-<p><strong>How do I convert a mesh to Nek5000?</strong></p>
+<div>This depends, you may want to turn it on e.g. for pressure but noti for velocity. All this is case specific and a simple
+experiment will show if it pays off or not.</div></blockquote>
+<p><strong>What can I do to get best performance?</strong></p>
 <blockquote>
-<div>We currently support conversion from the exodus file format with the <code class="docutils literal"><span class="pre">exo2nek</span></code> utility.</div></blockquote>
+<div><ul class="simple">
+<li>Design your mesh for a polynomial order N=7</li>
+<li>Reduce polynomial order used for overintegration (strict 3/2 rule might be overly conservative)</li>
+<li>Fine tune the number of elements per MPI rank to get a reasonable parallel efficiency</li>
+<li>Use AMG instead of XXT as coarse grid solver</li>
+<li>Avoid unnecessary time consuming operations in <code class="docutils literal"><span class="pre">usrchk/userbc</span></code></li>
+<li>Enable tuned MxM implementation for your platform (see <code class="docutils literal"><span class="pre">makenek</span></code> options)</li>
+<li>Compile with vector instructions like AVX, AVX2 using FFLAGS and CFLAGS in makenek</li>
+<li>Try to use residual projection</li>
+<li>Tune your solver tolerances</li>
+<li>Increase time step size (target Courant number 2-4) by switching to 2nd order BDF and OIFS extrapolation</li>
+<li>Use binary input files e.g. <code class="docutils literal"><span class="pre">.re2</span></code> and <code class="docutils literal"><span class="pre">.ma2</span></code> to minimize solver initialization time</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
+<p><strong>My simulation diverges. What should I do?</strong></p>
+<blockquote>
+<div><p>There are many potential root causes but here are some things you can experiment with:</p>
+<ul class="simple">
+<li>lower the time step (in particular during initial transients)</li>
+<li>reduce time integration order (e.g. use 2 instead of 3)</li>
+<li>increase spatial resolution</li>
+<li>provide a better initial condition</li>
+<li>check that your boundary conditions are meaningful and correctly implemented</li>
+<li>visualize the solution and look for unexpected anomalies</li>
+</ul>
+</div></blockquote>
 </div>
 <div class="section" id="post-processing">
 <h2>Post-Processing<a class="headerlink" href="#post-processing" title="Permalink to this headline">¶</a></h2>
