@@ -1069,6 +1069,55 @@ Available configurations options:</p>
 </tr>
 </tbody>
 </table>
+<p>The <code class="docutils literal"><span class="pre">PPLIST</span></code> field can be used to activate several features at compilation time.
+A list of possible options is below:</p>
+<table border="1" class="docutils" id="id10">
+<caption><span class="caption-number">Table 19 </span><span class="caption-text">PPLIST options</span><a class="headerlink" href="#id10" title="Permalink to this table">¶</a></caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Symbol</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>NOMPIIO</td>
+<td>deactivate MPI-IO support</td>
+</tr>
+<tr class="row-odd"><td>BGQ</td>
+<td>use Blue Gene Q optimized mxm</td>
+</tr>
+<tr class="row-even"><td>XSMM</td>
+<td>use libxsmm for mxm</td>
+</tr>
+<tr class="row-odd"><td>CVODE</td>
+<td>compile with CVODE support for scalars</td>
+</tr>
+<tr class="row-even"><td>VENDOR_BLAS</td>
+<td>use VENDOR BLAS/LAPACK</td>
+</tr>
+<tr class="row-odd"><td>EXTBAR</td>
+<td>add underscore to exit call (for BGQ)</td>
+</tr>
+<tr class="row-even"><td>NEKNEK</td>
+<td>activate overlapping mesh solver (experimental)</td>
+</tr>
+<tr class="row-odd"><td>CMTNEK</td>
+<td>activate discontinuous Galerkin compressible-flow solver (experimental)</td>
+</tr>
+</tbody>
+</table>
+<p>In addition to these preprocessor items, the user can add compilation and linking flags.
+<code class="docutils literal"><span class="pre">FFLAGS</span></code> allows the user to add Fortran compilation flags while <code class="docutils literal"><span class="pre">CCFAGS</span></code> allows the user to
+add C compilation flags.
+These will be compiler dependent and the user is encouraged to consult the manual of the compiler if specific options are needed/desired.
+A commonly used flag is <code class="docutils literal"><span class="pre">-mcmodel</span></code> which allows for arrays of size larger than 2GB.
+This option  tells the compiler to use a specific memory model to generate code and store data.
+It can affect code size and performance.
+If your program has global and static data with a total size smaller than 2GB, <code class="docutils literal"><span class="pre">-mcmodel=small</span></code> is sufficient.
+Global and static data larger than 2GB requires <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> or <code class="docutils literal"><span class="pre">-mcmodel=large</span></code>.</p>
 </div>
 <div class="section" id="internal-input-parameters-switches">
 <h2>Internal Input Parameters/Switches<a class="headerlink" href="#internal-input-parameters-switches" title="Permalink to this headline">¶</a></h2>

@@ -197,13 +197,15 @@ The mailing list also serves as a primary
 support channel. Please subscribe <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">here</a>.
 Postings from email addresses that are not on the list are held for moderation.</div></blockquote>
 <p><strong>How can I report a bug?</strong></p>
-<p>Nek5000 is hosted on GitHub and all bugs are reported and tracked through the <a class="reference external" href="https://github.com/Nek5000/Nek5000/issues">Issues</a> feature on GitHub.
+<blockquote>
+<div>Nek5000 is hosted on GitHub and all bugs are reported and tracked through the <a class="reference external" href="https://github.com/Nek5000/Nek5000/issues">Issues</a> feature on GitHub.
 However, GitHub Issues should not be used for common troubleshooting purposes. If you are having trouble
 installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
 If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
-you may create an Issue on GitHub.</p>
+you may create an Issue on GitHub.</div></blockquote>
 <p><strong>How can I contribute to the Nek5000 project?</strong></p>
-<p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
+<blockquote>
+<div><p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
 <ul class="simple">
 <li>follow the usual “fork-and-pull” Git workflow</li>
 <li>all development happens on the master branch</li>
@@ -211,6 +213,7 @@ you may create an Issue on GitHub.</p>
 <li>upcoming releases get their own tags out of master</li>
 </ul>
 <p>If you are planning a large contribution, we encourage you to discuss the concept here on GitHub and interact with us frequently to ensure that your effort is well-directed.</p>
+</div></blockquote>
 </div>
 <div class="section" id="installing-compiling-and-running">
 <h2>Installing, Compiling, and Running<a class="headerlink" href="#installing-compiling-and-running" title="Permalink to this headline">¶</a></h2>
@@ -226,16 +229,18 @@ a topic of active research.</div></blockquote>
 <blockquote>
 <div>Currently Intel, PGI, IBM and GNU compilers are supported.</div></blockquote>
 <p><strong>How much memory is required?</strong></p>
-<p>The memory footprint of a run depends on many factors and is printed to
-screen whenever Nek5000 exits. What follows is a first rough guess:</p>
+<blockquote>
+<div>The memory footprint of a run depends on many factors and is printed to screen whenever Nek5000 exits.
+What follows is a first rough guess:</div></blockquote>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lx1</span><span class="o">*</span><span class="n">ly1</span><span class="o">*</span><span class="n">lz1</span><span class="o">*</span><span class="n">lelt</span> <span class="o">*</span> <span class="mi">3000</span><span class="n">byte</span> <span class="o">+</span> <span class="n">lelg</span> <span class="o">*</span> <span class="mi">12</span><span class="n">byte</span> <span class="o">+</span> <span class="n">MPI</span> <span class="o">+</span> <span class="n">optional</span> <span class="n">libraries</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">CVODE</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>where lelt (the maximum number of local elements) is computed as lelg/lpmin.
-The memory allocated by MPI will depend heavily on the total number of
-ranks and the considered MPI implementation. For large rank counts (say &gt; 100‘000) it’s easily 50-100MB.</p>
-<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
-take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+<blockquote>
+<div><p>where <code class="docutils literal"><span class="pre">lelt</span></code> (the maximum number of local elements) is computed as <code class="docutils literal"><span class="pre">lelg</span></code>/<code class="docutils literal"><span class="pre">lpmin</span></code>.
+The memory allocated by MPI will depend heavily on the total number of ranks and the considered MPI implementation.
+For large rank counts (say &gt; 100,000) it’s easily 50-100MB.</p>
+<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+</div></blockquote>
 <p><strong>Why does the compiler issue relocation errors?</strong></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">relocation</span> <span class="pre">truncated</span> <span class="pre">to</span> <span class="pre">fit:</span> <span class="pre">R_X86_64</span> <span class="pre">against</span> <span class="pre">symbol</span> <span class="pre">'foo_'</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">COMMON</span> <span class="pre">section</span> <span class="pre">in</span> <span class="pre">obj/bar.o</span></code></p>
@@ -281,20 +286,18 @@ error is mainly a function of spatial resolution and a tolerance of <span class=
 Note the tolerances are related to the residual in the linear solve and do not represent the accuracy of the solution.</div></blockquote>
 <p><strong>What formulation Pn/Pn or Pn/Pn-2 should I use?</strong></p>
 <blockquote>
-<div>There is no simple answer but we typically recommend to use the Pn/Pn formulation altough not all features are
-supported (at least for now).</div></blockquote>
+<div>There is no simple answer but we typically recommend to use the Pn/Pn formulation altough not all features are supported (at least for now).</div></blockquote>
 <p><strong>What polynomial order should I use?</strong></p>
 <blockquote>
-<div><p>The code supports a large range of polynomial orders e.g. <cite>N=1-32</cite>.
+<div><p>The code supports a large range of polynomial orders, e.g. <span class="math">\(N=1\)</span> through <span class="math">\(N=32\)</span>.
 You can effectively realize the same number of grid points
 by using relatively few high-order elements or more low-order elements.
 For example, a 3D grid with resolution of 64x64x64 could be implemented
-as a 16x16x16 array of elements of order N=3 or as a
-8x8x8 array of elements of order N=7.  In Nek5000, the
+as a 16x16x16 array of elements of order <span class="math">\(N=3\)</span> or as a
+8x8x8 array of elements of order <span class="math">\(N=7\)</span>.  In Nek5000, the
 latter is preferred. The solution will be more accurate and the code
-is optimized for this range of N.</p>
-<p>The sweet spot is typically <span class="math">\(N=7\)</span> (lx1=8). Unless you have a very good reason to change it do not deviate
-from this best partice. Note, do never use <span class="math">\(N&lt;5\)</span> as this results in a very poor performance.</p>
+is optimized for this range of <span class="math">\(N\)</span>.</p>
+<p>The sweet spot is typically <span class="math">\(N=7\)</span> (<code class="docutils literal"><span class="pre">lx1=8</span></code>).</p>
 </div></blockquote>
 <p><strong>How do I specify/change the polynomial order?</strong></p>
 <blockquote>
@@ -323,15 +326,17 @@ RANS turbulence models (k-ω, k-ω SST, etc.) are not an integral part of the co
 <blockquote>
 <div>Compile with vector instructions like AVX, AVX2 using FFLAGS and CFLAGS
 in makenek.</div></blockquote>
-<p><strong>How many elements should I have per processes?</strong></p>
+<p><strong>How many elements should I have per process?</strong></p>
 <blockquote>
 <div>The upper limit is given by the available memory. The lower limit is (technically) 1 but you may want to have more
 elements (work) to get a reasonable (whatever that means for you) parallel efficiency.
 On most machines you need more than 10 elements per MPI rank to get a parallel efficiency of 0.5 (assuming N=7).</div></blockquote>
 <p><strong>Should I use residual projection?</strong></p>
 <blockquote>
-<div>This depends, you may want to turn it on e.g. for pressure but not for velocity. All this is case specific and a simple
-experiment will show if it pays off or not.</div></blockquote>
+<div>Typically projection is used for pressure but not velocity, however
+this is highly case specific and a simple experiment will show if it pays off or not.
+Projection will speed up the solution to a scalar, but takes time to compute itself.
+A scalar solve requiring ~40 iterations or greater is a good candidate for use.</div></blockquote>
 <p><strong>What other things can I do to get best performance?</strong></p>
 <blockquote>
 <div><ul class="simple">
@@ -378,13 +383,15 @@ experiment will show if it pays off or not.</div></blockquote>
 <div>By default Nek5000 outputs solution files in binary <code class="docutils literal"><span class="pre">&lt;casename&gt;.f%05d</span></code>.</div></blockquote>
 <p><strong>I have calculated additional fields from my solution, how do I visualize them?</strong></p>
 <blockquote>
-<div>Using the <code class="docutils literal"><span class="pre">.par</span></code> file, define an additional scalar, for example:</div></blockquote>
+<div>Using the <code class="docutils literal"><span class="pre">.par</span></code> file, define an additional scalar and include the <code class="docutils literal"><span class="pre">solver=none</span></code> option.
+For example:</div></blockquote>
 <div class="highlight-none"><div class="highlight"><pre><span></span>[SCALAR01] # lambda2 vortex criterion
 solver = none
 </pre></div>
 </div>
 <blockquote>
-<div>Then store the calculated field in <code class="docutils literal"><span class="pre">t(1,1,1,1,iscal+1)</span></code> where <code class="docutils literal"><span class="pre">iscal</span></code> is your passive scalar index (in this example 1).</div></blockquote>
+<div>Then store the calculated field in <code class="docutils literal"><span class="pre">t(1,1,1,1,iscal+1)</span></code> where <code class="docutils literal"><span class="pre">iscal</span></code> is your passive scalar index (in this example 1).
+The scalar will then be output by default with the solution files.</div></blockquote>
 <p><strong>How do I obtain values of variables at a specific point?</strong></p>
 <blockquote>
 <div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="case_files.html#case-files-his"><span class="std std-ref">History Points</span></a> file.
