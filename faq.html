@@ -103,8 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="case_files.html">Case Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="geometry.html">Mesh Generation and Conversion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="case_files.html">Problem Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
@@ -196,11 +195,26 @@ For more information see the <code class="docutils literal"><span class="pre">LI
 The mailing list also serves as a primary
 support channel. Please subscribe <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">here</a>.
 Postings from email addresses that are not on the list are held for moderation.</div></blockquote>
-<p><strong>How can I report a bug?</strong></p>
+<p><strong>How can I report a bug / feature request?</strong></p>
 <blockquote>
 <div>Nek5000 is hosted on GitHub and all bugs are reported and tracked through the <a class="reference external" href="https://github.com/Nek5000/Nek5000/issues">Issues</a> feature on GitHub.
 However, GitHub Issues should not be used for common troubleshooting purposes. If you are having trouble
 installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
+If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
+you may create an Issue on GitHub.</div></blockquote>
+<p><strong>How can I contribute to the Nek5000 project?</strong></p>
+<blockquote>
+<div><p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
+<ul class="simple">
+<li>follow the usual “fork-and-pull” Git workflow</li>
+<li>all development happens on the master branch</li>
+<li>anything in master is always deployable</li>
+<li>upcoming releases get their own tags out of master</li>
+</ul>
+<p>If you are planning a large contribution, we encourage you to discuss the concept here on GitHub and interact with us frequently to ensure that your effort is well-directed.</p>
+</div></blockquote>
+<blockquote>
+<div>installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
 If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
 you may create an Issue on GitHub.</div></blockquote>
 <p><strong>How can I contribute to the Nek5000 project?</strong></p>
@@ -230,21 +244,19 @@ a topic of active research.</div></blockquote>
 <div>Currently Intel, PGI, IBM and GNU compilers are supported.</div></blockquote>
 <p><strong>How much memory is required?</strong></p>
 <blockquote>
-<div>The memory footprint of a run depends on many factors and is printed to screen whenever Nek5000 exits.
-What follows is a first rough guess:</div></blockquote>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lx1</span><span class="o">*</span><span class="n">ly1</span><span class="o">*</span><span class="n">lz1</span><span class="o">*</span><span class="n">lelt</span> <span class="o">*</span> <span class="mi">3000</span><span class="n">byte</span> <span class="o">+</span> <span class="n">lelg</span> <span class="o">*</span> <span class="mi">12</span><span class="n">byte</span> <span class="o">+</span> <span class="n">MPI</span> <span class="o">+</span> <span class="n">optional</span> <span class="n">libraries</span> <span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="o">.</span> <span class="n">CVODE</span><span class="p">)</span>
-</pre></div>
-</div>
-<blockquote>
-<div><p>where <code class="docutils literal"><span class="pre">lelt</span></code> (the maximum number of local elements) is computed as <code class="docutils literal"><span class="pre">lelg</span></code>/<code class="docutils literal"><span class="pre">lpmin</span></code>.
-The memory allocated by MPI will depend heavily on the total number of ranks and the considered MPI implementation.
-For large rank counts (say &gt; 100,000) it’s easily 50-100MB.</p>
-<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+<div><p>The memory footprint of a run depends on many factors and is printed to
+screen whenever Nek5000 exits. What follows is a first rough guess:</p>
+<p>lx1*ly1*lz1*lelt * 3000byte + lelg * 12byte + MPI + optional libraries (e.g. CVODE)</p>
+<p>where lelt (the maximum number of local elements) is computed as lelg/lpmin.
+The memory allocated by MPI will depend heavily on the total number of
+ranks and the considered MPI implementation. For large rank counts (say &gt; 100‘000) it’s easily 50-100MB.</p>
+<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
+take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
 </div></blockquote>
 <p><strong>Why does the compiler issue relocation errors?</strong></p>
 <blockquote>
 <div><p><code class="docutils literal"><span class="pre">relocation</span> <span class="pre">truncated</span> <span class="pre">to</span> <span class="pre">fit:</span> <span class="pre">R_X86_64</span> <span class="pre">against</span> <span class="pre">symbol</span> <span class="pre">'foo_'</span> <span class="pre">defined</span> <span class="pre">in</span> <span class="pre">COMMON</span> <span class="pre">section</span> <span class="pre">in</span> <span class="pre">obj/bar.o</span></code></p>
-<p>This happens when the resultant executable requires more memory allocation than available, usually because <code class="docutils literal"><span class="pre">lelt</span></code> is too large.
+<p>This happens when the resultant executable requires more than 2GB of static data.
 The best way to avoid this is to increase the minimum number of MPI ranks, <code class="docutils literal"><span class="pre">lpmin</span></code> in <code class="docutils literal"><span class="pre">SIZE</span></code>.
 Alternatively, you can add <code class="docutils literal"><span class="pre">-mcmodel=medium</span></code> to the <code class="docutils literal"><span class="pre">FFLAGS/CFLAGS</span></code> variable in <code class="docutils literal"><span class="pre">makenek</span></code>.</p>
 </div></blockquote>
@@ -271,7 +283,7 @@ to do as they are ready to run.</div></blockquote>
 <div>Conformal curved quadrilateral/hexahedral elements.</div></blockquote>
 <p><strong>How do I import/convert a mesh to Nek5000?</strong></p>
 <blockquote>
-<div>We currently support conversion from the exodus file format with the <code class="docutils literal"><span class="pre">exo2nek</span></code> utility.</div></blockquote>
+<div>We currently support conversion from the exodusII with the <code class="docutils literal"><span class="pre">exo2nek</span></code> converter. This enables the import from popular mesh generators like ANSYS ICEM and CUBIT.</div></blockquote>
 <p><strong>Why is it important to non-dimensionalize my case?</strong></p>
 <blockquote>
 <div>Nek5000 can be run with dimensions, but we STRONGLY recommend that the case has been non-dimensionalized properly.
