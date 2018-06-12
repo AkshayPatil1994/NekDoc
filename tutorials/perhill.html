@@ -238,7 +238,7 @@ The tool will produce a binary mesh and boundary data file <code class="docutils
 <p>For a periodic hill, we will need to modify the geometry.  Let <span class="math">\({\bf x} := (x,y)\)</span> denote the old geometry, and <span class="math">\({\bf x}' := (x',y')\)</span> denote the new geometry.  For a domain
 with <span class="math">\(y\in [0,3]\)</span> and <span class="math">\(x\in [0,9]\)</span> the following function will map the straight pipe geometry to a periodic hill:</p>
 <div class="math">
-\[y'(x,y) = C(3-y)(1+\tanh(B(|x-A|-1))) .\]</div>
+\[y'(x,y) = y + C(3-y)(1+\tanh(B(|x-A|-1))) .\]</div>
 <p>where <span class="math">\(A=4.5, B=3.5, C=1/6\)</span>.
 We have chosen these constants so that the height of the hill (our reference length), <span class="math">\(h=1\)</span>.
 Note that, as <span class="math">\(y \longrightarrow 3\)</span>, the perturbation,:math:<cite>C(3-y)(1+tanh(B(|x-A|-1))</cite>, goes to zero.
