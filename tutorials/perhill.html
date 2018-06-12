@@ -238,9 +238,11 @@ The tool will produce a binary mesh and boundary data file <code class="docutils
 <p>For a periodic hill, we will need to modify the geometry.  Let <span class="math">\({\bf x} := (x,y)\)</span> denote the old geometry, and <span class="math">\({\bf x}' := (x',y')\)</span> denote the new geometry.  For a domain
 with <span class="math">\(y\in [0,3]\)</span> and <span class="math">\(x\in [0,9]\)</span> the following function will map the straight pipe geometry to a periodic hill:</p>
 <div class="math">
-\[y'(x,y) = y  + (3-y)(A + A\tanh(|x-B|-C)) .\]</div>
-<p>where <span class="math">\(A=1/6, B=4.5, C=3.5\)</span>.  We have chosen these constants so that the height of the hill (our reference length), <span class="math">\(h=1\)</span>. Note that, as <span class="math">\(y \longrightarrow 3\)</span>, the perturbation,
-<span class="math">\((3-y)(A+A\tanh(|x-B|-C)\)</span>, goes to zero.  So that near <span class="math">\(y = 3\)</span>, the mesh recovers its original form.</p>
+\[y'(x,y) = C(3-y)(1+\tanh(B(|x-A|-1))) .\]</div>
+<p>where <span class="math">\(A=4.5, B=3.5, C=1/6\)</span>.
+We have chosen these constants so that the height of the hill (our reference length), <span class="math">\(h=1\)</span>.
+Note that, as <span class="math">\(y \longrightarrow 3\)</span>, the perturbation,:math:<cite>C(3-y)(1+tanh(B(|x-A|-1))</cite>, goes to zero.
+So that near <span class="math">\(y = 3\)</span>, the mesh recovers its original form.</p>
 <p>In Nek5000, we can specify this through <code class="docutils literal"><span class="pre">usrdat2</span></code> in the usr file as follows</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">usrdat2</span>
 
