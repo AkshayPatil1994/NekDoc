@@ -514,12 +514,12 @@ Global and static data larger than 2GB requires <code class="docutils literal"><
 <td>temperature (t) and passive scalars (ps)</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">vtrans</span></code></td>
-<td>(lx1,ly1,lz1,lelt,ldimt1)</td>
+<td>(lx1,ly1,lz1,lelt,ldimt+1)</td>
 <td>real</td>
 <td>convective coefficient</td>
 </tr>
 <tr class="row-even"><td><code class="docutils literal"><span class="pre">vdiff</span></code></td>
-<td>(lx1,ly1,lz1,lelt,ldimt1)</td>
+<td>(lx1,ly1,lz1,lelt,ldimt+1)</td>
 <td>real</td>
 <td>diffusion coefficient</td>
 </tr>
@@ -544,7 +544,7 @@ Global and static data larger than 2GB requires <code class="docutils literal"><
 <td>pressure at previous time steps</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">tlag</span></code></td>
-<td>(lx1,ly1,lz1,lelv,lorder-1,ldimt1)</td>
+<td>(lx1,ly1,lz1,lelv,lorder-1,ldimt+1)</td>
 <td>real</td>
 <td>t and ps at previous time steps</td>
 </tr>
@@ -719,7 +719,7 @@ Global and static data larger than 2GB requires <code class="docutils literal"><
 <td>time steps between data output</td>
 </tr>
 <tr class="row-odd"><td><code class="docutils literal"><span class="pre">cbc</span></code></td>
-<td>(6,lelt,ldimt1)</td>
+<td>(6,lelt,ldimt+1)</td>
 <td>character*3</td>
 <td>boundary condition</td>
 </tr>
