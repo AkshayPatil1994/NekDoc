@@ -103,7 +103,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
-<li class="toctree-l1"><a class="reference internal" href="case_files.html">Problem Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problem_setup.html">Problem Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
 </ul>
@@ -192,31 +192,15 @@ For more information see the <code class="docutils literal"><span class="pre">LI
 <p><strong>Where can I get help?</strong></p>
 <blockquote>
 <div>If you have a question, first check the mailing list <a class="reference external" href="https://lists.mcs.anl.gov/pipermail/nek5000-users/">archive</a> to see if your question is already answered somewhere.
-The mailing list also serves as a primary
-support channel. Please subscribe <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">here</a>.
+The mailing list also serves as a primary support channel.
+Please subscribe <a class="reference external" href="https://lists.mcs.anl.gov/mailman/listinfo/nek5000-users">here</a>.
 Postings from email addresses that are not on the list are held for moderation.</div></blockquote>
 <p><strong>How can I report a bug / feature request?</strong></p>
 <blockquote>
 <div>Nek5000 is hosted on GitHub and all bugs are reported and tracked through the <a class="reference external" href="https://github.com/Nek5000/Nek5000/issues">Issues</a> feature on GitHub.
-However, GitHub Issues should not be used for common troubleshooting purposes. If you are having trouble
-installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
-If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
-you may create an Issue on GitHub.</div></blockquote>
-<p><strong>How can I contribute to the Nek5000 project?</strong></p>
-<blockquote>
-<div><p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
-<ul class="simple">
-<li>follow the usual “fork-and-pull” Git workflow</li>
-<li>all development happens on the master branch</li>
-<li>anything in master is always deployable</li>
-<li>upcoming releases get their own tags out of master</li>
-</ul>
-<p>If you are planning a large contribution, we encourage you to discuss the concept here on GitHub and interact with us frequently to ensure that your effort is well-directed.</p>
-</div></blockquote>
-<blockquote>
-<div>installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
-If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code,
-you may create an Issue on GitHub.</div></blockquote>
+However, GitHub Issues should not be used for common troubleshooting purposes.
+If you are having trouble installing the code or getting your model to run properly, you should first send a message to the User’s Group mailing list.
+If it turns out your issue really is a bug in the code, an issue will then be created on GitHub. If you want to request that a feature be added to the code, you may create an Issue on GitHub.</div></blockquote>
 <p><strong>How can I contribute to the Nek5000 project?</strong></p>
 <blockquote>
 <div><p>Our project is hosted on <a class="reference external" href="https://github.com/Nek5000">GitHub</a>. Here are the most important things you need to know:</p>
@@ -244,14 +228,16 @@ a topic of active research.</div></blockquote>
 <div>Currently Intel, PGI, IBM and GNU compilers are supported.</div></blockquote>
 <p><strong>How much memory is required?</strong></p>
 <blockquote>
-<div><p>The memory footprint of a run depends on many factors and is printed to
-screen whenever Nek5000 exits. What follows is a first rough guess:</p>
-<p>lx1*ly1*lz1*lelt * 3000byte + lelg * 12byte + MPI + optional libraries (e.g. CVODE)</p>
-<p>where lelt (the maximum number of local elements) is computed as lelg/lpmin.
-The memory allocated by MPI will depend heavily on the total number of
-ranks and the considered MPI implementation. For large rank counts (say &gt; 100‘000) it’s easily 50-100MB.</p>
-<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not
-take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
+<div>The memory footprint of a run depends on many factors and is printed to
+screen whenever Nek5000 exits. What follows is a first rough guess:</div></blockquote>
+<div class="highlight-none"><div class="highlight"><pre><span></span>lx1*ly1*lz1*lelt * 3000byte + lelg * 12byte + MPI + optional libraries (e.g. CVODE)
+</pre></div>
+</div>
+<blockquote>
+<div><p>where <code class="docutils literal"><span class="pre">lelt</span></code> (the maximum number of local elements) is computed as lelg/lpmin.
+The memory allocated by MPI will depend heavily on the total number of ranks and the considered MPI implementation.
+For large rank counts (say &gt; 100‘000) it’s easily 50-100MB.</p>
+<p>Note, the output of GNU`s SIZE utility is inaccurate as it does not take into account the dynamic memory alloation of MPI, gslib, CVODE, etc.</p>
 </div></blockquote>
 <p><strong>Why does the compiler issue relocation errors?</strong></p>
 <blockquote>
@@ -316,14 +302,14 @@ is optimized for this range of <span class="math">\(N\)</span>.</p>
 <div>Change <code class="docutils literal"><span class="pre">lx1</span></code> in the SIZE file. Note, the polynomial order is <span class="math">\(N=lx1-1\)</span>.</div></blockquote>
 <p><strong>How do I specify/change the solver runtime parameters?</strong></p>
 <blockquote>
-<div>See the section on the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
+<div>See the section on the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">par</span></a> file.</div></blockquote>
 <p><strong>Why is ``userbc`` only called for certain element faces?</strong></p>
 <blockquote>
 <div><code class="docutils literal"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</div></blockquote>
 <p><strong>How do I solve for a scalar?</strong></p>
 <blockquote>
 <div>Nek5000 supports solving up to 99 additional scalars.
-To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="case_files.html#case-files-par"><span class="std std-ref">par</span></a> file. See <code class="docutils literal"><span class="pre">shear4</span></code> example for more details.</div></blockquote>
+To solve an additional scalar equation, increase <code class="docutils literal"><span class="pre">ldimt</span></code> in the <code class="docutils literal"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">par</span></a> file. See <code class="docutils literal"><span class="pre">shear4</span></code> example for more details.</div></blockquote>
 </div>
 <div class="section" id="physical-models">
 <h2>Physical Models<a class="headerlink" href="#physical-models" title="Permalink to this headline">¶</a></h2>
@@ -406,7 +392,7 @@ solver = none
 The scalar will then be output by default with the solution files.</div></blockquote>
 <p><strong>How do I obtain values of variables at a specific point?</strong></p>
 <blockquote>
-<div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="case_files.html#case-files-his"><span class="std std-ref">History Points</span></a> file.
+<div>The simplest way is through the use of history points. See the section on the <a class="reference internal" href="problem_setup/his_points.html#case-files-his"><span class="std std-ref">History Points</span></a> file.
 You can also use the spectral interpolation tool (see examples for more details).</div></blockquote>
 </div>
 </div>

@@ -114,7 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="neknek.html">Overlapping Overset Grids</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../case_files.html">Problem Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../problem_setup.html">Problem Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendices</a></li>
 </ul>
@@ -227,7 +227,7 @@ The tool will produce a binary mesh and boundary data file <code class="docutils
 </div>
 <div class="section" id="usr-file">
 <h2>usr file<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="../case_files.html#case-files-usr"><span class="std std-ref">usr</span></a> file implements various subroutines to allow the user to interact with the solver.</p>
+<p>The <a class="reference internal" href="../problem_setup/case_files.html#case-files-usr"><span class="std std-ref">usr</span></a> file implements various subroutines to allow the user to interact with the solver.</p>
 <p>To get started we copy the template to our case directory</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/zero.usr hillp.usr
 </pre></div>
@@ -335,7 +335,7 @@ For this case, using any text editor, create a new file called <code class="docu
 </div>
 <p>In choosing <code class="docutils literal"><span class="pre">viscosity</span> <span class="pre">=</span> <span class="pre">-100</span></code> we are actually setting the Reynolds number. This assumes that
 <span class="math">\(\rho \times u_b \times h = 1\)</span> where <span class="math">\(u_b\)</span> denotes the bulk velocity and <span class="math">\(h\)</span> the hill height.</p>
-<p>We have set the calculation to stop at the physical time of <span class="math">\(T=200\)</span> (<code class="docutils literal"><span class="pre">endTime=200</span></code>) which is roughly 22 flow-thru time units (based on the bulk velocity <span class="math">\(u_b\)</span> and length of periodic pitch, <span class="math">\(L=9\)</span>).  Additional details on the names of keys in the <code class="docutils literal"><span class="pre">.par</span></code> file can be found <a class="reference internal" href="../case_files.html#case-files-par"><span class="std std-ref">here</span></a>.</p>
+<p>We have set the calculation to stop at the physical time of <span class="math">\(T=200\)</span> (<code class="docutils literal"><span class="pre">endTime=200</span></code>) which is roughly 22 flow-thru time units (based on the bulk velocity <span class="math">\(u_b\)</span> and length of periodic pitch, <span class="math">\(L=9\)</span>).  Additional details on the names of keys in the <code class="docutils literal"><span class="pre">.par</span></code> file can be found <a class="reference internal" href="../problem_setup/case_files.html#case-files-par"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="size-file">
 <h2>SIZE file<a class="headerlink" href="#size-file" title="Permalink to this headline">¶</a></h2>
