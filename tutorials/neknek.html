@@ -420,7 +420,7 @@ Copy the <code class="docutils literal"><span class="pre">SIZE.template</span></
 <div class="highlight-none"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/SIZE.template SIZE
 </pre></div>
 </div>
-<p>Then, adjust the following parameters in the BASIC section</p>
+<p>Then, adjust the following parameters</p>
 <div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="p">...</span>
 
 <span class="c">! BASIC</span>
@@ -434,6 +434,8 @@ Copy the <code class="docutils literal"><span class="pre">SIZE.template</span></
 <span class="k">parameter</span> <span class="p">(</span><span class="n">lpmax</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="k">parameter</span> <span class="p">(</span><span class="n">ldimt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
+<span class="c">! OPTIONAL</span>
+<span class="k">parameter</span> <span class="p">(</span><span class="n">nsessmax</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="p">...</span>
 </pre></div>
 </div>
