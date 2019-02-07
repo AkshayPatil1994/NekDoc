@@ -24,25 +24,17 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -106,7 +98,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Nek5000</a>
@@ -114,9 +106,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -161,92 +154,79 @@
   <div class="section" id="commonly-used-subroutines">
 <span id="append-subroutines"></span><h1>Commonly used Subroutines<a class="headerlink" href="#commonly-used-subroutines" title="Permalink to this headline">¶</a></h1>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">rescale_x(x,x0,x1)</span></code></dt>
-<dd>Rescales the array <code class="docutils literal"><span class="pre">x</span></code> to be in the range <code class="docutils literal"><span class="pre">(x0,x1)</span></code>. This is usually called from <code class="docutils literal"><span class="pre">usrdat2</span></code> in the <code class="docutils literal"><span class="pre">.usr</span></code> file</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">normvc(h1,semi,l2,linf,x1,x2,x3)</span></code></dt>
-<dd>Computes the error norms of a vector field variable <code class="docutils literal"><span class="pre">(x1,x2,x3)</span></code> defined on mesh 1, the velocity mesh. The error norms are normalized with respect to the volume, with the exception on the infinity norm, <code class="docutils literal"><span class="pre">linf</span></code>.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">comp_vort3(vort,work1,work2,u,v,w)</span></code></dt>
-<dd>Computes the vorticity (<code class="docutils literal"><span class="pre">vort</span></code>) of the velocity field, <code class="docutils literal"><span class="pre">(u,v,w)</span></code></dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">lambda2(l2)</span></code></dt>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">rescale_x(x,x0,x1)</span></code></dt>
+<dd>Rescales the array <code class="docutils literal notranslate"><span class="pre">x</span></code> to be in the range <code class="docutils literal notranslate"><span class="pre">(x0,x1)</span></code>. This is usually called from <code class="docutils literal notranslate"><span class="pre">usrdat2</span></code> in the <code class="docutils literal notranslate"><span class="pre">.usr</span></code> file</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">normvc(h1,semi,l2,linf,x1,x2,x3)</span></code></dt>
+<dd>Computes the error norms of a vector field variable <code class="docutils literal notranslate"><span class="pre">(x1,x2,x3)</span></code> defined on mesh 1, the velocity mesh. The error norms are normalized with respect to the volume, with the exception on the infinity norm, <code class="docutils literal notranslate"><span class="pre">linf</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">comp_vort3(vort,work1,work2,u,v,w)</span></code></dt>
+<dd>Computes the vorticity (<code class="docutils literal notranslate"><span class="pre">vort</span></code>) of the velocity field, <code class="docutils literal notranslate"><span class="pre">(u,v,w)</span></code></dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">lambda2(l2)</span></code></dt>
 <dd>Generates the Lambda-2 vortex criterion proposed by Jeong and Hussain (1995)</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">planar_average_z(ua,u,w1,w2)</span></code></dt>
-<dd>Computes the r-s planar average of the quantity <code class="docutils literal"><span class="pre">u</span></code>.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">torque_calc(scale,x0,ifdout,iftout)</span></code></dt>
-<dd>Computes torque about the point <code class="docutils literal"><span class="pre">x0</span></code>. Here scale is a user supplied multiplier so that the results may be scaled to any convenient non-dimensionalization. Both the drag and the torque can be printed to the screen by switching the appropriate <code class="docutils literal"><span class="pre">ifdout(drag)</span></code> or <code class="docutils literal"><span class="pre">iftout(torque)</span></code> logical.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">set_obj</span></code></dt>
-<dd>Defines objects for surface integrals by changing the value of <code class="docutils literal"><span class="pre">hcode</span></code> for future calculations. Typically called once within <code class="docutils literal"><span class="pre">userchk</span></code> (for <code class="docutils literal"><span class="pre">istep</span> <span class="pre">=</span> <span class="pre">0</span></code>) and used for calculating torque. (see above)</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">planar_average_z(ua,u,w1,w2)</span></code></dt>
+<dd>Computes the r-s planar average of the quantity <code class="docutils literal notranslate"><span class="pre">u</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">torque_calc(scale,x0,ifdout,iftout)</span></code></dt>
+<dd>Computes torque about the point <code class="docutils literal notranslate"><span class="pre">x0</span></code>. Here scale is a user supplied multiplier so that the results may be scaled to any convenient non-dimensionalization. Both the drag and the torque can be printed to the screen by switching the appropriate <code class="docutils literal notranslate"><span class="pre">ifdout(drag)</span></code> or <code class="docutils literal notranslate"><span class="pre">iftout(torque)</span></code> logical.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">set_obj</span></code></dt>
+<dd>Defines objects for surface integrals by changing the value of <code class="docutils literal notranslate"><span class="pre">hcode</span></code> for future calculations. Typically called once within <code class="docutils literal notranslate"><span class="pre">userchk</span></code> (for <code class="docutils literal notranslate"><span class="pre">istep</span> <span class="pre">=</span> <span class="pre">0</span></code>) and used for calculating torque. (see above)</dd>
 </dl>
-<p><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg1(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
-<p><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg2(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">avg1(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">avg2(avg,f,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">avg3(avg,f,g,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></dt>
-<dd>These three subroutines calculate the (weighted) average of <code class="docutils literal"><span class="pre">f</span></code>. Depending on the value of the logical, <code class="docutils literal"><span class="pre">ifverbose</span></code>, the results will be printed to standard output along with name. In <code class="docutils literal"><span class="pre">avg2</span></code>, the <code class="docutils literal"><span class="pre">f</span></code> component is squared. In <code class="docutils literal"><span class="pre">avg3</span></code>, vector <code class="docutils literal"><span class="pre">g</span></code> also contributes to the average calculation.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">outpost(x,vy,vz,pr,tz,'</span> <span class="pre">')</span></code></dt>
-<dd>Dumps the current data of <code class="docutils literal"><span class="pre">x</span></code>, <code class="docutils literal"><span class="pre">vy</span></code>, <code class="docutils literal"><span class="pre">vz</span></code>, <code class="docutils literal"><span class="pre">pr</span></code>, <code class="docutils literal"><span class="pre">tz</span></code> to an <code class="docutils literal"><span class="pre">.fld</span></code> or <code class="docutils literal"><span class="pre">.f0????</span></code> file for post processing.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">platform_timer(ivrb)</span></code></dt>
-<dd>Runs the battery of timing tests for matrix-matrix products,contention-free processor-to-processor ping-pong tests, and <code class="docutils literal"><span class="pre">mpi_all_reduce</span></code> times. Allows one to check the performance of the communication routines used on specific platforms.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">quickmv</span></code></dt>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">avg3(avg,f,g,</span> <span class="pre">alpha,beta,n,name,ifverbose)</span></code></dt>
+<dd>These three subroutines calculate the (weighted) average of <code class="docutils literal notranslate"><span class="pre">f</span></code>. Depending on the value of the logical, <code class="docutils literal notranslate"><span class="pre">ifverbose</span></code>, the results will be printed to standard output along with name. In <code class="docutils literal notranslate"><span class="pre">avg2</span></code>, the <code class="docutils literal notranslate"><span class="pre">f</span></code> component is squared. In <code class="docutils literal notranslate"><span class="pre">avg3</span></code>, vector <code class="docutils literal notranslate"><span class="pre">g</span></code> also contributes to the average calculation.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">outpost(x,vy,vz,pr,tz,'</span> <span class="pre">')</span></code></dt>
+<dd>Dumps the current data of <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">vy</span></code>, <code class="docutils literal notranslate"><span class="pre">vz</span></code>, <code class="docutils literal notranslate"><span class="pre">pr</span></code>, <code class="docutils literal notranslate"><span class="pre">tz</span></code> to an <code class="docutils literal notranslate"><span class="pre">.fld</span></code> or <code class="docutils literal notranslate"><span class="pre">.f0????</span></code> file for post processing.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">platform_timer(ivrb)</span></code></dt>
+<dd>Runs the battery of timing tests for matrix-matrix products,contention-free processor-to-processor ping-pong tests, and <code class="docutils literal notranslate"><span class="pre">mpi_all_reduce</span></code> times. Allows one to check the performance of the communication routines used on specific platforms.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">quickmv</span></code></dt>
 <dd>Moves the mesh to allow user affine motion.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">runtimeavg(ay,y,j,istep1,ipostep,s5)</span></code></dt>
-<dd>Computes, stores, and (for <code class="docutils literal"><span class="pre">ipostep!0</span></code>) prints runtime averages of <code class="docutils literal"><span class="pre">j</span></code>-quantity <code class="docutils literal"><span class="pre">y</span></code> (along w/ <code class="docutils literal"><span class="pre">y</span></code> itself unless <code class="docutils literal"><span class="pre">ipostep&lt;0</span></code>) with <code class="docutils literal"><span class="pre">j</span></code> + ‘<code class="docutils literal"><span class="pre">rtavg_</span></code>’ + (unique) <code class="docutils literal"><span class="pre">s5</span></code> every <code class="docutils literal"><span class="pre">ipostep</span></code> for <code class="docutils literal"><span class="pre">istep&gt;=istep1</span></code>. <code class="docutils literal"><span class="pre">s5</span></code> is a string to append to <code class="docutils literal"><span class="pre">rtavg_</span></code> for storage file naming.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">lagrng(uo,y,yvec,uvec,work,n,m)</span></code></dt>
-<dd>Compute Lagrangian interpolant for <code class="docutils literal"><span class="pre">uo</span></code></dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">opcopy(a1,a2,a3,b1,b2,b3)</span></code></dt>
-<dd>Copies <code class="docutils literal"><span class="pre">b1</span></code> to <code class="docutils literal"><span class="pre">a1</span></code>, <code class="docutils literal"><span class="pre">b2</span></code> to <code class="docutils literal"><span class="pre">a2</span></code>, and <code class="docutils literal"><span class="pre">b3</span></code> to <code class="docutils literal"><span class="pre">a3</span></code>, when <code class="docutils literal"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">3</span></code>,</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">cadd(a,const,n)</span></code></dt>
-<dd>Adds <code class="docutils literal"><span class="pre">const</span></code> to vector <code class="docutils literal"><span class="pre">a</span></code> of size <code class="docutils literal"><span class="pre">n</span></code>.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">col2(a,b,n)</span></code></dt>
-<dd>For <code class="docutils literal"><span class="pre">n</span></code> entries, calculates <code class="docutils literal"><span class="pre">a=a*b</span></code>.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">col3(a,b,c,n)</span></code></dt>
-<dd>For <code class="docutils literal"><span class="pre">n</span></code> entries, calculates <code class="docutils literal"><span class="pre">a=b*c</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">runtimeavg(ay,y,j,istep1,ipostep,s5)</span></code></dt>
+<dd>Computes, stores, and (for <code class="docutils literal notranslate"><span class="pre">ipostep!0</span></code>) prints runtime averages of <code class="docutils literal notranslate"><span class="pre">j</span></code>-quantity <code class="docutils literal notranslate"><span class="pre">y</span></code> (along w/ <code class="docutils literal notranslate"><span class="pre">y</span></code> itself unless <code class="docutils literal notranslate"><span class="pre">ipostep&lt;0</span></code>) with <code class="docutils literal notranslate"><span class="pre">j</span></code> + ‘<code class="docutils literal notranslate"><span class="pre">rtavg_</span></code>’ + (unique) <code class="docutils literal notranslate"><span class="pre">s5</span></code> every <code class="docutils literal notranslate"><span class="pre">ipostep</span></code> for <code class="docutils literal notranslate"><span class="pre">istep&gt;=istep1</span></code>. <code class="docutils literal notranslate"><span class="pre">s5</span></code> is a string to append to <code class="docutils literal notranslate"><span class="pre">rtavg_</span></code> for storage file naming.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">lagrng(uo,y,yvec,uvec,work,n,m)</span></code></dt>
+<dd>Compute Lagrangian interpolant for <code class="docutils literal notranslate"><span class="pre">uo</span></code></dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">opcopy(a1,a2,a3,b1,b2,b3)</span></code></dt>
+<dd>Copies <code class="docutils literal notranslate"><span class="pre">b1</span></code> to <code class="docutils literal notranslate"><span class="pre">a1</span></code>, <code class="docutils literal notranslate"><span class="pre">b2</span></code> to <code class="docutils literal notranslate"><span class="pre">a2</span></code>, and <code class="docutils literal notranslate"><span class="pre">b3</span></code> to <code class="docutils literal notranslate"><span class="pre">a3</span></code>, when <code class="docutils literal notranslate"><span class="pre">ndim</span> <span class="pre">=</span> <span class="pre">3</span></code>,</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">cadd(a,const,n)</span></code></dt>
+<dd>Adds <code class="docutils literal notranslate"><span class="pre">const</span></code> to vector <code class="docutils literal notranslate"><span class="pre">a</span></code> of size <code class="docutils literal notranslate"><span class="pre">n</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">col2(a,b,n)</span></code></dt>
+<dd>For <code class="docutils literal notranslate"><span class="pre">n</span></code> entries, calculates <code class="docutils literal notranslate"><span class="pre">a=a*b</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">col3(a,b,c,n)</span></code></dt>
+<dd>For <code class="docutils literal notranslate"><span class="pre">n</span></code> entries, calculates <code class="docutils literal notranslate"><span class="pre">a=b*c</span></code>.</dd>
 </dl>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glmax(a,n)</span></code></p>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glamax(a,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glmax(a,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glamax(a,n)</span></code></p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglmax(a,n)</span></code></dt>
-<dd>Calculates the (absolute) max of a vector that is size <code class="docutils literal"><span class="pre">n</span></code>. Prefix <code class="docutils literal"><span class="pre">i</span></code> implies integer type.</dd>
-<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">i8glmax(a,n)</span></code></dt>
-<dd>Calculates the max of an integer*8 vector that is size <code class="docutils literal"><span class="pre">n</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">iglmax(a,n)</span></code></dt>
+<dd>Calculates the (absolute) max of a vector that is size <code class="docutils literal notranslate"><span class="pre">n</span></code>. Prefix <code class="docutils literal notranslate"><span class="pre">i</span></code> implies integer type.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">i8glmax(a,n)</span></code></dt>
+<dd>Calculates the max of an integer*8 vector that is size <code class="docutils literal notranslate"><span class="pre">n</span></code>.</dd>
 </dl>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glmin(a,n)</span></code></p>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glamin(a,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glmin(a,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glamin(a,n)</span></code></p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglmin(a,n)</span></code></dt>
-<dd>Calculates the (absolute) min of a vector that is size <code class="docutils literal"><span class="pre">n</span></code>. Prefix <code class="docutils literal"><span class="pre">i</span></code> implies integer type.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">iglmin(a,n)</span></code></dt>
+<dd>Calculates the (absolute) min of a vector that is size <code class="docutils literal notranslate"><span class="pre">n</span></code>. Prefix <code class="docutils literal notranslate"><span class="pre">i</span></code> implies integer type.</dd>
 </dl>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc2(a,b,n)</span></code></p>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc3(a,b,mult,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc2(a,b,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc3(a,b,mult,n)</span></code></p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsc23(z,y,z,n)</span></code></dt>
-<dd>Performs the inner product in double precision. <code class="docutils literal"><span class="pre">glsc3</span></code> uses a multiplier, <code class="docutils literal"><span class="pre">mult</span></code> and <code class="docutils literal"><span class="pre">glsc23</span></code> performs <code class="docutils literal"><span class="pre">x*x*y*z</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc23(z,y,z,n)</span></code></dt>
+<dd>Performs the inner product in double precision. <code class="docutils literal notranslate"><span class="pre">glsc3</span></code> uses a multiplier, <code class="docutils literal notranslate"><span class="pre">mult</span></code> and <code class="docutils literal notranslate"><span class="pre">glsc23</span></code> performs <code class="docutils literal notranslate"><span class="pre">x*x*y*z</span></code>.</dd>
 </dl>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">glsum(x,n)</span></code></p>
-<p><code class="docutils literal"><span class="pre">function</span> <span class="pre">iglsum(x,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsum(x,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">iglsum(x,n)</span></code></p>
 <dl class="docutils">
-<dt><code class="docutils literal"><span class="pre">function</span> <span class="pre">i8glsum(x,n)</span></code></dt>
-<dd>Computes the global sum of <code class="docutils literal"><span class="pre">x</span></code>, where the prefix, <code class="docutils literal"><span class="pre">i</span></code> specifies type integer, and <code class="docutils literal"><span class="pre">i8</span></code> specifies type integer*8.</dd>
-<dt><code class="docutils literal"><span class="pre">subroutine</span> <span class="pre">surface_int(dphi,dS,phi,ielem,iside)</span></code></dt>
-<dd>Computes the surface integral of scalar array <code class="docutils literal"><span class="pre">phi</span></code> over face <code class="docutils literal"><span class="pre">iside</span></code> of element <code class="docutils literal"><span class="pre">ielem</span></code>.
-The resulting integral is storted in <code class="docutils literal"><span class="pre">dphi</span></code> and the area in <code class="docutils literal"><span class="pre">dS</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">i8glsum(x,n)</span></code></dt>
+<dd>Computes the global sum of <code class="docutils literal notranslate"><span class="pre">x</span></code>, where the prefix, <code class="docutils literal notranslate"><span class="pre">i</span></code> specifies type integer, and <code class="docutils literal notranslate"><span class="pre">i8</span></code> specifies type integer*8.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">surface_int(dphi,dS,phi,ielem,iside)</span></code></dt>
+<dd>Computes the surface integral of scalar array <code class="docutils literal notranslate"><span class="pre">phi</span></code> over face <code class="docutils literal notranslate"><span class="pre">iside</span></code> of element <code class="docutils literal notranslate"><span class="pre">ielem</span></code>.
+The resulting integral is storted in <code class="docutils literal notranslate"><span class="pre">dphi</span></code> and the area in <code class="docutils literal notranslate"><span class="pre">dS</span></code>.</dd>
 </dl>
-</div>
-<div class="section" id="grid-to-grid-interpolation">
-<span id="append-g2g"></span><h1>Grid-to-Grid Interpolation<a class="headerlink" href="#grid-to-grid-interpolation" title="Permalink to this headline">¶</a></h1>
-<p>To restart from an existing field file onto a new mesh you can call the generic field file reader interpolation subroutine in userchk.
-Note that selection of specific fields to read is not currently supported and the source file must include the coordinates.
-That means all fields included in <code class="docutils literal"><span class="pre">foo.f00001</span></code> will be overwritten. Usage example:</p>
-<blockquote>
-<div><div class="highlight-none"><div class="highlight"><pre><span></span>if (istep.eq.0) call gfldr(&#39;foo.f00001&#39;)
-</pre></div>
-</div>
-</div></blockquote>
-</div>
+<span class="target" id="append-g2g"></span></div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -255,11 +235,11 @@ That means all fields included in <code class="docutils literal"><span class="pr
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC.
+        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -274,36 +254,25 @@ That means all fields included in <code class="docutils literal"><span class="pr
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'17.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

@@ -24,25 +24,17 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="genindex.html"/>
-        <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="Nek5000 17.0 documentation" href="index.html"/> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -106,7 +98,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Nek5000</a>
@@ -114,9 +106,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -163,12 +156,12 @@
 <div class="section" id="uniformly-distributed-mesh">
 <h2>Uniformly Distributed Mesh<a class="headerlink" href="#uniformly-distributed-mesh" title="Permalink to this headline">¶</a></h2>
 <p>Suppose you wish to simulate flow through an axisymmetric pipe,
-of radius <span class="math">\(R=0.5\)</span> and length <span class="math">\(L=4\)</span>.  You estimate that you will
-need 3 elements in radial <span class="math">\((y)\)</span> direction, and 5 in the <span class="math">\(x\)</span> direction,
-as depicted in <code class="xref std std-numref docutils literal"><span class="pre">fig:mesh_axi1</span></code>.
-This would be specified by the following input file (called <code class="docutils literal"><span class="pre">pipe.box</span></code>)
-to <code class="docutils literal"><span class="pre">genbox</span></code>:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>axisymmetric.rea
+of radius <span class="math notranslate nohighlight">\(R=0.5\)</span> and length <span class="math notranslate nohighlight">\(L=4\)</span>.  You estimate that you will
+need 3 elements in radial <span class="math notranslate nohighlight">\((y)\)</span> direction, and 5 in the <span class="math notranslate nohighlight">\(x\)</span> direction,
+as depicted in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi1</span></code>.
+This would be specified by the following input file (called <code class="docutils literal notranslate"><span class="pre">pipe.box</span></code>)
+to <code class="docutils literal notranslate"><span class="pre">genbox</span></code>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>axisymmetric.rea
 2                      spatial dimension
 1                      number of fields
 #
@@ -190,33 +183,33 @@ v  ,O  ,A  ,W  ,   ,          BC&#39;s:  (cbx0, cbx1, cby0, cby1, cbz0, cbz1)
 <p class="caption"><span class="caption-text">Axisymmetric pipe mesh.</span></p>
 </div>
 <ul class="simple">
-<li>The first line of this file supplies the name of an existing 2D <code class="docutils literal"><span class="pre">.rea</span></code> file that has the appropriate run parameters (viscosity, timestep size, etc.). These parameters can be modified later, but it is important that <code class="docutils literal"><span class="pre">axisymmetric.rea</span></code> be a 2D file, and not a 3D file.</li>
+<li>The first line of this file supplies the name of an existing 2D <code class="docutils literal notranslate"><span class="pre">.rea</span></code> file that has the appropriate run parameters (viscosity, timestep size, etc.). These parameters can be modified later, but it is important that <code class="docutils literal notranslate"><span class="pre">axisymmetric.rea</span></code> be a 2D file, and not a 3D file.</li>
 <li>The second line indicates the number of fields for this simulation, in this case, just 1, corresponding to the velocity field (i.e., no heat transfer).</li>
-<li>The next set of lines just shows how one can place comments into a <code class="docutils literal"><span class="pre">genbox</span></code> input file.</li>
+<li>The next set of lines just shows how one can place comments into a <code class="docutils literal notranslate"><span class="pre">genbox</span></code> input file.</li>
 <li>The line that starts with “Box” indicates that a new box is starting, and that the following lines describe a typical box input.  Other possible key characters (the first character of Box, “B”) are “C” and “M”, more on those later.</li>
 <li>The first line after “Box” specifies the number of elements in the
-<span class="math">\(x\)</span> and <span class="math">\(y\)</span> directions.   The fact that these values are negative indicates
-that you want <code class="docutils literal"><span class="pre">genbox</span></code> to automatically generate the element distribution
+<span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions.   The fact that these values are negative indicates
+that you want <code class="docutils literal notranslate"><span class="pre">genbox</span></code> to automatically generate the element distribution
 along each axis, rather than providing it by hand.  (More on this below.)</li>
-<li>The next line specifies the distribution of the 5 elements in the <span class="math">\(x\)</span> direction.
-The mesh starts at <span class="math">\(x=0\)</span> and ends at <span class="math">\(x=4.0\)</span>.  The <code class="docutils literal"><span class="pre">ratio</span></code> indicates the
+<li>The next line specifies the distribution of the 5 elements in the <span class="math notranslate nohighlight">\(x\)</span> direction.
+The mesh starts at <span class="math notranslate nohighlight">\(x=0\)</span> and ends at <span class="math notranslate nohighlight">\(x=4.0\)</span>.  The <code class="docutils literal notranslate"><span class="pre">ratio</span></code> indicates the
 relative size of each element, progressing from left to right.</li>
-<li>The next line specifies the distribution of the 3 elements in the <span class="math">\(y\)</span> direction,
-starting at <span class="math">\(y=0\)</span> and going to <span class="math">\(y=0.5\)</span>.  Again,
-<code class="docutils literal"><span class="pre">ratio</span></code> =1.0 indicates that the elements will be of uniform height.</li>
+<li>The next line specifies the distribution of the 3 elements in the <span class="math notranslate nohighlight">\(y\)</span> direction,
+starting at <span class="math notranslate nohighlight">\(y=0\)</span> and going to <span class="math notranslate nohighlight">\(y=0.5\)</span>.  Again,
+<code class="docutils literal notranslate"><span class="pre">ratio</span></code> =1.0 indicates that the elements will be of uniform height.</li>
 <li>The last line specifies boundary conditions on each of the 4 sides of the
 box:<ul>
-<li>Lower-case <em>v</em> indicates that the left <span class="math">\((x)\)</span> boundary is to be a velocity
+<li>Lower-case <em>v</em> indicates that the left <span class="math notranslate nohighlight">\((x)\)</span> boundary is to be a velocity
 boundary condition, with a user-specified distribution determined by
-routine <code class="docutils literal"><span class="pre">userbc</span></code> in the <code class="docutils literal"><span class="pre">.usr</span></code> file.  (Upper-case <span class="math">\(V\)</span> would indicate that
+routine <code class="docutils literal notranslate"><span class="pre">userbc</span></code> in the <code class="docutils literal notranslate"><span class="pre">.usr</span></code> file.  (Upper-case <span class="math notranslate nohighlight">\(V\)</span> would indicate that
 the velocity is constant, with values specified in the .rea file.)</li>
-<li><em>O</em> indicates that the right <span class="math">\((x)\)</span> boundary is an outflow boundary – the
-flow leaves the domain at the left and the default exit pressure is <span class="math">\(p=0\)</span>.</li>
-<li><em>A</em> indicates that the lower <span class="math">\((y)\)</span> boundary is the axis—this condition
+<li><em>O</em> indicates that the right <span class="math notranslate nohighlight">\((x)\)</span> boundary is an outflow boundary – the
+flow leaves the domain at the left and the default exit pressure is <span class="math notranslate nohighlight">\(p=0\)</span>.</li>
+<li><em>A</em> indicates that the lower <span class="math notranslate nohighlight">\((y)\)</span> boundary is the axis—this condition
 is mandatory for the axisymmetric case, given the fact that the lower domain
-boundary is at <span class="math">\(y=0\)</span>, which corresponds to <span class="math">\(r=0\)</span>.</li>
-<li><em>W</em> indicates that the upper <span class="math">\((y)\)</span> boundary is a wall.  This would be
-equivalent to a <em>v</em> or <em>V</em> boundary condition, with <span class="math">\({\bf u}=0\)</span>.</li>
+boundary is at <span class="math notranslate nohighlight">\(y=0\)</span>, which corresponds to <span class="math notranslate nohighlight">\(r=0\)</span>.</li>
+<li><em>W</em> indicates that the upper <span class="math notranslate nohighlight">\((y)\)</span> boundary is a wall.  This would be
+equivalent to a <em>v</em> or <em>V</em> boundary condition, with <span class="math notranslate nohighlight">\({\bf u}=0\)</span>.</li>
 </ul>
 </li>
 </ul>
@@ -229,21 +222,21 @@ equivalent to a <em>v</em> or <em>V</em> boundary condition, with <span class="m
 </div>
 <p>Suppose you wish to have the mesh be graded,
 that you have increased resolution near the wall.
-In this case you change <code class="docutils literal"><span class="pre">ratio</span></code> in the <span class="math">\(y\)</span>-specification
+In this case you change <code class="docutils literal notranslate"><span class="pre">ratio</span></code> in the <span class="math notranslate nohighlight">\(y\)</span>-specification
 of the element distribution.  For example, changing the 3 lines
-in the above <code class="docutils literal"><span class="pre">genbox</span></code> input file from</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>-5 -3                         Nelx  Nely
+in the above <code class="docutils literal notranslate"><span class="pre">genbox</span></code> input file from</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-5 -3                         Nelx  Nely
 0.0   4.0   1.0               x0  x1   ratio
 0.0   0.5   1.0               y0  y1   ratio
 </pre></div>
 </div>
 <p>to</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>-5 -4                         Nelx  Nely
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-5 -4                         Nelx  Nely
 0.0   4.0   1.0               x0  x1   ratio
 0.0   0.5   0.7               y0  y1   ratio
 </pre></div>
 </div>
-<p>yields the mesh shown in <code class="xref std std-numref docutils literal"><span class="pre">fig:mesh_axi2</span></code>.</p>
+<p>yields the mesh shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi2</span></code>.</p>
 </div>
 <div class="section" id="user-specified-distribution">
 <h2>User-Specified Distribution<a class="headerlink" href="#user-specified-distribution" title="Permalink to this headline">¶</a></h2>
@@ -254,40 +247,40 @@ in the above <code class="docutils literal"><span class="pre">genbox</span></cod
 <p>You can also specify your own, precise, distribution of element
 locations.   For example, another graded mesh similar to the
 one of the preceding example could be built by changing the
-<code class="docutils literal"><span class="pre">genbox</span></code> input file to contain:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>-5  4                                               Nelx  Nely
+<code class="docutils literal notranslate"><span class="pre">genbox</span></code> input file to contain:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>-5  4                                               Nelx  Nely
 0.0   4.0   1.0                                     x0  x1   ratio
 0.000    0.250    0.375    0.450    0.500           y0  y1 ... y4
 </pre></div>
 </div>
-<p>Here, the positive number of elements for the <span class="math">\(y\)</span> direction indicates
-that <code class="docutils literal"><span class="pre">genbox</span></code> is expecting <code class="docutils literal"><span class="pre">Nely+1</span></code> values of <span class="math">\(y\)</span> positions on the
-<span class="math">\(y\)</span>-element distribution line.   This is the <code class="docutils literal"><span class="pre">genbox</span></code> default, which
-explains why it corresponds to <code class="docutils literal"><span class="pre">Nely</span></code> <span class="math">\(&gt;\)</span> 0.  The corresponding mesh
-is shown in <code class="xref std std-numref docutils literal"><span class="pre">fig:mesh_axi3</span></code>.</p>
+<p>Here, the positive number of elements for the <span class="math notranslate nohighlight">\(y\)</span> direction indicates
+that <code class="docutils literal notranslate"><span class="pre">genbox</span></code> is expecting <code class="docutils literal notranslate"><span class="pre">Nely+1</span></code> values of <span class="math notranslate nohighlight">\(y\)</span> positions on the
+<span class="math notranslate nohighlight">\(y\)</span>-element distribution line.   This is the <code class="docutils literal notranslate"><span class="pre">genbox</span></code> default, which
+explains why it corresponds to <code class="docutils literal notranslate"><span class="pre">Nely</span></code> <span class="math notranslate nohighlight">\(&gt;\)</span> 0.  The corresponding mesh
+is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi3</span></code>.</p>
 </div>
 </div>
 <div class="section" id="mesh-modification">
 <h1>Mesh Modification<a class="headerlink" href="#mesh-modification" title="Permalink to this headline">¶</a></h1>
 <p>For complex shapes, it is often convenient to modify the mesh
 direction in the simulation code, Nek5000.  This can be done
-through the <code class="docutils literal"><span class="pre">usrdat2</span></code> routine provided in the <code class="docutils literal"><span class="pre">.usr</span></code> file.
-The routine <code class="docutils literal"><span class="pre">usrdat2</span></code> is called by Nek5000 immediately after
-the geometry, as specified by the <code class="docutils literal"><span class="pre">.rea</span></code> file, is established.
+through the <code class="docutils literal notranslate"><span class="pre">usrdat2</span></code> routine provided in the <code class="docutils literal notranslate"><span class="pre">.usr</span></code> file.
+The routine <code class="docutils literal notranslate"><span class="pre">usrdat2</span></code> is called by Nek5000 immediately after
+the geometry, as specified by the <code class="docutils literal notranslate"><span class="pre">.rea</span></code> file, is established.
 Thus, one can use the existing geometry to map to a new geometry
 of interest.</p>
 <p>For example, suppose you want the above pipe geometry to have
-a sinusoidal wall.  Let <span class="math">\({\bf x} := (x,y)\)</span> denote the old geometry,
-and <span class="math">\({\bf x}' := (x',y')\)</span> denote the new geometry.  For a domain
-with <span class="math">\(y\in [0,0.5]\)</span>, the following function will map the straight
-pipe geometry to a wavy wall with amplitude <span class="math">\(A\)</span>, wavelength <span class="math">\(\lambda\)</span>:</p>
-<div class="math">
+a sinusoidal wall.  Let <span class="math notranslate nohighlight">\({\bf x} := (x,y)\)</span> denote the old geometry,
+and <span class="math notranslate nohighlight">\({\bf x}' := (x',y')\)</span> denote the new geometry.  For a domain
+with <span class="math notranslate nohighlight">\(y\in [0,0.5]\)</span>, the following function will map the straight
+pipe geometry to a wavy wall with amplitude <span class="math notranslate nohighlight">\(A\)</span>, wavelength <span class="math notranslate nohighlight">\(\lambda\)</span>:</p>
+<div class="math notranslate nohighlight">
 \[y'(x,y) = y  + y A \sin( 2 \pi x / \lambda ).\]</div>
-<p>Note that, as <span class="math">\(y \longrightarrow 0\)</span>, the perturbation,
-<span class="math">\(yA \sin( 2 \pi x / \lambda )\)</span>, goes to zero.  So, near the axis,
+<p>Note that, as <span class="math notranslate nohighlight">\(y \longrightarrow 0\)</span>, the perturbation,
+<span class="math notranslate nohighlight">\(yA \sin( 2 \pi x / \lambda )\)</span>, goes to zero.  So, near the axis,
 the mesh recovers its original form.</p>
-<p>In Nek5000, you would specify this through <code class="docutils literal"><span class="pre">usrdat2</span></code> as follows</p>
-<div class="highlight-fortran"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">usrdat2</span>
+<p>In Nek5000, you would specify this through <code class="docutils literal notranslate"><span class="pre">usrdat2</span></code> as follows</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="k">subroutine </span><span class="n">usrdat2</span>
 <span class="k">include</span> <span class="s1">&#39;SIZE&#39;</span>
 <span class="k">include</span> <span class="s1">&#39;TOTAL&#39;</span>
 
@@ -309,13 +302,13 @@ the mesh recovers its original form.</p>
 <span class="k">end</span>
 </pre></div>
 </div>
-<p>Note that, since Nek5000 is modifying the mesh, <code class="docutils literal"><span class="pre">postx</span></code> will not
-recognize the current mesh unless you tell it to, because <code class="docutils literal"><span class="pre">postx</span></code>
-looks to the <code class="docutils literal"><span class="pre">.rea</span></code> file for the mesh geometry.  The only way for
-Nek5000 to communicate the new mesh to <code class="docutils literal"><span class="pre">postx</span></code> is via the <code class="docutils literal"><span class="pre">.fld</span></code>
+<p>Note that, since Nek5000 is modifying the mesh, <code class="docutils literal notranslate"><span class="pre">postx</span></code> will not
+recognize the current mesh unless you tell it to, because <code class="docutils literal notranslate"><span class="pre">postx</span></code>
+looks to the <code class="docutils literal notranslate"><span class="pre">.rea</span></code> file for the mesh geometry.  The only way for
+Nek5000 to communicate the new mesh to <code class="docutils literal notranslate"><span class="pre">postx</span></code> is via the <code class="docutils literal notranslate"><span class="pre">.fld</span></code>
 file, so you must request that the geometry be dumped to the
-<code class="docutils literal"><span class="pre">.fld</span></code> file.
-The result of above changes is shown in <code class="xref std std-numref docutils literal"><span class="pre">fig:wavypipe</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">.fld</span></code> file.
+The result of above changes is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:wavypipe</span></code>.</p>
 <div class="align-center figure" id="id4">
 <span id="fig-wavypipe"></span><img alt="axis-pipe-mesh-wavy" src="_images/wavypipe.png" />
 <p class="caption"><span class="caption-text">Axisymmetric pipe mesh.</span></p>
@@ -332,12 +325,12 @@ The result of above changes is shown in <code class="xref std std-numref docutil
 </div>
 <p>More sophisticated
 transition treatments may be generated using the GLOBAL REFINE options in
-<code class="docutils literal"><span class="pre">prenek</span></code> or through an upgrade of <code class="docutils literal"><span class="pre">genb7</span></code>, as demand warrants.
-Example 2D and 3D input files are provided in the <code class="docutils literal"><span class="pre">nek5000/doc</span></code> files
-<code class="docutils literal"><span class="pre">box7.2d</span></code> and <code class="docutils literal"><span class="pre">box7.3d</span></code>.
-<code class="xref std std-numref docutils literal"><span class="pre">fig:cylbox_2d</span></code> shows a 2D example generated using
-the <code class="docutils literal"><span class="pre">box7.2d</span></code> input file, which reads:</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span>x2d.rea
+<code class="docutils literal notranslate"><span class="pre">prenek</span></code> or through an upgrade of <code class="docutils literal notranslate"><span class="pre">genb7</span></code>, as demand warrants.
+Example 2D and 3D input files are provided in the <code class="docutils literal notranslate"><span class="pre">nek5000/doc</span></code> files
+<code class="docutils literal notranslate"><span class="pre">box7.2d</span></code> and <code class="docutils literal notranslate"><span class="pre">box7.3d</span></code>.
+<code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:cylbox_2d</span></code> shows a 2D example generated using
+the <code class="docutils literal notranslate"><span class="pre">box7.2d</span></code> input file, which reads:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x2d.rea
 2                      spatial dimension
 1                      number of fields
 #
@@ -355,22 +348,22 @@ ccbb                descriptors: c-cyl, o-oct, b-box (1 character + space)
 v  ,W  ,E  ,E  ,    bc&#39;s (3 characters + comma)
 </pre></div>
 </div>
-<p>An example of a mesh is shown in <code class="xref std std-numref docutils literal"><span class="pre">fig:cylbox_2d</span></code>.   The mesh has been quad-refined
-once with oct-refine option of <code class="docutils literal"><span class="pre">prenek</span></code>. The 3D counterpart to this
+<p>An example of a mesh is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:cylbox_2d</span></code>.   The mesh has been quad-refined
+once with oct-refine option of <code class="docutils literal notranslate"><span class="pre">prenek</span></code>. The 3D counterpart to this
 mesh could joined to a hemisphere/Cartesian transition built with
-the spherical mesh option in <code class="docutils literal"><span class="pre">prenek</span></code>.</p>
+the spherical mesh option in <code class="docutils literal notranslate"><span class="pre">prenek</span></code>.</p>
 </div>
 </div>
 <div class="section" id="mesh-extrusion-and-mirroring">
 <h1>Mesh Extrusion and Mirroring<a class="headerlink" href="#mesh-extrusion-and-mirroring" title="Permalink to this headline">¶</a></h1>
-<p>In <code class="docutils literal"><span class="pre">nek5000/tools</span></code>, there is a code <code class="docutils literal"><span class="pre">n2to3.f</span></code> that can be compiled with your
+<p>In <code class="docutils literal notranslate"><span class="pre">nek5000/tools</span></code>, there is a code <code class="docutils literal notranslate"><span class="pre">n2to3.f</span></code> that can be compiled with your
 local fortran compiler (preferably not g77).
 By running this code, you can extend two dimensional domains to
 three dimensional ones with a user-specified number of levels in the
-<span class="math">\(z\)</span>-direction.  Such a mesh can then be modified using the mesh modification
-approach. Assuming you have a valid two-dimensional mesh, <code class="docutils literal"><span class="pre">n2to3</span></code> is straightforward
-to run.  Below is a typical session, upon typing <code class="docutils literal"><span class="pre">n2to3</span></code> the user is prompted at the command line</p>
-<div class="highlight-none"><div class="highlight"><pre><span></span> Input old (source) file name:
+<span class="math notranslate nohighlight">\(z\)</span>-direction.  Such a mesh can then be modified using the mesh modification
+approach. Assuming you have a valid two-dimensional mesh, <code class="docutils literal notranslate"><span class="pre">n2to3</span></code> is straightforward
+to run.  Below is a typical session, upon typing <code class="docutils literal notranslate"><span class="pre">n2to3</span></code> the user is prompted at the command line</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> Input old (source) file name:
 h2e
  Input new (output) file name:
 h3e
@@ -398,52 +391,50 @@ FORTRAN STOP
 <p>The domain in which the fluid flow/heat transfer
 problem is solved consists of two distinct subdomains. The
 first subdomain is that part of the region occupied by
-fluid, denoted <span class="math">\(\Omega_f\)</span>, while the second subdomain is that part
-of the region occupied by a solid, denoted <span class="math">\(\Omega_s\)</span>. These two
-subdomains are depicted in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 11</span></a>. The entire domain is denoted as <span class="math">\(D=\Omega_f \cup \Omega_s\)</span>.
-The fluid problem is solved in the domain <span class="math">\(\Omega_f\)</span>, while the
+fluid, denoted <span class="math notranslate nohighlight">\(\Omega_f\)</span>, while the second subdomain is that part
+of the region occupied by a solid, denoted <span class="math notranslate nohighlight">\(\Omega_s\)</span>. These two
+subdomains are depicted in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 11</span></a>. The entire domain is denoted as <span class="math notranslate nohighlight">\(D=\Omega_f \cup \Omega_s\)</span>.
+The fluid problem is solved in the domain <span class="math notranslate nohighlight">\(\Omega_f\)</span>, while the
 temperature in the energy equation is solved in the
 entire domain; the passive scalars can be solved in either
 the fluid or the entire domain.</p>
-<p>We denote the entire boundary of <span class="math">\(\Omega_f\)</span> as <span class="math">\(\partial \Omega_f\)</span>, that part
-of the boundary of <span class="math">\(\Omega_f\)</span> which is not shared by <span class="math">\(\Omega_s\)</span> as
-<span class="math">\(\overline{\partial \Omega_f}\)</span>, and
-that part of the boundary of <span class="math">\(\Omega_f\)</span> which is shared by <span class="math">\(\Omega_s\)</span>.
-In addition, <span class="math">\(\partial \Omega_{s}, \overline{\partial \Omega_s}\)</span> are analogously defined.
+<p>We denote the entire boundary of <span class="math notranslate nohighlight">\(\Omega_f\)</span> as <span class="math notranslate nohighlight">\(\partial \Omega_f\)</span>, that part
+of the boundary of <span class="math notranslate nohighlight">\(\Omega_f\)</span> which is not shared by <span class="math notranslate nohighlight">\(\Omega_s\)</span> as
+<span class="math notranslate nohighlight">\(\overline{\partial \Omega_f}\)</span>, and
+that part of the boundary of <span class="math notranslate nohighlight">\(\Omega_f\)</span> which is shared by <span class="math notranslate nohighlight">\(\Omega_s\)</span>.
+In addition, <span class="math notranslate nohighlight">\(\partial \Omega_{s}, \overline{\partial \Omega_s}\)</span> are analogously defined.
 These distinct portions of the
 domain boundary are illustrated in <a class="reference internal" href="theory.html#fig-walls"><span class="std std-numref">Fig. 11</span></a>.
 The restrictions on the domain for Nek5000 are itemized below.</p>
 <ul class="simple">
-<li>The domain <span class="math">\(\Omega=\Omega_f \cup \Omega_s\)</span> must correspond either to a
+<li>The domain <span class="math notranslate nohighlight">\(\Omega=\Omega_f \cup \Omega_s\)</span> must correspond either to a
 planar (Cartesian) two-dimensional geometry, or to the
 cross-section of an axisymmetric region specified by
 revolution of the cross-section about a specified axis, or
 by a (Cartesian) three-dimensional geometry.</li>
 <li>For two-dimensional and axisymmetric geometries, the
-boundaries of both subdomains, <span class="math">\(\partial \Omega_f\)</span> and
-<span class="math">\(\partial \Omega_s\)</span>, must be
+boundaries of both subdomains, <span class="math notranslate nohighlight">\(\partial \Omega_f\)</span> and
+<span class="math notranslate nohighlight">\(\partial \Omega_s\)</span>, must be
 representable as (or at least approximated by) the union of
 straight line segments, splines, or circular arcs.</li>
 <li>Nek5000 can interpret a two-dimensional image as either
 a planar Cartesian geometry, or
 the cross-section of an axisymmetric body. In the case of
-the latter, it is assumed that the <span class="math">\(y\)</span>-direction is the radial
-direction, that is, the axis of revolution is at <span class="math">\(y=0\)</span>.
+the latter, it is assumed that the <span class="math notranslate nohighlight">\(y\)</span>-direction is the radial
+direction, that is, the axis of revolution is at <span class="math notranslate nohighlight">\(y=0\)</span>.
 Although an axisymmetric geometry is, in fact,
 three-dimensional, Nek5000 can assume that the field variables
 are also axisymmetric ( that is, do not depend on azimuth,
-but only <span class="math">\(y\)</span>, that is, radius, <span class="math">\(x\)</span>, and <span class="math">\(t\)</span> ), thus reducing the
+but only <span class="math notranslate nohighlight">\(y\)</span>, that is, radius, <span class="math notranslate nohighlight">\(x\)</span>, and <span class="math notranslate nohighlight">\(t\)</span> ), thus reducing the
 relevant equations to “two-dimensional” form.</li>
 </ul>
 <p>Fully general three-dimensional meshes generated by other softwares
-packages can be input to <code class="docutils literal"><span class="pre">prenek</span></code> as import meshes.</p>
+packages can be input to <code class="docutils literal notranslate"><span class="pre">prenek</span></code> as import meshes.</p>
 </div>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -452,11 +443,11 @@ packages can be input to <code class="docutils literal"><span class="pre">prenek
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC.
+        &copy; Copyright 2015-2017, UCHICAGO ARGONNE, LLC
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -471,36 +462,25 @@ packages can be input to <code class="docutils literal"><span class="pre">prenek
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'17.0',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>
