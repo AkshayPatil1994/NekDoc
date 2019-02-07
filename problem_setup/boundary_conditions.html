@@ -252,10 +252,10 @@ The legacy boundary conditions are listed in <code class="xref std std-numref do
 <span id="tab-ubcf"></span><table border="1" class="docutils" id="id2">
 <caption><span class="caption-number">Table 15 </span><span class="caption-text">User defined boundary conditions for velocity</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
+<col width="10%" />
+<col width="23%" />
 <col width="11%" />
-<col width="26%" />
-<col width="13%" />
-<col width="51%" />
+<col width="56%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Identifier</th>
@@ -305,27 +305,32 @@ The legacy boundary conditions are listed in <code class="xref std std-numref do
 <td>Mixed</td>
 <td>Zero normal velocity, traction in tangent and bitangent</td>
 </tr>
-<tr class="row-even"><td>mm</td>
+<tr class="row-even"><td>int</td>
+<td>Interpolated (NEKNEK)</td>
+<td>Dirichlet</td>
+<td>Interpolated from the adjacent overset mesh, see: <a class="reference internal" href="../tutorials/neknek.html#neknek"><span class="std std-ref">Overlapping Overset Grids</span></a></td>
+</tr>
+<tr class="row-odd"><td>mm</td>
 <td>Moving mesh</td>
 <td>–</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>ms</td>
+<tr class="row-even"><td>ms</td>
 <td>Moving surface</td>
 <td>–</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>msi</td>
+<tr class="row-odd"><td>msi</td>
 <td>Moving internal surface</td>
 <td>–</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-odd"><td>mv</td>
+<tr class="row-even"><td>mv</td>
 <td>Moving boundary</td>
 <td>Dirichlet</td>
 <td>&#160;</td>
 </tr>
-<tr class="row-even"><td>mvn</td>
+<tr class="row-odd"><td>mvn</td>
 <td>Moving boundary, normal</td>
 <td>Dirichlet</td>
 <td>Zero velocity in non-normal directions</td>
@@ -440,10 +445,10 @@ Thus, the temperature boundary condition menu will reappear for each passive sca
 <span id="tab-userbct"></span><table border="1" class="docutils" id="id4">
 <caption><span class="caption-number">Table 17 </span><span class="caption-text">User defined boundary conditions for temperature and passive scalars</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
+<col width="10%" />
+<col width="23%" />
 <col width="11%" />
-<col width="26%" />
-<col width="13%" />
-<col width="51%" />
+<col width="56%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Identifier</th>
@@ -467,6 +472,11 @@ Thus, the temperature boundary condition menu will reappear for each passive sca
 <td>Newton cooling</td>
 <td>Robin</td>
 <td>Specified heat transfer coefficient</td>
+</tr>
+<tr class="row-odd"><td>int</td>
+<td>Interpolated (NEKNEK)</td>
+<td>Dirichlet</td>
+<td>Interpolated from the adjacent overset mesh, see: <a class="reference internal" href="../tutorials/neknek.html#neknek"><span class="std std-ref">Overlapping Overset Grids</span></a></td>
 </tr>
 </tbody>
 </table>
