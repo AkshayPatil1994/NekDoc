@@ -98,6 +98,7 @@
 <li class="toctree-l1"><a class="reference internal" href="problem_setup.html">Problem Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -296,14 +297,14 @@ is optimized for this range of <span class="math notranslate nohighlight">\(N\)<
 <div>Change <code class="docutils literal notranslate"><span class="pre">lx1</span></code> in the SIZE file. Note, the polynomial order is <span class="math notranslate nohighlight">\(N=lx1-1\)</span>.</div></blockquote>
 <p><strong>How do I specify/change the solver runtime parameters?</strong></p>
 <blockquote>
-<div>See the section on the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">The Parameter File (.par)</span></a> file.</div></blockquote>
+<div>See the section on the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">Parameter File (.par)</span></a> file.</div></blockquote>
 <p><strong>Why is ``userbc`` only called for certain element faces?</strong></p>
 <blockquote>
 <div><code class="docutils literal notranslate"><span class="pre">userbc</span></code> is ONLY called for element boundary conditions specified with a lower-case letter, e.g. ‘v’, ‘t’, or ‘o’ but NOT ‘W’, ‘E’, or ‘O’.  Note that this implies it is not necesarily called on all MPI ranks.</div></blockquote>
 <p><strong>How do I solve for a scalar?</strong></p>
 <blockquote>
 <div>Nek5000 supports solving up to 99 additional scalars.
-To solve an additional scalar equation, increase <code class="docutils literal notranslate"><span class="pre">ldimt</span></code> in the <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">The Parameter File (.par)</span></a> file. See <code class="docutils literal notranslate"><span class="pre">shear4</span></code> example for more details.</div></blockquote>
+To solve an additional scalar equation, increase <code class="docutils literal notranslate"><span class="pre">ldimt</span></code> in the <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> file to accomodate the additional scalar and specify the appropriate parameter in the <a class="reference internal" href="problem_setup/case_files.html#case-files-par"><span class="std std-ref">Parameter File (.par)</span></a> file. See <code class="docutils literal notranslate"><span class="pre">shear4</span></code> example for more details.</div></blockquote>
 <p><strong>Are there any books/papers that describe the numerics of Nek5000?</strong></p>
 <blockquote>
 <div><p>There are a number of descriptions of the various numerical methods used in Nek5000 available.

@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Additional Features" href="features.html" />
-    <link rel="prev" title="Case Files" href="case_files.html" /> 
+    <link rel="next" title="Case Files" href="case_files.html" />
+    <link rel="prev" title="Problem Setup" href="../problem_setup.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -87,18 +87,19 @@
 <li class="toctree-l1"><a class="reference internal" href="../faq.html">FAQ</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../problem_setup.html">Problem Setup</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Boundary Conditions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#fluid-velocity">Fluid Velocity</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#temperature-and-passive-scalars">Temperature and Passive Scalars</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#internal-boundary-conditions">Internal Boundary Conditions</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="case_files.html">Case Files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="features.html">Additional Features</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -169,14 +170,14 @@
 <h1>Boundary Conditions<a class="headerlink" href="#boundary-conditions" title="Permalink to this headline">¶</a></h1>
 <p>The boundary conditions can be imposed in various ways:</p>
 <ul class="simple">
-<li>when the mesh is generated, e.g. with <code class="docutils literal notranslate"><span class="pre">genbox</span></code>, as is explained in <a class="reference internal" href="../geometry.html#sec-genbox"><span class="std std-ref">Cylindrical/Cartesian-transition Annuli</span></a></li>
+<li>when the mesh is generated, e.g. with <code class="docutils literal notranslate"><span class="pre">genbox</span></code>, as is explained in <a class="reference internal" href="../appendix.html#sec-genbox"><span class="std std-ref">Cylindrical/Cartesian-transition Annuli</span></a></li>
 <li>when an <code class="docutils literal notranslate"><span class="pre">.rea</span></code> file is read in <code class="docutils literal notranslate"><span class="pre">prenek</span></code></li>
 <li>translated from side-set numbers in <code class="docutils literal notranslate"><span class="pre">usrdat</span></code> when using <code class="docutils literal notranslate"><span class="pre">exotonek</span></code> or similar</li>
 </ul>
 <p>The general convention for boundary conditions is</p>
 <ul class="simple">
-<li>uppercase letters correspond to primitive boundary conditions, as given in <a class="reference internal" href="#tab-bcf"><span class="std std-numref">Table 14</span></a>, <a class="reference internal" href="#tab-bct"><span class="std std-numref">Table 16</span></a></li>
-<li>lowercase letters correspond to user defined boundary conditions, see <a class="reference internal" href="#tab-ubcf"><span class="std std-numref">Table 15</span></a> , <a class="reference internal" href="#tab-userbct"><span class="std std-numref">Table 17</span></a></li>
+<li>uppercase letters correspond to primitive boundary conditions, as given in <a class="reference internal" href="#tab-bcf"><span class="std std-numref">Table 1</span></a>, <a class="reference internal" href="#tab-bct"><span class="std std-numref">Table 3</span></a></li>
+<li>lowercase letters correspond to user defined boundary conditions, see <a class="reference internal" href="#tab-ubcf"><span class="std std-numref">Table 2</span></a> , <a class="reference internal" href="#tab-userbct"><span class="std std-numref">Table 4</span></a></li>
 <li>lowercase letters ending with <code class="docutils literal notranslate"><span class="pre">l</span></code>, i.e. <code class="docutils literal notranslate"><span class="pre">'vl</span> <span class="pre">'</span></code>, are specified in face-local coordinates, i.e. normal, tangent and bitangent directions.</li>
 </ul>
 <p>Uppercase boundary conditions which require assigned values in the <code class="docutils literal notranslate"><span class="pre">.rea</span></code> file are considered legacy and are not recommended for use.</p>
@@ -189,9 +190,9 @@ If the nonstress formulation is selected, then traction is not defined on the bo
 In this case, any Neumann boundary condition imposed must be homogeneous, i.e. equal to zero.
 .. In addition, mixed Dirichlet/Neumann boundaries must be aligned with one of the Cartesian axes.
 For flow geometry which consists of a periodic repetition of a particular geometric unit, the periodic boundary conditions can be imposed, as illustrated in <a class="reference internal" href="../theory.html#fig-walls"><span class="std std-numref">Fig. 11</span></a> .
-The available primitive boundary conditions for the fluid are given in <a class="reference internal" href="#tab-bcf"><span class="std std-numref">Table 14</span></a> , with the user-specified boundary conditions in <a class="reference internal" href="#tab-ubcf"><span class="std std-numref">Table 15</span></a> .</p>
+The available primitive boundary conditions for the fluid are given in <a class="reference internal" href="#tab-bcf"><span class="std std-numref">Table 1</span></a> , with the user-specified boundary conditions in <a class="reference internal" href="#tab-ubcf"><span class="std std-numref">Table 2</span></a> .</p>
 <span id="tab-bcf"></span><table border="1" class="docutils" id="id1">
-<caption><span class="caption-number">Table 14 </span><span class="caption-text">Primitive boundary conditions for velocity</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 1 </span><span class="caption-text">Primitive boundary conditions for velocity</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="11%" />
 <col width="27%" />
@@ -249,7 +250,7 @@ The available primitive boundary conditions for the fluid are given in <a class=
 </tbody>
 </table>
 <span id="tab-ubcf"></span><table border="1" class="docutils" id="id2">
-<caption><span class="caption-number">Table 15 </span><span class="caption-text">User defined boundary conditions for velocity</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">User defined boundary conditions for velocity</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="23%" />
@@ -351,12 +352,14 @@ We identify two situations</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}{\bf u} \cdot {\bf n} &amp;= 0\ ,\\
 (\nabla {\bf u} \cdot {\bf t})\cdot {\bf n} &amp;= 0\end{split}\]</div>
-<p>where <span class="math notranslate nohighlight">\({\bf n}\)</span> is the normal vector and <span class="math notranslate nohighlight">\({\bf t}\)</span> the tangent vector.</p>
+<p>where <span class="math notranslate nohighlight">\({\bf n}\)</span> is the normal vector and <span class="math notranslate nohighlight">\({\bf t}\)</span> the tangent vector.
+If the normal and tangent vector are not aligned with the mesh the stress formulation has to be used.</p>
+</li>
+<li><p class="first">the periodic boundary condition (“P”) needs to be prescribed in the <code class="docutils literal notranslate"><span class="pre">.rea</span></code> or <code class="docutils literal notranslate"><span class="pre">.re2</span></code> file since it already assigns the last point to first via <span class="math notranslate nohighlight">\({\bf u}({\bf x})={\bf u}({\bf x} + L)\)</span>, where <span class="math notranslate nohighlight">\(L\)</span> is the periodic length.</p>
+</li>
+<li><p class="first">the wall boundary condition (“W”) corresponds to <span class="math notranslate nohighlight">\({\bf u}=0\)</span>.</p>
 </li>
 </ul>
-<p>If the normal and tangent vector are not aligned with the mesh the stress formulation has to be used.
-- the periodic boundary condition (“P”) needs to be prescribed in the <code class="docutils literal notranslate"><span class="pre">.rea</span></code> or <code class="docutils literal notranslate"><span class="pre">.re2</span></code> file since it already assigns the last point to first via <span class="math notranslate nohighlight">\({\bf u}({\bf x})={\bf u}({\bf x} + L)\)</span>, where <span class="math notranslate nohighlight">\(L\)</span> is the periodic length.
-- the wall boundary condition (“W”) corresponds to <span class="math notranslate nohighlight">\({\bf u}=0\)</span>.</p>
 <p>For a fully-developed flow in such a configuration, one can effect great computational efficiencies by considering the problem in a single geometric unit (here taken to be of length <span class="math notranslate nohighlight">\(L\)</span>), and requiring periodicity of the field variables.
 Nek5000 requires that the pairs of sides (or faces, in the case of a three-dimensional mesh) identified as periodic be identical (i.e., that the geometry be periodic).</p>
 <p>For an axisymmetric flow geometry, the axis boundary condition is provided for boundary segments that lie entirely on the axis of symmetry.
@@ -389,7 +392,7 @@ power of the surface temperature.</p>
 <p>The boundary conditions for the passive scalar fields are analogous to those used for the temperature field.
 Thus, the temperature boundary condition menu will reappear for each passive scalar field so that the user can specify an independent set of boundary conditions for each passive scalar field.</p>
 <span id="tab-bct"></span><table border="1" class="docutils" id="id3">
-<caption><span class="caption-number">Table 16 </span><span class="caption-text">Primitive boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Primitive boundary conditions (Temperature and Passive scalars)</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="11%" />
 <col width="27%" />
@@ -442,7 +445,7 @@ Thus, the temperature boundary condition menu will reappear for each passive sca
 </tbody>
 </table>
 <span id="tab-userbct"></span><table border="1" class="docutils" id="id4">
-<caption><span class="caption-number">Table 17 </span><span class="caption-text">User defined boundary conditions for temperature and passive scalars</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
+<caption><span class="caption-number">Table 4 </span><span class="caption-text">User defined boundary conditions for temperature and passive scalars</span><a class="headerlink" href="#id4" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="10%" />
 <col width="23%" />
@@ -565,10 +568,10 @@ which is also assumed to be constant, should be specified.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="features.html" class="btn btn-neutral float-right" title="Additional Features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="case_files.html" class="btn btn-neutral float-right" title="Case Files" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="case_files.html" class="btn btn-neutral" title="Case Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../problem_setup.html" class="btn btn-neutral" title="Problem Setup" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

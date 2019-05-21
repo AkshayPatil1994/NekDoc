@@ -108,6 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../problem_setup.html">Problem Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../theory.html">Theory</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../appendix.html">Appendices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -209,8 +210,10 @@ Box                                       hillp
 P  ,P  ,W  ,W                             BC&#39;s:  (cbx0, cbx1, cby0, cby1)
 </pre></div>
 </div>
-<p>For this mesh we are specifying 22 uniform elements in the stream-wise (x) direction. 8 non-uniform elements are specified in the span-wise (y) direction in order to
-resolve the boundary layers. The boundary conditions are periodic in the x-direction and no-slip in the y. Additional details on generating meshes using <code class="docutils literal notranslate"><span class="pre">genbox</span></code> can be found in <span class="xref std std-doc">geometry</span>. Now we can run genbox with</p>
+<p>For this mesh we are specifying 22 uniform elements in the stream-wise (x) direction.
+8 non-uniform elements are specified in the span-wise (y) direction in order to resolve the boundary layers.
+The boundary conditions are periodic in the x-direction and no-slip in the y.
+Additional details on generating meshes using <code class="docutils literal notranslate"><span class="pre">genbox</span></code> can be found <a class="reference internal" href="../appendix.html#mesh-gen"><span class="std std-ref">here</span></a>. Now we can run genbox with</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>genbox
 </pre></div>
 </div>
@@ -219,7 +222,7 @@ The tool will produce a binary mesh and boundary data file <code class="docutils
 </div>
 <div class="section" id="usr-file">
 <h2>usr file<a class="headerlink" href="#usr-file" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="../problem_setup/case_files.html#case-files-usr"><span class="std std-ref">The User Routines File (.usr)</span></a> file implements various subroutines to allow the user to interact with the solver.</p>
+<p>The <a class="reference internal" href="../problem_setup/case_files.html#case-files-usr"><span class="std std-ref">user file</span></a> implements various subroutines to allow the user to interact with the solver.</p>
 <p>To get started we copy the template to our case directory</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cp $HOME/Nek5000/core/zero.usr hillp.usr
 </pre></div>
@@ -355,7 +358,7 @@ Copy the <code class="docutils literal notranslate"><span class="pre">SIZE.templ
 </pre></div>
 </div>
 <p>For this tutorial we have set our polynomial order to be <span class="math notranslate nohighlight">\(N=7\)</span> - this is defined in the <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> file above as <code class="docutils literal notranslate"><span class="pre">lx1=8</span></code> which indices that there are 8 points in each spatial dimension of every element.
-Additional details on the parameters in the <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> file are given in <span class="xref std std-doc">case_files</span>.</p>
+Additional details on the parameters in the <code class="docutils literal notranslate"><span class="pre">SIZE</span></code> file are given <a class="reference internal" href="../problem_setup/case_files.html#case-files-size"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="compilation">
 <h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Bibliography" href="bibliography.html" />
     <link rel="prev" title="Theory" href="theory.html" /> 
 
   
@@ -92,7 +93,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#internal-input-parameters-switches">Internal Input Parameters/Switches</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#parameters">Parameters</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#logical-switches">Logical switches</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#other-inut-varaibles">Other Inut Varaibles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-input-variables">Other Input Variables</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#commonly-used-variables">Commonly used Variables</a><ul>
@@ -116,6 +117,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#mesh-extrusion-and-mirroring">Mesh Extrusion and Mirroring</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="bibliography.html">Bibliography</a></li>
 </ul>
 
             
@@ -276,7 +278,7 @@ Available configurations options:</p>
 </table>
 <p>The <code class="docutils literal notranslate"><span class="pre">PPLIST</span></code> field can be used to activate several features at compilation time.
 A list of possible options is below:</p>
-<table border="1" class="docutils" id="id2">
+<span id="tab-pplist"></span><table border="1" class="docutils" id="id2">
 <caption><span class="caption-number">Table 19 </span><span class="caption-text">PPLIST options</span><a class="headerlink" href="#id2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="50%" />
@@ -455,8 +457,8 @@ Global and static data larger than 2GB requires <code class="docutils literal no
 <p><strong>IFSYNC</strong> use upfront synchronization</p>
 <p><strong>IFUSERVP</strong> user-defined properties</p>
 </div>
-<div class="section" id="other-inut-varaibles">
-<h3>Other Inut Varaibles<a class="headerlink" href="#other-inut-varaibles" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="other-input-variables">
+<h3>Other Input Variables<a class="headerlink" href="#other-input-variables" title="Permalink to this headline">¶</a></h3>
 <p><strong>filterType</strong> 0: explicit, 1: HPT-RT</p>
 <p><strong>restol(:)</strong> field solver tolerance</p>
 </div>
@@ -878,28 +880,30 @@ Global and static data larger than 2GB requires <code class="docutils literal no
 </dl>
 <p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc2(a,b,n)</span></code></p>
 <p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc3(a,b,mult,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc23(a,b,c,n)</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsum(a,n)</span></code></p>
+<blockquote>
+<div>Computes the global sum of the real arrays <code class="docutils literal notranslate"><span class="pre">a</span></code>, with number of local entries <code class="docutils literal notranslate"><span class="pre">n</span></code></div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">iglsum(a,n)</span></code></p>
+<blockquote>
+<div>Computes the global sum of the integer arrays <code class="docutils literal notranslate"><span class="pre">a</span></code>, with number of local entries <code class="docutils literal notranslate"><span class="pre">n</span></code></div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">i8glsum(a,n)</span></code></p>
+<blockquote>
+<div>Computes the global sum of the integer*8 arrays <code class="docutils literal notranslate"><span class="pre">a</span></code>, with number of local entries <code class="docutils literal notranslate"><span class="pre">n</span></code></div></blockquote>
 <dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsc23(z,y,z,n)</span></code></dt>
-<dd>Performs the inner product in double precision. <code class="docutils literal notranslate"><span class="pre">glsc3</span></code> uses a multiplier, <code class="docutils literal notranslate"><span class="pre">mult</span></code> and <code class="docutils literal notranslate"><span class="pre">glsc23</span></code> performs <code class="docutils literal notranslate"><span class="pre">x*x*y*z</span></code>.</dd>
-</dl>
-<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">glsum(x,n)</span></code></p>
-<p><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">iglsum(x,n)</span></code></p>
-<dl class="docutils">
-<dt><code class="docutils literal notranslate"><span class="pre">function</span> <span class="pre">i8glsum(x,n)</span></code></dt>
-<dd>Computes the global sum of <code class="docutils literal notranslate"><span class="pre">x</span></code>, where the prefix, <code class="docutils literal notranslate"><span class="pre">i</span></code> specifies type integer, and <code class="docutils literal notranslate"><span class="pre">i8</span></code> specifies type integer*8.</dd>
 <dt><code class="docutils literal notranslate"><span class="pre">subroutine</span> <span class="pre">surface_int(dphi,dS,phi,ielem,iside)</span></code></dt>
 <dd>Computes the surface integral of scalar array <code class="docutils literal notranslate"><span class="pre">phi</span></code> over face <code class="docutils literal notranslate"><span class="pre">iside</span></code> of element <code class="docutils literal notranslate"><span class="pre">ielem</span></code>.
 The resulting integral is storted in <code class="docutils literal notranslate"><span class="pre">dphi</span></code> and the area in <code class="docutils literal notranslate"><span class="pre">dS</span></code>.</dd>
 </dl>
 </div>
 <div class="section" id="generating-a-mesh-with-genbox">
-<span id="mesh-gen"></span><span id="append-g2g"></span><h2>Generating a Mesh with Genbox<a class="headerlink" href="#generating-a-mesh-with-genbox" title="Permalink to this headline">¶</a></h2>
+<span id="mesh-gen"></span><h2>Generating a Mesh with Genbox<a class="headerlink" href="#generating-a-mesh-with-genbox" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="uniformly-distributed-mesh">
 <h3>Uniformly Distributed Mesh<a class="headerlink" href="#uniformly-distributed-mesh" title="Permalink to this headline">¶</a></h3>
 <p>Suppose you wish to simulate flow through an axisymmetric pipe,
 of radius <span class="math notranslate nohighlight">\(R=0.5\)</span> and length <span class="math notranslate nohighlight">\(L=4\)</span>.  You estimate that you will
 need 3 elements in radial <span class="math notranslate nohighlight">\((y)\)</span> direction, and 5 in the <span class="math notranslate nohighlight">\(x\)</span> direction,
-as depicted in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi1</span></code>.
+as depicted in <a class="reference internal" href="#fig-mesh-axi1"><span class="std std-numref">Fig. 12</span></a>.
 This would be specified by the following input file (called <code class="docutils literal notranslate"><span class="pre">pipe.box</span></code>)
 to <code class="docutils literal notranslate"><span class="pre">genbox</span></code>:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>axisymmetric.rea
@@ -977,7 +981,7 @@ in the above <code class="docutils literal notranslate"><span class="pre">genbox
 0.0   0.5   0.7               y0  y1   ratio
 </pre></div>
 </div>
-<p>yields the mesh shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi2</span></code>.</p>
+<p>yields the mesh shown in <a class="reference internal" href="#fig-mesh-axi2"><span class="std std-numref">Fig. 13</span></a>.</p>
 </div>
 <div class="section" id="user-specified-distribution">
 <h3>User-Specified Distribution<a class="headerlink" href="#user-specified-distribution" title="Permalink to this headline">¶</a></h3>
@@ -998,7 +1002,7 @@ one of the preceding example could be built by changing the
 that <code class="docutils literal notranslate"><span class="pre">genbox</span></code> is expecting <code class="docutils literal notranslate"><span class="pre">Nely+1</span></code> values of <span class="math notranslate nohighlight">\(y\)</span> positions on the
 <span class="math notranslate nohighlight">\(y\)</span>-element distribution line.   This is the <code class="docutils literal notranslate"><span class="pre">genbox</span></code> default, which
 explains why it corresponds to <code class="docutils literal notranslate"><span class="pre">Nely</span></code> <span class="math notranslate nohighlight">\(&gt;\)</span> 0.  The corresponding mesh
-is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:mesh_axi3</span></code>.</p>
+is shown in <a class="reference internal" href="#fig-mesh-axi3"><span class="std std-numref">Fig. 14</span></a>.</p>
 </div>
 </div>
 <div class="section" id="mesh-modification">
@@ -1049,7 +1053,7 @@ looks to the <code class="docutils literal notranslate"><span class="pre">.rea</
 Nek5000 to communicate the new mesh to <code class="docutils literal notranslate"><span class="pre">postx</span></code> is via the <code class="docutils literal notranslate"><span class="pre">.fld</span></code>
 file, so you must request that the geometry be dumped to the
 <code class="docutils literal notranslate"><span class="pre">.fld</span></code> file.
-The result of above changes is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:wavypipe</span></code>.</p>
+The result of above changes is shown in <a class="reference internal" href="#fig-wavypipe"><span class="std std-numref">Fig. 15</span></a>.</p>
 <div class="align-center figure" id="id6">
 <span id="fig-wavypipe"></span><img alt="axis-pipe-mesh-wavy" src="_images/wavypipe.png" />
 <p class="caption"><span class="caption-number">Fig. 15 </span><span class="caption-text">Axisymmetric pipe mesh.</span></p>
@@ -1069,7 +1073,7 @@ transition treatments may be generated using the GLOBAL REFINE options in
 <code class="docutils literal notranslate"><span class="pre">prenek</span></code> or through an upgrade of <code class="docutils literal notranslate"><span class="pre">genb7</span></code>, as demand warrants.
 Example 2D and 3D input files are provided in the <code class="docutils literal notranslate"><span class="pre">nek5000/doc</span></code> files
 <code class="docutils literal notranslate"><span class="pre">box7.2d</span></code> and <code class="docutils literal notranslate"><span class="pre">box7.3d</span></code>.
-<code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:cylbox_2d</span></code> shows a 2D example generated using
+<a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 16</span></a> shows a 2D example generated using
 the <code class="docutils literal notranslate"><span class="pre">box7.2d</span></code> input file, which reads:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>x2d.rea
 2                      spatial dimension
@@ -1089,7 +1093,7 @@ ccbb                descriptors: c-cyl, o-oct, b-box (1 character + space)
 v  ,W  ,E  ,E  ,    bc&#39;s (3 characters + comma)
 </pre></div>
 </div>
-<p>An example of a mesh is shown in <code class="xref std std-numref docutils literal notranslate"><span class="pre">fig:cylbox_2d</span></code>.   The mesh has been quad-refined
+<p>An example of a mesh is shown in <a class="reference internal" href="#fig-cylbox-2d"><span class="std std-numref">Fig. 16</span></a>.   The mesh has been quad-refined
 once with oct-refine option of <code class="docutils literal notranslate"><span class="pre">prenek</span></code>. The 3D counterpart to this
 mesh could joined to a hemisphere/Cartesian transition built with
 the spherical mesh option in <code class="docutils literal notranslate"><span class="pre">prenek</span></code>.</p>
@@ -1170,7 +1174,7 @@ but only <span class="math notranslate nohighlight">\(y\)</span>, that is, radiu
 relevant equations to “two-dimensional” form.</li>
 </ul>
 <p>Fully general three-dimensional meshes generated by other softwares
-packages can be input to <code class="docutils literal notranslate"><span class="pre">prenek</span></code> as import meshes.</p>
+packages can be input to <code class="docutils literal notranslate"><span class="pre">prenek</span></code> as imported meshes.</p>
 </div>
 </div>
 
@@ -1181,6 +1185,8 @@ packages can be input to <code class="docutils literal notranslate"><span class=
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="bibliography.html" class="btn btn-neutral float-right" title="Bibliography" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="theory.html" class="btn btn-neutral" title="Theory" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
